@@ -158,3 +158,76 @@ const MemoHelper = () => {
 
 export default MemoHelper;
 ```
+
+## useCallback
+
+### example:
+
+_CallbackParent.js_
+
+```jsx
+import { useCallback, useState } from "react";
+import CallbackChild from "./CallbackChild";
+
+const CallbackParent = () => {
+  const [number, setNumber] = useState(0);
+  const [dark, setDark] = useState(false);
+  console.log("Parent Component redered");
+
+  const handler = useCallback(() => {
+    return [number, number + 1, number + 2];
+  }, [number]); //api function call
+  //const handler = ()=> { return [number, number + 1, number + 2]} //toggle this api* function to see it run on every render on parent without useCallback hook
+  const theme = {
+    backgroundColor: dark ? "#333" : "#fff",
+    color: dark ? "#fff" : "#333",
+  };
+
+  return (
+    <>
+      <div style={theme}>
+        <input
+          type="number"
+          value={number}
+          onChange={e => setNumber(parseInt(e.target.value))}
+        />
+        <button onClick={() => setDark(prevDark => !prevDark)}>
+          Toggle theme
+        </button>
+        <CallbackChild handler={handler} />
+      </div>
+    </>
+  );
+};
+
+export default CallbackParent;
+```
+
+_CallbackChild.js_
+
+```jsx
+import { useEffect, useState } from "react";
+
+const CallbackChild = ({ handler }) => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    setItems(handler());
+    console.log("Child Component redered");
+  }, [handler]);
+
+  return (
+    <>
+      {items.map((item, index) => {
+        return <div key={index}>{item}</div>;
+      })}
+    </>
+  );
+};
+
+export default CallbackChild;
+```
+
+### Note:
+
+_Remember useMemo and useCallback both take advantage of Referential Equality and they do have benifits & related side effects. Therefore, use them only when their use causes significant performence gain. useMemo return result, whereas useCallback returns a callback function which can take an argument too, passed from the child component. Both have similar syntax._
