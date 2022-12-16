@@ -52,18 +52,39 @@ _App.js_
 ```jsx
 import "./App.scss";
 import DataState from "./Components/DataState";
+import Example from "./ExampleComponent"
 
 function App() {
   return (
     <div className="App">
       <DataState>
         <h3>Hello</h3>
+        <Example>
       </DataState>
     </div>
   );
 }
 
 export default App;
+```
+
+Then in Example.js component where you have to use context
+
+```jsx
+import React, { useContext } from "react";
+import DataContext from "./DataContext";
+
+const Example = props => {
+  const {btnState, setBtnState} = useContext(DataContext);
+
+  return (
+    <div>
+      <button onClick={()={setBtnState(!btnState)}}>Click me</button>
+    </div>
+  );
+};
+
+export default Example;
 ```
 
 ## useReducer
