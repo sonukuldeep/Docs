@@ -80,3 +80,24 @@ import indivisual package in global css file as required
 ```
 
 Check [Open-props website for more](https://open-props.style/)
+
+---
+
+### To install on Vite
+
+```shell
+npm i -D open-props postcss-jit-props
+```
+
+Include any other plugin you want to add.
+
+Then add _postcss.config.js_ file in folder root with these settings
+
+```shell
+const postcssJitProps = require('postcss-jit-props');
+const OpenProps = require('open-props');
+
+module.exports = {
+  plugins: [postcssJitProps(OpenProps)],
+};
+```
