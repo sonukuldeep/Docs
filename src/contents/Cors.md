@@ -1,5 +1,5 @@
 ---
-author: Kuldeep
+author: WDS
 datetime: 2022-12-21
 title: Understanding cors
 slug: "cors"
