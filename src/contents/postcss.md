@@ -65,7 +65,7 @@ Add these line to _package.json_ for autoprefixer
 As of now _postcss-jit-props_ doesn't work on Nextjs
 
 ```shell
-npm i -D postcss open-props
+npm i -D open-props
 ```
 
 Install any other plugin you want to use through npm
@@ -79,9 +79,11 @@ import indivisual package in global css file as required
 @import "open-props/gradients";
 ```
 
-Check [Open-props website for more](https://open-props.style/)
+Check [Open-props website for more](https://open-props.style/#overview)
 
 ---
+
+Tip: Use sass with open-props
 
 ### To install on Vite
 
