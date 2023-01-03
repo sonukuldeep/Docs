@@ -12,6 +12,8 @@ ogImage: ""
 description: Poppins font initialization.
 ---
 
+![Font image](https://blog.adobe.com/en/publish/2017/06/11/media_159bde3b0a9324b8e3cc00d1e478e8000c7e056e9.png?width=750&format=png&optimize=medium)
+
 # Add fonts to your website
 
 ## How to add Own fonts
