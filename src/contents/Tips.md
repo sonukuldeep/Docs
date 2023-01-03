@@ -11,6 +11,8 @@ ogImage: ""
 description: Collection of random tips and tricks i came across in the internet.
 ---
 
+![tips image](https://eugensystems.com/wp-content/uploads/2016/03/Tips1.jpg)
+
 # Tips
 
 ## Table of contents
