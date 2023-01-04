@@ -48,6 +48,8 @@ const firebaseConfig = {
 export const FirebaseApp = initializeApp(firebaseConfig); /* export this */
 ```
 
+<hr>
+
 ## Sign In
 
 ### How to use
@@ -66,6 +68,8 @@ import {
   signOut,
 } from "firebase/auth";
 ```
+
+<hr>
 
 ### Initialize app and provider
 
@@ -114,7 +118,7 @@ const signInHandler = () => {
 
 If we use redirect then we also need to have _getRedirectResult_ or have auth state checked with _onAuthStateChanged_
 
-_Out side the component or within useEffect_
+_Out side the component or within useEffect_ in the later case you can use hook(useNavigate) to redirect to home page after successful login
 
 ```jsx
 getRedirectResult(auth)
