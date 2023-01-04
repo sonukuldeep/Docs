@@ -118,7 +118,7 @@ const signInHandler = () => {
 
 If we use redirect then we also need to have _getRedirectResult_ or have auth state checked with _onAuthStateChanged_
 
-_Out side the component or within useEffect_ in the later case you can use hook(useNavigate) to redirect to home page after successful login
+_Out side the component or within useEffect_ in the later case you can use hook(useNavigate) to redirect to homepage after successful login
 
 ```jsx
 getRedirectResult(auth)
