@@ -82,6 +82,8 @@ const GoogleProvider = new GoogleAuthProvider();
 
 ### Auth state
 
+Recommended component
+
 _Outside the component or within useEffect_
 
 ```jsx
@@ -166,6 +168,8 @@ signInWithPopup(auth, GoogleProvider)
     // ...
   });
 ```
+
+[source](https://firebase.google.com/docs/auth/web/google-signin?authuser=0#handle_the_sign-in_flow_with_the_firebase_sdk)
 
 <hr>
 
