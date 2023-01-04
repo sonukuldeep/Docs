@@ -252,3 +252,34 @@ export default CallbackChild;
 ### Note:
 
 _Remember useMemo and useCallback both take advantage of Referential Equality and they do have benifits & related side effects. Therefore, use them only when their use causes significant performence gain. useMemo return result, whereas useCallback returns a callback function which can take an argument too, passed from the child component. Both have similar syntax._
+
+<hr>
+
+## useNavigate
+
+### Install
+
+useNavigate is part of react-router-dom hence we need to install that in order to use this hook
+
+```npx
+npm i react-router-dom
+```
+
+### Usage
+
+```jsx
+import { useNavigate } from "react-router-dom";
+
+export default app = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      // 👇 Redirects to home page, note the `replace: true`
+      navigate("/", { replace: true });
+    }, 3000);
+  }, []);
+
+  return <p>redirect home in 3 secs</p>;
+};
+```
