@@ -14,7 +14,9 @@ description: CORS, Cross-Origin Resource Sharing.
 
 # CORS (Cross-Origin Resource Sharing)
 
-### What Is CORS?
+## Table of Contents
+
+## What Is CORS?
 
 Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading resources.
 
@@ -52,7 +54,7 @@ app.listen(PORT, (console.log(`Server running on port ${PORT}`)))
 
 This code tells your app to send down the Access-Control-Allow-Origin header with the value of http://localhost:1234. If you want to just allow all URLS to access your site you can instead use \* as the origin value in the header and that will allow cross origin requests from any URL. This will work for most of your CORS issues, but there are some instances where you need to do a bit of extra work.
 
-### CORS Preflight
+## CORS Preflight
 
 If we are making a PUT request or some other complex request to a cross origin URL, then doing just the above will not actually work. This is because the browser will send a preflight request to the server asking the server if they are allowed to make this PUT request. This preflight request will contain the Access-Control-Request-Method and Access-Control-Request-Headers headers. These headers contain the value of the method and headers that the client wants to use in the request and the server will return back if the method and headers are valid.
 
@@ -72,7 +74,7 @@ app.use(cors({
 
 This will send back the allowed headers and methods headers to the client based on the data passed to the cors function. Also, if we do not set the allowedHeaders key then it will default to the same list sent up by the client in the Access-Control-Request-Headers which is why generally you do not need to manually set the allowedHeaders.
 
-### Dealing With Credentials
+## Dealing With Credentials
 
 The final difficult thing to deal with for CORS is cookies. By default CORS will not send our cookies along with a request unless we specifically tell it to. In order to allow our cookies to be sent, we first need to tell the request that it is with credentials by setting the credentials option in the fetch request to include.
 
