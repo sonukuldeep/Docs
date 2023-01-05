@@ -194,3 +194,70 @@ const signOutUser = () => {
 ```
 
 [source](https://firebase.google.com/docs/auth/web/password-auth#next_steps)
+
+<hr>
+
+## Firebase cloud
+
+### Initialize
+
+```jsx
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(FirebaseApp); //const db = getFirestore(app); same thing
+```
+
+This can be initialized in firebase config file or in the file where you want to use cloud db functions
+
+### Read data
+
+```jsx
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+
+const populateUserInDB = async uid => {
+  const userRef = doc(db, "users", uid); // reference uid document, containing the data, in "users" collection within database
+  const userSnap = await getDoc(userRef); // read data from ref object
+  if (userSnap.exists()) {
+    //data exist so do something
+    console.log("Document data:", userSnap.data());
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!, hence creating data");
+  }
+};
+```
+
+<hr>
+
+### Write data
+
+```jsx
+import { doc, setDoc } from "firebase/firestore";
+
+const docRef = doc(db, "cities", "LA");
+const data = {
+  name: "Los Angeles",
+  state: "CA",
+  country: "USA",
+};
+// Add a new document in collection "cities"
+await setDoc(docRef, data);
+```
+
+[source](https://firebase.google.com/docs/firestore/manage-data/add-data?authuser=0#set_a_document)
+
+<hr>
+
+### Update data
+
+```jsx
+import { doc, updateDoc } from "firebase/firestore";
+
+const washingtonRef = doc(db, "cities", "DC");
+
+// Set the "capital" field of the city 'DC'
+await updateDoc(washingtonRef, {
+  capital: true,
+});
+```
+
+[source](https://firebase.google.com/docs/firestore/manage-data/add-data?authuser=0#update-data)
