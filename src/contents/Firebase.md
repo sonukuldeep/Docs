@@ -226,6 +226,8 @@ const populateUserInDB = async uid => {
 };
 ```
 
+[source](https://firebase.google.com/docs/firestore/query-data/get-data?authuser=0#get_a_document)
+
 <hr>
 
 ### Write data
