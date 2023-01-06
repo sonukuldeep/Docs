@@ -88,7 +88,9 @@ const GoogleProvider = new GoogleAuthProvider();
 
 Recommended component
 
-_Outside the component or within useEffect_
+_put this outside if used raw but i higly advise to use the callback version which goes inside useEffect. There is one more benifit of using callback version and that is we call manage states without needing localhost_
+
+_Raw version_
 
 ```jsx
 onAuthStateChanged(auth, user => {
@@ -105,6 +107,22 @@ onAuthStateChanged(auth, user => {
 ```
 
 [source](https://firebase.google.com/docs/auth/web/start#set_an_authentication_state_observer_and_get_user_data)
+
+_Callback version_
+
+```jsx
+const observer = callback => {
+  onAuthStateChanged(auth, callback);
+};
+
+useEffect(() => {
+  const callbackFunction = user => {
+    console.log("this function runs whenever auth changes", user);
+  };
+  const unsubscribe = observer(callbackFunction);
+  return unsubscribe;
+}, []);
+```
 
 <hr>
 
