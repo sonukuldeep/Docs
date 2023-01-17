@@ -12,6 +12,8 @@ ogImage: ""
 description: Basic setup of stripe
 ---
 
+<img src="https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80" alt=""/>
+
 # Stripe basic setup
 
 ## For detailed visit
@@ -124,3 +126,5 @@ function checkoutHandler(cartItems) {
     .then(data => window.location.assign(data.url));
 }
 ```
+
+[def]: https://firebase.google.com/images/social.png
