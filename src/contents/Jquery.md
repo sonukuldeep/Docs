@@ -1,8 +1,8 @@
 ---
-title: Jquery
+title: jquery
 author: kuldeep
 datetime: 2023-02-14
-slug: promise
+slug: jquery
 featured: false
 draft: false
 tags:
