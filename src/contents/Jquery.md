@@ -1,5 +1,5 @@
 ---
-title: jquery
+title: Jquery
 author: kuldeep
 datetime: 2023-02-14
 slug: jquery
