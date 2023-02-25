@@ -13,47 +13,81 @@ description: MongoDb commands
 
 # MongoDb
 
-Show DB:- show <database name>
+## Table of contents
+
+## Basic:-
+
+### Show DB:-
+
+show &lt;database name&gt;
+
+Example:
 
 ```js
-eg. show dbs
+show dbs
 ```
 
-Create DB:- use <database name>
+### Create DB:-
+
+use &lt;database name&gt;
+
+Example:
 
 ```js
-eg. use shopDB
+use shopDB
 ```
 
-Create collection:- db.<collection name>.inseartOne({\_id: <id #>, name: "<name>"})
+### Create collection:-
+
+db.&lt;collection name&gt;.insertOne({\_id: &lt;id #&gt;, name: "&lt;name&gt;"})
+
+Example:
 
 ```js
-eg.db.products.insertOne({ _id: 1, name: "Pensil" });
+db.products.insertOne({ _id: 1, name: "Pensil" });
 ```
 
-To show collection:- show collections
+### To show collection:-
+
+show &lt;collection name&gt;
+
+Example:
 
 ```js
 show shopDB
 ```
 
-To read collection:- db.<collection>.find(query,projection)
+### To read collection:-
+
+db.&lt;collection name&gt;.find(query,projection)
+
+Here query is the field you want to find and projection determines the visiblity of data that will be returned
+
+Example:
 
 ```js
-eg.db.products.find();
+db.products.find();
 db.products.fund({ name: "Pensil" });
 db.products.find({ price: { $gt: 1 } });
 db.products.find({ _id: 1 }, { name: 1, _id: 0 }); //1st param matches the record, in 2nd param, 1 means show and 0 don't show
 ```
 
-Add new entry to collection:- db.<collection name>.updateOne({\_id: <id #>},{$set:{<field>:<value>}})
+### Add new entry to collection:-
+
+db.&lt;collection name&gt;.updateOne({\_id: &lt;id #&gt;},{$set:{&lt;field&gt;:&lt;value&gt;}})
+
+Example:
 
 ```js
-eg.db.products.updateOne({ _id: 1 }, { $set: { stock: 32 } });
+db.products.updateOne({ _id: 1 }, { $set: { stock: 32 } });
 ```
 
-Delete record:- db.<collection>.deleteOne({\_id: <id #>})
+### Delete record:-
+
+db.&lt;collection name&gt;.deleteOne({\_id: &lt;id #&gt;})
+
+Example:
 
 ```js
-eg.db.products.deleteOne({ _id: 1 });
+db.products.deleteOne({ _id: 1 });
 ```
