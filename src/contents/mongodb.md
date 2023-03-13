@@ -47,6 +47,14 @@ use shopDB
 
 The above command creates a database if it isn't already there and the console switches to the db specified
 
+### Delete Db
+
+```js
+db.dropDatabase();
+```
+
+Make sure you're currently inside the db you want to delete
+
 ## Create collection:-
 
 Collection can be created in 2 ways

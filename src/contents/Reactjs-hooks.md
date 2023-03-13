@@ -261,7 +261,7 @@ _Remember useMemo and useCallback both take advantage of Referential Equality an
 
 useNavigate is part of react-router-dom hence we need to install that in order to use this hook
 
-```npx
+```js
 npm i react-router-dom
 ```
 
