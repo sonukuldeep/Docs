@@ -1,7 +1,7 @@
 ---
 author: w3school and Bootcamp
 datetime: 2023-02-24
-title: Important MongoDb commands
+title: MongoDb shell commands
 slug: mongodb-commands
 featured: false
 draft: false
@@ -21,15 +21,21 @@ description: MongoDb commands
 
 ### Show DB:-
 
-show &lt;database name&gt;
-
-Example:
+Below commands returns all database in the server
 
 ```js
 show dbs
 ```
 
-### Create DB:-
+### To show collection:-
+
+Make sure you're inside a db and use the following command to get the all the collection names
+
+```js
+show collections
+```
+
+## Create DB:-
 
 use &lt;database name&gt;
 
@@ -39,11 +45,15 @@ Example:
 use shopDB
 ```
 
-### Create collection:-
+The above command creates a database if it isn't already there and the console switches to the db specified
+
+## Create collection:-
 
 Collection can be created in 2 ways
 
-1. db.&lt;collection name&gt;.insertOne({\_id: &lt;id #&gt;, name: "&lt;name&gt;"})
+### insertOne
+
+db.&lt;collection name&gt;.insertOne({\_id: &lt;id #&gt;, name: "&lt;name&gt;"})
 
 Example:
 
@@ -51,48 +61,64 @@ Example:
 db.products.insertOne({ _id: 1, name: "Pensil" });
 ```
 
-2. db.createCollection("&lt;collection name&gt;")
-<hr>
-
-### To show collection:-
-
-show &lt;collection name&gt;
+You can also create a collection with multiple documents at once as shown below
 
 Example:
 
 ```js
-show shopDB
+db.products.insertMany([
+  { _id: 1, name: "Pensil" },
+  { _id: 2, name: "Eraser" },
+]);
 ```
 
-### To read collection:-
+### createCollection
+
+db.createCollection("&lt;collection name&gt;")
+
+Example:
+
+```js
+db.createCollection("Products");
+```
+
+<hr>
+
+## To read collection:-
 
 There are 2 methods to find a document in a MongoDB collection, find() and findOne().
 
-1. db.&lt;collection name&gt;.find(query,projection)
+### find
+
+db.&lt;collection name&gt;.find(query,projection)
 
 Here query is the document you want to find and projection determines the visiblity of data within the document
 
 Example:
 
 ```js
-db.products.find();
-db.products.fund({ name: "Pensil" });
-db.products.find({ price: { $gt: 1 } });
-db.products.find({ _id: 1 }, { name: 1, _id: 0 }); //1st param matches the record, in 2nd param, 1 means show and 0 don't show
+db.products.find(); //Displays all document in collection
+db.products.fund({ name: "Pensil" }); //Displays all documents that match the field's value
+db.products.find({ price: { $gt: 1 } }); //Displays all documumt whose price is greater than 1
+db.products.find({ _id: 1 }, { name: 1, _id: 0 }); //1st param matches the record, and in 2nd param, 1 means show and 0 don't show
 ```
 
-2. db.&lt;collection name&gt;.findOne()
+### findOne
+
+db.&lt;collection name&gt;.findOne()
 
 To select only one document, we can use the findOne() method.
 This method also take two arguments as find method above
 
 <hr>
 
-### Insert document in collection
+## Insert document in collection
 
 There are 2 methods to insert documents into a collection.
 
-1. db.&lt;collection name&gt;.insertOne()
+### insertOne
+
+db.&lt;collection name&gt;.insertOne()
 
 Example:
 
@@ -107,7 +133,9 @@ db.posts.insertOne({
 });
 ```
 
-1. db.&lt;collection name&gt;.insertMany()
+### insertMany
+
+db.&lt;collection name&gt;.insertMany()
 
 Example:
 
@@ -134,13 +162,15 @@ db.posts.insertMany([
 
 <hr>
 
-### Update document in collection:-
+## Update document in collection:-
 
 To update an existing document we can use the updateOne() or updateMany() methods.
 The first parameter is a query object to define which document or documents should be updated.
 The second parameter is an object defining the updated data.
 
-1. db.&lt;collection name&gt;.updateOne({\_id: &lt;id #&gt;},{$set:{&lt;field&gt;:&lt;value&gt;}})
+### updateOne
+
+db.&lt;collection name&gt;.updateOne({\_id: &lt;id #&gt;},{$set:{&lt;field&gt;:&lt;value&gt;}})
 
 Example:
 
@@ -148,7 +178,9 @@ Example:
 db.products.updateOne({ _id: 1 }, { $set: { stock: 32 } });
 ```
 
-2. db.&lt;collection name&gt;.updateMany()
+### updateMany
+
+db.&lt;collection name&gt;.updateMany()
 
 ```jsx
 db.posts.updateMany({}, { $inc: { likes: 1 } }); //Update likes on all documents by 1.
@@ -156,12 +188,14 @@ db.posts.updateMany({}, { $inc: { likes: 1 } }); //Update likes on all documents
 
 <hr>
 
-### Delete record:-
+## Delete record:-
 
 We can delete documents by using the methods deleteOne() or deleteMany().
 These methods accept a query object. The matching documents will be deleted.
 
-1. db.&lt;collection name&gt;.deleteOne({\_id: &lt;id #&gt;})
+### deleteOne
+
+db.&lt;collection name&gt;.deleteOne({\_id: &lt;id #&gt;})
 
 Example:
 
@@ -169,7 +203,9 @@ Example:
 db.products.deleteOne({ _id: 1 });
 ```
 
-2. db.&lt;collection name&gt;.deleteMany()
-   The deleteMany() method will delete all documents that match the query provided.
+### deleteMany
+
+db.&lt;collection name&gt;.deleteMany()
+The deleteMany() method will delete all documents that match the query provided.
 
 <hr>
