@@ -19,6 +19,7 @@ description: Everything related to Nextjs
 ## Static site config
 
 we need getStaticProps and getStaticPaths for this
+_With nextjs 13 and above getStaticPropsand getStaticPaths have been depricated_
 
 _blog.tsx_
 
