@@ -103,3 +103,18 @@ You'll likely want to use the raw output tag (<%-) with your include to avoid do
   <% }); %>
 </ul>
 ```
+
+### Layouts
+
+EJS does not specifically support blocks, but layouts can be implemented by including headers and footers, like so:
+
+```c++
+<%- include('header'); -%>
+<h1>
+  Title
+</h1>
+<p>
+  My page
+</p>
+<%- include('footer'); -%>
+```
