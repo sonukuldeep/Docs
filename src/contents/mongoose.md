@@ -163,11 +163,34 @@ apple.save(err => {
 
 ## Few important functions.
 
+### save
+
+Saves this document by inserting a new document into the database if document is.New is true(document created using new keyword), or sends an updateOne operation only with the modifications to the database, it does not replace the whole document in the latter case.
+
+Syntax:
+
+```js
+const <variable name> = new <collection name>(object)
+<variable name>.save()
+```
+
+Example:
+
+```js
+const user = new User({ username, password });
+const userDoc = await user.save();
+```
+
 ### create
 
 Shortcut for saving one or more documents to the database. MyModel.create(docs) does new MyModel(doc).save() for every doc in docs.
 
 This function triggers the save() middleware.
+Syntax:
+
+```js
+<collection name>.create(object or array of objects)
+```
 
 Example:
 
