@@ -163,6 +163,22 @@ apple.save(err => {
 
 ## Few important functions.
 
+### create
+
+Shortcut for saving one or more documents to the database. MyModel.create(docs) does new MyModel(doc).save() for every doc in docs.
+
+This function triggers the save() middleware.
+
+Example:
+
+```js
+// Insert one new `Character` document
+await Character.create({ name: "Jean-Luc Picard" });
+
+// Insert multiple new `Character` documents
+await Character.create([{ name: "Will Riker" }, { name: "Geordi LaForge" }]);
+```
+
 ### insertMany
 
 The insertMany() function is used to insert multiple documents into a collection. It accepts an array of documents to insert into the collection.
