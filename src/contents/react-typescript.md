@@ -48,5 +48,5 @@ export function UserContextProvider({ children }: { children: ReactNode }) { // 
 ## useState
 
 ```jsx
-const [username, setUsername] = (useState < string) | (null > null);
+const [username, setUsername] = useState<string | null>(null);
 ```
