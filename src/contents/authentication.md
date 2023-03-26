@@ -10,6 +10,7 @@ tags:
   - passport
   - express
   - node
+  - next-auth
 ogImage: ""
 description: JavaScript React router v6
 ---
@@ -278,15 +279,12 @@ app.post("/login", async (req, res) => {
         { username, id: userDoc._id, iat: Math.floor(Date.now() / 1000) - 30 },
         privateKey
       );
-      res
-        .cookie("token", token)
-        .status(200)
-        .json({
-          username,
-          id: userDoc._id,
-          cover: userDoc.cover,
-          content: userDoc.content,
-        }); //cookie has to come first like so
+      res.cookie("token", token).status(200).json({
+        username,
+        id: userDoc._id,
+        cover: userDoc.cover,
+        content: userDoc.content,
+      }); //cookie has to come first like so
     } else {
       throw new Error("Uesrname password don't match");
     }
@@ -341,4 +339,160 @@ app.post("/newpost", uploadMiddleware.single("file"), async (req, res) => {
 app.listen(port, () => {
   console.log("App running on port " + port);
 });
+```
+
+## Using Next Auth
+
+[Documentation](https://next-auth.js.org/getting-started/introduction)
+
+Providers have to be configured as per the docs
+
+[Use website](https://blog.logrocket.com/nextauth-js-for-next-js-client-side-authentication/)
+
+### Setup
+
+api/auth/[...nextauth].js
+
+```jsx
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
+
+export const authOptions = {
+  // Configure one or more authentication providers
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+  ],
+};
+
+export default NextAuth(authOptions);
+```
+
+\_app.tsx
+
+```jsx
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
+
+interface AppPropsWithSession extends AppProps {
+  session: Session;
+}
+
+export default function App({
+  Component,
+  pageProps,
+  session,
+}: AppPropsWithSession) {
+  return (
+    <SessionProvider session={session}>
+      <Component {...pageProps} />
+    </SessionProvider>
+  );
+}
+```
+
+.env.local
+
+```js
+GOOGLE_CLIENT_ID= get from google // [Get from here](https://console.developers.google.com/apis/credentials)
+GOOGLE_CLIENT_SECRET= get from google
+GITHUB_ID= get from github // [get from here](https://github.com/settings/apps)
+GITHUB_SECRET= get from github
+
+
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET= run 'openssl rand -base64 32' and paste here
+```
+
+### Usage
+
+#### Example:
+
+Login
+
+```jsx
+import { GetServerSideProps } from "next";
+import { useSession, signIn, signOut } from "next-auth/react";
+
+const Login = () => {
+  const { data: session } = useSession();
+  if (session) {
+    // if not logged in session is null
+    return (
+      <div>
+        <p>You are logged in as {session.user?.name}</p>
+        <button onClick={() => signOut()}>Sign out</button>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <p>You're not logged in click sign in to login</p>
+        <button onClick={() => signIn()}>Sign in</button>
+      </div>
+    );
+  }
+};
+
+export default Login;
+```
+
+Restrict access
+
+```jsx
+import { useSession, signOut } from "next-auth/react";
+
+const restricted = () => {
+  const { data: session } = useSession({ required: true }); // forces user to log in to view the page
+  return <div>restricted</div>;
+};
+
+export default restricted;
+```
+
+Access session serverside
+
+```jsx
+import { getSession, GetSessionParams } from "next-auth/react";
+
+const serverside = ({ order }: OrderProps) => {
+  return (
+    <div>
+      <p>{order.firstName}</p>
+      <p>{order.lastName}</p>
+    </div>
+  );
+};
+
+export default serverside;
+
+export const getServerSideProps = async (context: GetSessionParams) => {
+  const session = await getSession(context);
+  if (!session) {
+    console.log("user not logged in... redirecting");
+    return {
+      redirect: {
+        destination: "/login",
+      },
+    };
+  } else {
+    return {
+      props: {
+        order: {
+          firstName: "Dummy",
+          lastName: "data",
+        },
+      },
+    };
+  }
+};
 ```
