@@ -496,3 +496,18 @@ export const getServerSideProps = async (context: GetSessionParams) => {
   }
 };
 ```
+
+Successfully login session in google will log like this
+
+```jsx
+{
+  user: {
+    name: 'abc def',
+    email: 'abc@gmail.com',
+    image: 'abcdef'
+  },
+  expires: 'time here'
+}
+```
+
+While a logged out session will be null
