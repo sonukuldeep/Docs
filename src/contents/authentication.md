@@ -497,7 +497,7 @@ export const getServerSideProps = async (context: GetSessionParams) => {
 };
 ```
 
-Successfully login session in google will log like this
+> Successfully login session in google will log like this
 
 ```jsx
 {
