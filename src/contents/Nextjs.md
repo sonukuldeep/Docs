@@ -68,7 +68,7 @@ Mark the slug in square brackets
 
 <hr>
 
-## Next image component
+## Next image apt
 
 Known Browser Bugs
 
@@ -200,3 +200,16 @@ When true, the image will be considered high priority and preload. Lazy loading 
 A placeholder to use while the image is loading. Possible values are blur or empty. Defaults to empty.
 
 When blur, the blurDataURL property will be used as the placeholder. If src is an object from a static import and the imported image is .jpg, .png, .webp, or .avif, then blurDataURL will be automatically populated.
+
+## Image Component
+
+[Detailed docs](https://nextjs.org/docs/basic-features/image-optimization)
+
+The Next.js Image component, next/image, is an extension of the HTML <img> element, evolved for the modern web. It includes a variety of built-in performance optimizations to help you achieve good Core Web Vitals. These scores are an important measurement of user experience on your website, and are factored into Google's search rankings.
+
+Some of the optimizations built into the Image component include:
+
+- Improved Performance: Always serve correctly sized image for each device, using modern image formats
+- Visual Stability: Prevent Cumulative Layout Shift automatically
+- Faster Page Loads: Images are only loaded when they enter the viewport, with optional blur-up placeholders
+- Asset Flexibility: On-demand image resizing, even for images stored on remote servers
