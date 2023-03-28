@@ -81,6 +81,8 @@ Known Browser Bugs
     - Enable AVIF formats
     - Use placeholder="blur"
 
+<hr>
+
 ### Required Props
 
 #### Src
@@ -91,6 +93,8 @@ Must be one of the following:
 1. A path string. This can be either an absolute external URL, or an internal path depending on the [loader](https://nextjs.org/docs/api-reference/next/image#loader) prop.
 
 When using an external URL, you must add it to [remotePatterns](https://nextjs.org/docs/api-reference/next/image#remote-patterns) in next.config.js.
+
+<hr>
 
 #### Width
 
@@ -108,9 +112,13 @@ Required, except for statically imported images or images with the fill property
 
 The alt property is used to describe the image for screen readers and search engines.
 
+<hr>
+
 ### Optional Props
 
-The <Image /> component accepts a number of additional properties beyond those which are required. This section describes the most commonly-used properties of the Image component. Find details about more rarely-used properties in the [Advanced Props](https://nextjs.org/docs/api-reference/next/image#advanced-props) section.
+The &lt;Image /&gt; component accepts a number of additional properties beyond those which are required. This section describes the most commonly-used properties of the Image component. Find details about more rarely-used properties in the [Advanced Props](https://nextjs.org/docs/api-reference/next/image#advanced-props) section.
+
+<hr>
 
 #### Loader
 
@@ -146,6 +154,8 @@ const MyImage = props => {
 
 Alternatively, you can use the loaderFile configuration in next.config.js to configure every instance of next/image in your application, without passing a prop.
 
+<hr>
+
 #### Fill
 
 A boolean that causes the image to fill the parent element instead of setting width and height.
@@ -157,6 +167,8 @@ By default, the img element will automatically be assigned the position: "absolu
 The default image fit behavior will stretch the image to fit the container. You may prefer to set object-fit: "contain" for an image which is letterboxed to fit the container and preserve aspect ratio.
 
 Alternatively, object-fit: "cover" will cause the image to fill the entire container and be cropped to preserve aspect ratio. For this to look correct, the overflow: "hidden" style should be assigned to the parent element.
+
+<hr>
 
 #### Sizes
 
@@ -187,6 +199,8 @@ const Example = () => (
 
 This example sizes could have a dramatic effect on performance metrics. Without the 33vw sizes, the image selected from the server would be 3 times as wide as it needs to be. Because file size is proportional to the square of the width, without sizes the user would download an image that's 9 times larger than necessary.
 
+<hr>
+
 #### Quality
 
 The quality of the optimized image, an integer between 1 and 100, where 100 is the best quality and therefore largest file size. Defaults to 75.
@@ -201,6 +215,8 @@ A placeholder to use while the image is loading. Possible values are blur or emp
 
 When blur, the blurDataURL property will be used as the placeholder. If src is an object from a static import and the imported image is .jpg, .png, .webp, or .avif, then blurDataURL will be automatically populated.
 
+<hr>
+
 ## Image Component
 
 [Detailed docs](https://nextjs.org/docs/basic-features/image-optimization)
@@ -213,3 +229,5 @@ Some of the optimizations built into the Image component include:
 - Visual Stability: Prevent Cumulative Layout Shift automatically
 - Faster Page Loads: Images are only loaded when they enter the viewport, with optional blur-up placeholders
 - Asset Flexibility: On-demand image resizing, even for images stored on remote servers
+
+<hr>
