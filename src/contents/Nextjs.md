@@ -68,7 +68,7 @@ Mark the slug in square brackets
 
 <hr>
 
-## Next image apt
+## Next image api
 
 Known Browser Bugs
 
