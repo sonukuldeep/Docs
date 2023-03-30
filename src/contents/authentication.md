@@ -345,6 +345,12 @@ app.listen(port, () => {
 
 [Documentation](https://next-auth.js.org/getting-started/introduction)
 
+Package:
+
+```jsx
+npm i next-auth
+```
+
 Providers have to be configured as per the docs
 
 [Use website](https://blog.logrocket.com/nextauth-js-for-next-js-client-side-authentication/)
