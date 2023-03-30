@@ -45,7 +45,25 @@ If you want to add additional keys later, use the [.add](https://mongoosejs.com/
 
 All available methods on [schema](https://mongoosejs.com/docs/api/schema.html)
 
+<hr>
+
 #### Data validation
+
+- Validation is defined in the SchemaType
+- Validation is middleware. Mongoose registers validation as a pre('save') hook on every schema by default.
+- Validation always runs as the first pre('save') hook. This means that validation doesn't run on any changes you make in pre('save') hooks.
+- You can disable automatic validation before save by setting the validateBeforeSave option
+- You can manually run validation using doc.validate() or doc.validateSync()
+- You can manually mark a field as invalid (causing validation to fail) by using doc.invalidate(...)
+- Validators are not run on undefined values. The only exception is the required validator.
+- When you call Model#save, Mongoose also runs subdocument validation. If an error occurs, your Model#save promise rejects
+- Validation is customizable
+
+Remember "unique" option is not a validator. [link](https://mongoosejs.com/docs/faq.html#unique-doesnt-work)
+
+Mongoose also supports validation for update(), updateOne(), updateMany(), and findOneAndUpdate() operations. Update validators are off by default - you need to specify the runValidators option.
+
+To turn on update validators, set the runValidators option for update(), updateOne(), updateMany(), or findOneAndUpdate(). <br> <b>Be careful: update validators are off by default because they have several caveats.</b>
 
 We can add data validation to schema like so
 
