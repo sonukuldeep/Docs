@@ -18,8 +18,9 @@ description: Everything related to Nextjs
 
 ## Static site config
 
-we need getStaticProps and getStaticPaths for this
-_With nextjs 13 and above getStaticPropsand getStaticPaths have been depricated_
+getStaticProps and getServerSideProps work in page elemnt only.
+we need getStaticProps and getStaticPaths for this.
+_With nextjs 13 and above getStaticProps and getStaticPaths have been depricated_
 
 _blog.tsx_
 
