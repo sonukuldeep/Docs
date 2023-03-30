@@ -63,7 +63,9 @@ Remember "unique" option is not a validator. [link](https://mongoosejs.com/docs/
 
 Mongoose also supports validation for update(), updateOne(), updateMany(), and findOneAndUpdate() operations. Update validators are off by default - you need to specify the runValidators option.
 
-To turn on update validators, set the runValidators option for update(), updateOne(), updateMany(), or findOneAndUpdate(). <br> <b>Be careful: update validators are off by default because they have several caveats.</b>
+To turn on update validators, set the runValidators option for update(), updateOne(), updateMany(), or findOneAndUpdate(). <br><b>Be careful: update validators are off by default because they have several caveats.</b>
+
+Instead update using save() [link](https://mongoosejs.com/docs/documents.html#updating-using-save)
 
 We can add data validation to schema like so
 
