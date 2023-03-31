@@ -63,6 +63,24 @@ export const getStaticProps: GetStaticProps = async context => {
 };
 ```
 
+or <br>
+Use serverSideProps
+
+```jsx
+export const getServerSideProps: GetServerSideProps = async context => {
+  let id;
+  if (context.params) {
+    id = context.params;
+  }
+  console.log(id);
+  return {
+    props: {
+      page: id,
+    },
+  };
+};
+```
+
 <img src="https://i.ibb.co/wpL1xS7/Screenshot-2023-02-05-205246.png" alt="folder-structure-image">
 
 Mark the slug in square brackets
