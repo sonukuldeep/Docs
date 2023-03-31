@@ -68,10 +68,8 @@ Use serverSideProps
 
 ```jsx
 export const getServerSideProps: GetServerSideProps = async context => {
-  let id;
-  if (context.params) {
-    id = context.params;
-  }
+  const { params } = context;
+  const id = params?.id;
   console.log(id);
   return {
     props: {
