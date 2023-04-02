@@ -367,6 +367,34 @@ User.findOne({ age: { $gte: 5 } }, function (err, docs) {
 
 <hr>
 
+### where
+
+Creates a Query, applies the passed conditions, and returns the Query
+
+For example, instead of writing:
+
+User.find({ age: { $gte: 21, $lte: 65 } });
+
+we can instead write:
+
+```jsx
+User.where("age")
+  .gte(21)
+  .lte(65)
+  .exec((err, result) => {});
+```
+
+Since the Query class also supports where you can continue chaining
+
+User
+
+```jsx
+.where('age').gte(21).lte(65)
+.where('name', /^b/i)
+```
+
+<hr>
+
 ### updateOne
 
 The updateOne() function is used to update the first document that matches the condition.
