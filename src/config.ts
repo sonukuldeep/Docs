@@ -7,7 +7,7 @@ export const SITE = {
   title: "My Docs",
   ogImage: "default-og.png",
   lightAndDarkMode: true,
-  postPerPage: 3,
+  postPerPage: 10,
 };
 
 export const LOGO_IMAGE = {
