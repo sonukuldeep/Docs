@@ -341,6 +341,123 @@ app.listen(port, () => {
 });
 ```
 
+<hr>
+
+## Passport and Oauth
+
+Using google in this case
+Go to google [console](https://console.cloud.google.com/welcome) and create an api
+With api created you should have CLIENTID and CLIENTSECRET
+We need that. Note for callback url use http://localhost:3000/auth/google/callback
+
+app.js/server.js
+
+```js
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const { User } = require(__dirname + "/schema/userSchema.js");
+const app = express();
+const session = require("express-session");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const PORT = 3000;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// cookie setup
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+    // cookie: { secure: true }, // setting this to true will prevent browwser to send back the cookie if network is not secured
+    cookie: { maxAge: 1 * 60 * 1000 }, // expiration set to 1 min
+  })
+);
+
+// passport initialization
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport config
+passport.use(User.createStrategy());
+passport.serializeUser(function (user, cb) {
+  // https://www.passportjs.org/concepts/authentication/strategies/
+  process.nextTick(function () {
+    return cb(null, {
+      id: user.id,
+      username: user.username,
+      picture: user.picture,
+    });
+  });
+});
+
+passport.deserializeUser(function (user, cb) {
+  process.nextTick(function () {
+    return cb(null, user);
+  });
+});
+
+//express setup
+app.use(express.static("public/"));
+
+// mongoose setup
+mongoose.set("strictQuery", false);
+const url = "mongodb://127.0.0.1/userDB";
+mongoose.connect(url, { useNewUrlParser: true });
+
+// Google stratergy
+passport.use(
+  new GoogleStrategy(
+    {
+      //https://www.passportjs.org/packages/passport-google-oauth20/
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google/callback",
+    },
+    async function (accessToken, refreshToken, profile, cb) {
+      try {
+        const user = await User.findOne({ username: profile.displayName });
+        if (!user) {
+          const user = await User.create({ username: profile.displayName });
+          return cb(null, user);
+        }
+        return cb(null, user);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  )
+);
+
+// Routes
+app.get("/", function (req, res) {
+  res.render("home");
+});
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("/");
+  }
+);
+
+app.listen(PORT, function () {
+  console.log("Listening on port " + PORT);
+});
+```
+
+<hr>
+
 ## Using Next Auth
 
 [Documentation](https://next-auth.js.org/getting-started/introduction)
