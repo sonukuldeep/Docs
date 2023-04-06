@@ -75,3 +75,5 @@ export default function IsObserver({ children, classNameInView, classNameNotInVi
     );
 }
 ```
+
+[link](https://www.franciscomoretti.com/how-to-animate-on-scroll-with-react-intersection-observer-and-tailwind-in-a-nextjs-app)
