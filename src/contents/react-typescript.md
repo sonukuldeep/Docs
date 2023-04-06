@@ -14,6 +14,8 @@ description: Common react code using typescript
 
 # React Typescript
 
+## Table of Context
+
 ## useContext
 
 ```jsx
@@ -48,5 +50,28 @@ export function UserContextProvider({ children }: { children: ReactNode }) { // 
 ## useState
 
 ```jsx
-const [username, setUsername] = useState<string | null>(null);
+const [username, setUsername] = (useState < string) | (null > null);
+```
+
+## Intersection observer
+
+animate using animate.css
+
+```jsx
+Copy code
+'use client';
+
+import { InView } from "react-intersection-observer";
+
+export default function IsObserver({ children, classNameInView, classNameNotInView="", triggerOnce={true}, threshold={0}}: { children: React.ReactNode, classNameInView: string, classNameNotInView: string, triggerOnce: bool, threshold: number }) {
+    return (
+        <InView triggerOnce={triggerOnce} threshold={threshold} >
+            {({ inView, ref, entry }) => (
+                <div ref={ref} className={inView ? classNameInView : classNameNotInView}>
+                    {children}
+                </div>
+            )}
+        </InView >
+    );
+}
 ```
