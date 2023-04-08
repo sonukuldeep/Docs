@@ -14,6 +14,10 @@ description: EJS is a simple templating language that lets you generate HTML mar
 
 # EJS
 
+![ejs](https://i.ibb.co/x5D06K4/Screenshot-2023-04-08-214211.png)
+
+## Table of Content
+
 What is the "E" for? "Embedded?" Could be. How about "Effective," "Elegant," or just "Easy"? EJS is a simple templating language that lets you generate HTML markup with plain JavaScript. No religiousness about how to organize things. No reinvention of iteration and control-flow. It's just plain JavaScript.
 
 ## Install
@@ -22,7 +26,7 @@ What is the "E" for? "Embedded?" Could be. How about "Effective," "Elegant," or 
 npm install ejs
 ```
 
-### Use
+## Use
 
 Pass EJS a template string and some data. BOOM, you've got some HTML.
 
@@ -32,7 +36,7 @@ let people = ["geddy", "neil", "alex"];
 let html = ejs.render('<%= people.join(", "); %>', { people: people });
 ```
 
-### Docs
+## Docs
 
 Example
 
@@ -42,7 +46,7 @@ Example
 <% } %>
 ```
 
-### Usage
+## Usage
 
 ```js
 let template = ejs.compile(str, options);
@@ -57,7 +61,7 @@ ejs.renderFile(filename, data, options, function (err, str) {
 });
 ```
 
-### Options
+## Options
 
 - cache Compiled functions are cached, requires filename
 - filename Used by cache to key caches, and for includes
@@ -78,7 +82,7 @@ ejs.renderFile(filename, data, options, function (err, str) {
 - outputFunctionName Set to a string (e.g., 'echo' or 'print') for a function to print output inside scriptlet tags.
 - async When true, EJS will use an async function for rendering. (Depends on async/await support in the JS runtime.
 
-### Tags
+## Tags
 
 - <% 'Scriptlet' tag, for control-flow, no output
 - <%\_ ‘Whitespace Slurping’ Scriptlet tag, strips all whitespace before it
@@ -90,7 +94,7 @@ ejs.renderFile(filename, data, options, function (err, str) {
 - -%> Trim-mode ('newline slurp') tag, trims following newline
 - \_%> ‘Whitespace Slurping’ ending tag, removes all whitespace after it
 
-### Includes
+## Includes
 
 Includes are relative to the template with the include call. (This requires the 'filename' option.) For example if you have "./views/users.ejs" and "./views/user/show.ejs" you would use <%- include('user/show'); %>.
 
@@ -104,7 +108,7 @@ You'll likely want to use the raw output tag (<%-) with your include to avoid do
 </ul>
 ```
 
-### Layouts
+## Layouts
 
 EJS does not specifically support blocks, but layouts can be implemented by including headers and footers, like so:
 
@@ -117,4 +121,57 @@ EJS does not specifically support blocks, but layouts can be implemented by incl
   My page
 </p>
 <%- include('footer'); -%>
+```
+
+## Exercise 1:
+
+Render a file and pass a value to it
+
+index.ejs
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tot do list</title>
+  </head>
+  <body>
+    <!-- <%= variable name %> -->
+    <h1>Its a <%= kindOfDay %></h1>
+  </body>
+</html>
+```
+
+app.js
+
+```js
+const express = require("express");
+const app = express();
+
+const PORT = 3000;
+
+// mmiddleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+
+const today = new Date().getDay();
+let kindOfDay;
+if (today === 6 || today == 0) {
+  kindOfDay = "weekend";
+} else {
+  kindOfDay = "weekday";
+}
+
+app.get("/", (req, res) => {
+  res.render("index", { kindOfDay });
+});
+
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
 ```
