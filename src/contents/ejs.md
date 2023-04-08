@@ -87,7 +87,7 @@ ejs.renderFile(filename, data, options, function (err, str) {
 - <% 'Scriptlet' tag, for control-flow, no output
 - <%\_ ‘Whitespace Slurping’ Scriptlet tag, strips all whitespace before it
 - <%= Outputs the value into the template (HTML escaped)
-- <%- Outputs the unescaped value into the template
+- <%- Outputs the unescaped value into the template [Never ever use this for value coming from user use HTML escaped instead](https://stackoverflow.com/questions/20727910/what-is-escaped-unescaped-output)
 - <%# Comment tag, no execution, no output
 - <%% Outputs a literal '<%'
 - %> Plain ending tag
