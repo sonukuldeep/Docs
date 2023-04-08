@@ -136,7 +136,7 @@ index.ejs
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tot do list</title>
+    <title>To do list</title>
   </head>
   <body>
     <!-- <%= variable name %> -->
@@ -187,7 +187,7 @@ simple code in ejs
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tot do list</title>
+    <title>To do list</title>
 </head>
 
 <body>
@@ -199,4 +199,82 @@ simple code in ejs
 </body>
 
 </html>
+```
+
+<hr>
+
+## Exercise 3:
+
+index.ejs
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do list</title>
+  </head>
+
+  <body>
+    <% if( kindOfDay==='weekend' ) { %>
+    <h1 style="color: purple">Its a <%= kindOfDay %></h1>
+    <% } else { %>
+    <h1 style="color: red">Its a <%= kindOfDay %></h1>
+    <% } %>
+
+    <ul>
+      <% items.forEach(item=>{ %>
+      <li><%= item %></li>
+      <!-- <%= item %> HTML escaped -->
+      <% }) %>
+    </ul>
+
+    <form action="/" method="post">
+      <input type="text" name="newItem" />
+      <button type="submit" name="button">Add</button>
+    </form>
+  </body>
+</html>
+```
+
+app.js
+
+```js
+const express = require("express");
+const app = express();
+
+const PORT = 3000;
+
+// mmiddleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+
+const items = ["Buy food", "Cook food", "Eat food"];
+
+const today = new Date().getDay();
+let kindOfDay;
+if (today === 6 || today == 0) {
+  kindOfDay = "weekend";
+} else {
+  kindOfDay = "weekday";
+}
+
+app
+  .route("/")
+  .get((req, res) => {
+    res.render("index", { kindOfDay, items });
+  })
+  .post((req, res) => {
+    const { newItem } = req.body;
+    items.push(newItem);
+    res.redirect("/");
+  });
+
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
 ```
