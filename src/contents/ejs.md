@@ -278,3 +278,66 @@ app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 ```
+
+<hr>
+
+## Exercise 4:
+
+Layout in ejs
+
+header.ejs
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Tot do list</title>
+  </head>
+
+  <body></body>
+</html>
+```
+
+Footer.ejs
+
+```html
+</body>
+<footer>
+    &#169; Copyright 2023 Codethatdev
+</footer>
+</html>
+```
+
+index.ejs
+
+```html
+<%- include('header'); -%>
+<div class="box" id="heading">
+  <h1>Its a <%= kindOfDay %></h1>
+</div>
+
+<div class="box">
+  <% items.forEach(item=>{ %>
+  <div class="item">
+    <input type="checkbox" />
+    <p><%= item %></p>
+  </div>
+  <% }) %>
+
+  <form class="item" action="/" method="post">
+    <input
+      type="text"
+      name="newItem"
+      placeholder="Add new item"
+      autocomplete="off"
+    />
+    <button type="submit" name="button">+</button>
+  </form>
+</div>
+
+<%- include('footer'); -%>
+```
