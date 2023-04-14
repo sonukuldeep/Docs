@@ -14,6 +14,8 @@ description: CORS, Cross-Origin Resource Sharing.
 
 # CORS (Cross-Origin Resource Sharing)
 
+![main image](https://cdn.pellerex.com/public/ecosystem/web/content/api-cors/pellerex-asp-net-5-web-api-cors.png)
+
 ## Table of Contents
 
 ## What Is CORS?
