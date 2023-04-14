@@ -93,3 +93,5 @@ def create_user():
     db.session.commit()
     return redirect('/')
 ```
+
+[see full code](https://github.com/sonukuldeep/flask-tutorial/tree/sqlalchemy)
