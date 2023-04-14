@@ -30,14 +30,15 @@ interface FormData {
   name: string;
   email: string;
   password: string;
+  message: string;
 }
 
 const MyForm: React.FC = () => {
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+    register, // Register function from react-hook-form
+    handleSubmit, // Submit handler from react-hook-form
+    formState: { errors }, // Errors object from react-hook-form
+  } = useForm<FormData>(); // Initialize useForm hook with FormData type as generic
 
   const onSubmit = (data: FormData) => {
     // Handle form submission
@@ -46,15 +47,18 @@ const MyForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {/* Name field */}
       <TextField
         label="Name"
         variant="outlined"
         {...register('name', {
           required: 'This field is required',
-        } as RegisterOptions)} // Use RegisterOptions for additional type safety
-        error={!!errors.name}
-        helperText={errors.name?.message}
+        } as RegisterOptions)}
+        error={!!errors.name} // Check if errors exist for 'name' field
+        helperText={errors.name?.message} // Display error message for 'name' field
       />
+
+      {/* Email field */}
       <TextField
         label="Email"
         variant="outlined"
@@ -64,20 +68,37 @@ const MyForm: React.FC = () => {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
             message: 'Invalid email address',
           },
-        } as RegisterOptions)} // Use RegisterOptions for additional type safety
-        error={!!errors.email}
-        helperText={errors.email?.message}
+        } as RegisterOptions)}
+        error={!!errors.email} // Check if errors exist for 'email' field
+        helperText={errors.email?.message} // Display error message for 'email' field
       />
+
+      {/* Password field */}
       <TextField
         label="Password"
         variant="outlined"
-        type="password"
+        type="password" // Set input type to password
         {...register('password', {
           required: 'This field is required',
-        } as RegisterOptions)} // Use RegisterOptions for additional type safety
-        error={!!errors.password}
-        helperText={errors.password?.message}
+        } as RegisterOptions)}
+        error={!!errors.password} // Check if errors exist for 'password' field
+        helperText={errors.password?.message} // Display error message for 'password' field
       />
+
+      {/* Message textarea field */}
+      <TextField
+        label="Message"
+        variant="outlined"
+        multiline // Set multiline prop to true for textarea
+        rows={4} // Set number of rows for textarea
+        {...register('message', {
+          required: 'This field is required',
+        } as RegisterOptions)}
+        error={!!errors.message} // Check if errors exist for 'message' field
+        helperText={errors.message?.message} // Display error message for 'message' field
+      />
+
+      {/* Submit button */}
       <Button type="submit" variant="contained" color="primary">
         Submit
       </Button>
@@ -86,4 +107,5 @@ const MyForm: React.FC = () => {
 };
 
 export default MyForm;
+
 ```
