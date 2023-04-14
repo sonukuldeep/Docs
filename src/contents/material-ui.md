@@ -109,3 +109,118 @@ const MyForm: React.FC = () => {
 export default MyForm;
 
 ```
+
+<hr>
+
+React- form with checkbox
+
+```jsx
+import React from 'react';
+import { useForm, RegisterOptions } from 'react-hook-form';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import FormHelperText from '@mui/material/FormHelperText'; // Add import for FormHelperText
+
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+  message: string;
+  acceptTerms: boolean;
+}
+
+const MyForm: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onSubmit = (data: FormData) => {
+    // Handle form submission
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {/* Name field */}
+      <TextField
+        label="Name"
+        variant="outlined"
+        {...register('name', {
+          required: 'This field is required',
+        } as RegisterOptions)}
+        error={!!errors.name}
+        helperText={errors.name?.message}
+      />
+
+      {/* Email field */}
+      <TextField
+        label="Email"
+        variant="outlined"
+        {...register('email', {
+          required: 'This field is required',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+            message: 'Invalid email address',
+          },
+        } as RegisterOptions)}
+        error={!!errors.email}
+        helperText={errors.email?.message}
+      />
+
+      {/* Password field */}
+      <TextField
+        label="Password"
+        variant="outlined"
+        type="password"
+        {...register('password', {
+          required: 'This field is required',
+        } as RegisterOptions)}
+        error={!!errors.password}
+        helperText={errors.password?.message}
+      />
+
+      {/* Message textarea field */}
+      <TextField
+        label="Message"
+        variant="outlined"
+        multiline
+        rows={4}
+        {...register('message', {
+          required: 'This field is required',
+        } as RegisterOptions)}
+        error={!!errors.message}
+        helperText={errors.message?.message}
+      />
+
+      {/* Checkbox field */}
+      <FormControlLabel
+        control={
+          <Checkbox
+            {...register('acceptTerms', {
+              required: 'You must accept the terms and conditions',
+            } as RegisterOptions)}
+            color="primary"
+          />
+        }
+        label="I accept the terms and conditions"
+      />
+
+      {/* Error message for checkbox */}
+      {errors.acceptTerms && (
+        <FormHelperText error>{errors.acceptTerms.message}</FormHelperText>
+      )}
+
+      {/* Submit button */}
+      <Button type="submit" variant="contained" color="primary">
+        Submit
+      </Button>
+    </form>
+  );
+};
+
+export default MyForm;
+```
