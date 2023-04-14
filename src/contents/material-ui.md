@@ -224,3 +224,143 @@ const MyForm: React.FC = () => {
 
 export default MyForm;
 ```
+
+<hr>
+
+## React- form with checkbox and dropdown
+
+Error msg in drop down doesnot go away in first attempt
+
+```jsx
+import React from 'react';
+import { useForm, RegisterOptions } from 'react-hook-form';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import FormHelperText from '@mui/material/FormHelperText'; // Add import for FormHelperText
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+
+interface FormData {
+    name: string;
+    email: string;
+    password: string;
+    message: string;
+    acceptTerms: boolean;
+    country: string;
+}
+
+const MyForm: React.FC = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormData>();
+
+    const onSubmit = (data: FormData) => {
+        console.log(data);
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {/* Name field */}
+                <TextField
+                    label="Name"
+                    variant="outlined"
+                    {...register('name', {
+                        required: 'This field is required',
+                    } as RegisterOptions)}
+                    error={!!errors.name}
+                    helperText={errors.name?.message}
+                />
+
+                {/* Email field */}
+                <TextField
+                    label="Email"
+                    variant="outlined"
+                    {...register('email', {
+                        required: 'This field is required',
+                        pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                            message: 'Invalid email address',
+                        },
+                    } as RegisterOptions)}
+                    error={!!errors.email}
+                    helperText={errors.email?.message}
+                />
+
+                {/* Password field */}
+                <TextField
+                    label="Password"
+                    variant="outlined"
+                    type="password"
+                    {...register('password', {
+                        required: 'This field is required',
+                    } as RegisterOptions)}
+                    error={!!errors.password}
+                    helperText={errors.password?.message}
+                />
+
+                {/* Message textarea field */}
+                <TextField
+                    label="Message"
+                    variant="outlined"
+                    multiline
+                    rows={4}
+                    {...register('message', {
+                        required: 'This field is required',
+                    } as RegisterOptions)}
+                    error={!!errors.message}
+                    helperText={errors.message?.message}
+                />
+                {/* Country dropdown field */}
+                <FormControl variant="outlined" fullWidth error={Boolean(errors.country)}>
+                    <InputLabel htmlFor="country-label">Country</InputLabel>
+                    <Select
+                        labelId="country-label"
+                        label="Country"
+                        {...register('country', { required: 'This field is required' })}
+                    >
+                        <MenuItem value="USA">USA</MenuItem>
+                        <MenuItem value="Canada">Canada</MenuItem>
+                        <MenuItem value="UK">UK</MenuItem>
+                        <MenuItem value="Australia">Australia</MenuItem>
+                    </Select>
+                    {errors.country && (
+                        <FormHelperText error>{errors.country.message}</FormHelperText>
+                    )}
+                </FormControl>
+                {/* Checkbox field */}
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            {...register('acceptTerms', {
+                                required: 'You must accept the terms and conditions',
+                            } as RegisterOptions)}
+                            color="primary"
+                        />
+                    }
+                    label="I accept the terms and conditions"
+                />
+
+                {/* Error message for checkbox */}
+                {errors.acceptTerms && (
+                    <FormHelperText error>{errors.acceptTerms.message}</FormHelperText>
+                )}
+
+                {/* Submit button */}
+                <Button type="submit" variant="contained" color="primary">
+                    Submit
+                </Button>
+            </Box>
+        </form>
+    );
+};
+
+export default MyForm;
+```
