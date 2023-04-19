@@ -129,12 +129,17 @@ function NoRefsForm() {
 ### Form in react using typescript (uncontrolled)
 
 ```tsx
+import React from "react";
+
 function NoRefsForm() {
-  const handleSubmit = e => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.target;
-    console.log("email", form.email, form.elements.email);
-    console.log("name", form.name, form.elements.name);
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const email = formData.get("email");
+    const name = formData.get("name");
+    console.log("email", email);
+    console.log("name", name);
   };
 
   return (
@@ -151,6 +156,8 @@ function NoRefsForm() {
     </form>
   );
 }
+
+export default NoRefsForm;
 ```
 
 ### Form in react with uncontrolled input using useRef
