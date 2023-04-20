@@ -140,6 +140,7 @@ function NoRefsForm() {
     const name = formData.get("name");
     console.log("email", email);
     console.log("name", name);
+    form.reset();
   };
 
   return (
