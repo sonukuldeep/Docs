@@ -343,3 +343,29 @@ npx prisma migrate deploy
 ```js
 npx prisma studio // GUI to view and edit data in your database
 ```
+
+### Prisma best practice
+
+In development, the command next dev clears Node.js cache on run. This in turn initializes a new PrismaClient instance each time due to hot reloading that creates a connection to the database. This can quickly exhaust the database connections as each PrismaClient instance holds its own connection pool.<br>
+
+The solution in this case is to instantiate a single instance PrismaClient and save it on the global object. Then we keep a check to only instantiate PrismaClient if it's not on the global object otherwise use the same instance again if already present to prevent instantiating extra PrismaClient instances.<br>
+Create a folder lib/prisma.ts in root <br>
+lib/prisma.ts
+
+```ts
+import { PrismaClient } from "@prisma/client";
+
+// PrismaClient is attached to the `global` object in development to prevent
+// exhausting your database connection limit.
+//
+// Learn more:
+// https://pris.ly/d/help/next-js-best-practices
+
+const globalForPrisma = global as unknown as { prisma: PrismaClient };
+
+export const prisma = globalForPrisma.prisma || new PrismaClient();
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+
+export default prisma;
+```
