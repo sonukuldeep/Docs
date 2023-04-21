@@ -258,14 +258,14 @@ This has a dedicated section
 
 ## Prisma
 
-### Installation
+### 1. Installation
 
 ```js
 npm i -D prisma
 npm i @prisma/client
 ```
 
-### Initialize prisma
+### 2. Initialize prisma
 
 ```js
 npx prisma init // this creates a prisma/schema.prisma file where you put your schema
@@ -305,9 +305,9 @@ model Post {
 }
 ```
 
-### Run migration to create your database
+### 3. Run migration to create your database
 
-#### Prisma Migrate in development environments
+#### 1. Prisma Migrate in development environments
 
 Make sure you have added schema in the above stems before running this command <br>
 In a development environment, use the migrate dev command to generate and apply migrations:
@@ -324,7 +324,7 @@ npx prisma migrate dev --name init
 npx prisma migrate reset
 ```
 
-#### Prisma Migrate in production and testing environments
+#### 2. Prisma Migrate in production and testing environments
 
 In production and testing environments, use the migrate deploy command to apply migrations:
 
@@ -343,6 +343,8 @@ npx prisma migrate deploy
 ```js
 npx prisma studio // GUI to view and edit data in your database
 ```
+
+<hr>
 
 ### Prisma best practice
 
@@ -369,3 +371,17 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export default prisma;
 ```
+
+<hr>
+
+### Prisma in vercel
+
+Resolve dependency caching error
+[link](https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/vercel-caching-issue) <br>
+Use the [custom postinstall script](https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/vercel-caching-issue#a-custom-postinstall-script) method
+
+### Prisma in Netlify
+
+Resolve dependency caching error
+[link](https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/netlify-caching-issue) <br>
+Use the [custom postinstall script](https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/netlify-caching-issue#a-custom-postinstall-script) method
