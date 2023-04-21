@@ -248,3 +248,74 @@ Some of the optimizations built into the Image component include:
 - Asset Flexibility: On-demand image resizing, even for images stored on remote servers
 
 <hr>
+
+## Next Auth
+
+[link](https://kuldeep-docs.netlify.app/posts/authentication/#using-next-auth)
+
+<hr>
+
+## Prisma
+
+### Installation
+
+```js
+npm i -D prisma
+npm i @prisma/client
+```
+
+### Initialize prisma
+
+```js
+npx prisma init // this creates a prisma/schema.prisma file where you put your schema
+// npx prisma init --datasource-provider postgresql
+// npx prisma init --datasource-provider sqlite
+```
+
+Example:-
+
+```js
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  posts Post[]
+}
+
+model Post {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean @default(false)
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+```
+
+### Run migration to create your database
+
+Make sure you have added schema in the above stems before running this command
+
+```js
+npx prisma migrate dev --name init
+```
+
+<hr>
+
+### Prisma Studio
+
+```js
+npx prisma studio // GUI to view and edit data in your database
+```
