@@ -481,29 +481,8 @@ Providers have to be configured as per the docs
 
 #### For Nextjs 13.2 or higher
 
+Documentation isn't complete yet
 [link](https://next-auth.js.org/configuration/initialization#route-handlers-app) <br>
-
-/app/api/auth/[...nextauth]/route.ts
-
-```ts
-import NextAuth from "next-auth";
-
-const handler = NextAuth({
-  // Configure one or more authentication providers
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
-  ],
-});
-
-export { handler as GET, handler as POST };
-```
 
 #### For Nextjs 13.1 and lower
 
@@ -533,7 +512,6 @@ export default NextAuth(authOptions);
 
 ### Add provider
 
-For next 13.2 or higher but this in layout file instead
 \_app.tsx
 
 ```jsx
