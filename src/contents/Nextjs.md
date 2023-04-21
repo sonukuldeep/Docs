@@ -251,6 +251,7 @@ Some of the optimizations built into the Image component include:
 
 ## Next Auth
 
+This has a dedicated section
 [link](https://kuldeep-docs.netlify.app/posts/authentication/#using-next-auth)
 
 <hr>
