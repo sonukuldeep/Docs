@@ -307,11 +307,34 @@ model Post {
 
 ### Run migration to create your database
 
-Make sure you have added schema in the above stems before running this command
+#### Prisma Migrate in development environments
+
+Make sure you have added schema in the above stems before running this command <br>
+In a development environment, use the migrate dev command to generate and apply migrations:
 
 ```js
 npx prisma migrate dev --name init
 ```
+
+> Note: migrate dev is a development command and should never be used in a production environment.
+
+##### Reset the development database
+
+```js
+npx prisma migrate reset
+```
+
+#### Prisma Migrate in production and testing environments
+
+In production and testing environments, use the migrate deploy command to apply migrations:
+
+```js
+npx prisma migrate deploy
+```
+
+> Note: migrate deploy should generally be part of an automated CI/CD pipeline, and we do not recommend running this command locally to deploy changes to a production database.
+
+[read more](https://www.prisma.io/docs/concepts/components/prisma-migrate/migrate-development-production#production-and-testing-environments)
 
 <hr>
 
