@@ -23,17 +23,21 @@ description: Express js documemtation
 ```js
 //imports
 const express = require("express");
-
 const app = express();
 
 //Middleware
-app.use(express.urlencoded({ extended: false })); //body parser is depricated now
-// http://expressjs.com/en/api.html#express.urlencoded
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+// Set the view engine to EJS
+app.set("view engine", "ejs");
+
+// Serve static files from a public folder
+app.use(express.static("public"));
 
 // Routes
 app.get("/", function (req, res) {
-  res.status(200).sendFile(__dirname + "/index.html");
+  res.status(200).render("index");
 });
 
 app.post("/", function (req, res) {
@@ -41,14 +45,72 @@ app.post("/", function (req, res) {
   res.status(200).send("The sum of these numbers is " + num1 + num2);
 });
 
-app.listen(5000, function () {
-  console.log("Running on port 5000");
+// Set the port based on environment
+const PORT = process.env.NODE_ENV === "production" ? 80 : 3000;
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(
+    `Server is running on port ${PORT} in ${process.env.NODE_ENV} mode`
+  );
 });
 ```
 
+## Seperate file for routes
+
+```js
+// userRoutes.js
+
+const express = require("express");
+const router = express.Router();
+
+// Define user routes
+router.get("/", (req, res) => {
+  // Handle user route logic
+});
+
+router.post("/", (req, res) => {
+  // Handle user route logic
+});
+
+router.put("/:id", (req, res) => {
+  // Handle user route logic
+});
+
+router.delete("/:id", (req, res) => {
+  // Handle user route logic
+});
+
+// Export the router
+module.exports = router;
+```
+
+In the main Express app file import userRouts
+
+```js
+// app.js
+
+const express = require("express");
+const userRoutes = require("./userRoutes");
+
+const app = express();
+
+// Register userRoutes middleware
+app.use("/users", userRoutes);
+
+// Define other routes and middleware
+
+// Start the server
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
+```
+
+<hr>
+
 ## Import from another file
 
-Another js file
+Another lib file
 
 ```js
 module.exports = { odd: sumOfOdd, even: sumOfEven };
@@ -62,7 +124,7 @@ function sumOfEven() {
 }
 ```
 
-//server.js
+In app.js file
 
 ```js
 const express = require("express");
@@ -90,6 +152,8 @@ app.listen(PORT, function () {
   console.log("running on port " + PORT);
 });
 ```
+
+<hr>
 
 ## Res.write and res.send
 
