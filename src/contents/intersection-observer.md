@@ -47,6 +47,7 @@ export default function IsObserver({ children, classNameInView, classNameNotInVi
 
 ## Intersection observer in javascript
 
+[mdn](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
 [My pen](https://codepen.io/Donald-6329/pen/vYVEBQj)
 
 ```jsx
