@@ -159,3 +159,112 @@ function handleIntersect(entries, observer) {
   opacity: 1;
 }
 ```
+
+## Alternative. Using scroll listner
+
+script.js
+
+```js
+// getting cards to listen to
+const cards = document.querySelectorAll(".animate-on-scroll");
+
+const windowHeight = window.innerHeight; // gets viewport height
+
+const animateProperty = {
+  scale: "--scale",
+  ease: "--easeIn",
+  scroll: "--scroll",
+};
+
+function animateFunction(element, property, delay = 1, propertyVariable = "") {
+  const top = element.getBoundingClientRect().top; // gets element top relative to view port
+  const topFactor = delay; // lower value to delay animation and vice versa
+  const range = topFactor * windowHeight - top; // if window - top is + then object is in view
+  const step = range / windowHeight; // responsible for a steady increment/decrement from 0-1 during scroll. nothing else
+  if (range > 0 && range <= windowHeight) {
+    // animate only when object is in view and in limit
+    document.body.style.setProperty(property + propertyVariable, step); //sets css variable that can be used for animation
+  }
+}
+
+window.addEventListener(
+  "scroll",
+  () => {
+    animateFunction(cards[0], animateProperty.ease, 1, (propertyVariable = 1));
+    animateFunction(cards[10], animateProperty.scale, 0.7);
+    animateFunction(cards[14], animateProperty.scroll, 0.5);
+  },
+  false
+);
+```
+
+css file
+
+```css
+.animate-on-scroll.scale {
+  animation: scale 1s linear infinite;
+  animation-play-state: paused;
+  animation-delay: calc(var(--scale) * -1s);
+
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+@keyframes scale {
+  0% {
+    opacity: 0.5;
+    transform: scale(1, 1);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.4, 1.4);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.4, 1.4);
+  }
+}
+
+.animate-on-scroll.scroll {
+  animation: rotate 1s linear infinite;
+  animation-play-state: paused;
+  animation-delay: calc(var(--scroll) * -1s);
+
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+@keyframes rotate {
+  to {
+    transform: translateX(-35vw);
+  }
+}
+
+.animate-on-scroll.easeIn1 {
+  animation: easeIn 1s linear infinite;
+  animation-play-state: paused;
+  animation-delay: calc(var(--easeIn1) * -1s);
+
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+@keyframes easeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+```
