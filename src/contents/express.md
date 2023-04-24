@@ -24,17 +24,22 @@ description: Express js documemtation
 //imports
 const express = require("express");
 const app = express();
+var path = require("path");
+const cors = require("cors");
 
 //Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+// cors all all
+app.use(cors());
 
 // Set the view engine to EJS
 app.set("views", path.join(__dirname, "views")); // have a folder named views in root
 app.set("view engine", "ejs");
 
 // Serve static files from a public folder
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public"))); // have a folder named public in root
 
 // Routes
 app.get("/", function (req, res) {
