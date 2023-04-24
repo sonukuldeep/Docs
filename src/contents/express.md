@@ -62,6 +62,8 @@ app.listen(PORT, () => {
 });
 ```
 
+<hr>
+
 ## Seperate file for routes
 
 ```js
@@ -114,7 +116,7 @@ app.listen(3000, () => {
 
 <hr>
 
-## Import from another file
+## Separate js file
 
 Another lib file
 
@@ -189,4 +191,104 @@ app.get("/", function (req, res) {
 app.listen(PORT, function () {
   console.log("Runing on port " + PORT);
 });
+```
+
+<hr>
+
+## Set up to deploy in vercel
+
+Vercel requires the folling files and folder to work<br>
+Note these settings are for mern app
+
+- app/routes.js
+- index.js
+- vercel.json
+- public
+- views
+
+app/routes file contains the route which is then imported into index.js file.<br>
+app/routes.js
+
+```js
+// imports
+const express = require("express");
+const router = express.Router();
+
+// Define user routes
+router.get("/test", function (req, res) {
+  res.status(200).send("works");
+});
+
+router.get("/", function (req, res) {
+  res.status(200).render("home");
+});
+
+router.get("/about", function (req, res) {
+  res.status(200).render("about");
+});
+
+router.get("/contact", function (req, res) {
+  res.status(200).render("contact");
+});
+
+router.post("/", function (req, res) {
+  const { num1, num2 } = req.body;
+  res.status(200).send("The sum of these numbers is " + num1 + num2);
+});
+
+// Export the router
+module.exports = router;
+```
+
+index.js
+
+```js
+//Imports
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const routes = require("./app/routes");
+var path = require("path");
+
+//Middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+// Set the view engine to EJS
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
+// Serve static files from a public folder
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
+app.use("/", routes);
+
+// if port exist then run on localhost else deploy on vercel
+if (process.env.PORT) {
+  // Start the server
+  app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
+  });
+} else app.listen();
+```
+
+vercel.json
+
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "./index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
+}
 ```
