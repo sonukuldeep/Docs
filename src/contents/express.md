@@ -30,6 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Set the view engine to EJS
+app.set("views", path.join(__dirname, "views")); // have a folder named views in root
 app.set("view engine", "ejs");
 
 // Serve static files from a public folder
