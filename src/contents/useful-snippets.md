@@ -1,7 +1,7 @@
 ---
 author: kuldeep
 datetime: 2023-02-23
-title: Useful Snippets
+title: Useful Stuff
 slug: "snippets"
 featured: false
 draft: false
@@ -236,3 +236,28 @@ function useOutsideAlerter(ref: React.RefObject<HTMLElement>) {
 ```
 
 [source](https://www.geeksforgeeks.org/how-to-detect-click-outside-react-component/)
+
+<hr>
+
+## Prisma setup in Node js
+
+[main image](https://logos-world.net/wp-content/uploads/2022/04/Prisma-Logo.png)
+
+Installation
+
+- Install express, typescript, etc
+- Install prisma using the following commands "npm i -D prisma"
+- Install prisma client with "npm i @prisma/client"
+- Initialize prisma with "npx prisma init --datasource-provider sqlite" or mysql or postgresql etc
+- This will give us .env file and prisma/schema.prisma
+- Prisma/schema.prisma is where you add all your schema
+- When you are done adding schema run "npx prisma migrate dev --name init"
+- This creates a migration which help us work with db
+- If you ever need to generate prisma client again do "npx prisma generate"
+- This completes prisma setup in node js
+
+For more details check Prisma on Next js or prisma docs [here](https://www.prisma.io/docs/getting-started)
+
+## Prisma on Next js
+
+[link](https://kuldeep-docs.netlify.app/posts/nextjs/#prisma)
