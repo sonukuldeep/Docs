@@ -423,6 +423,7 @@ app.listen(PORT, function () {
 require("dotenv").config();
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
+const passportLocalMongoose = require("passport-local-mongoose");
 
 //Schema
 const userSchema = new Schema({
@@ -439,6 +440,9 @@ const userSchema = new Schema({
     type: String,
   },
 });
+
+//encryption
+userSchema.plugin(passportLocalMongoose);
 
 //Model
 const User = model("User", userSchema);
