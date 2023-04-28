@@ -642,3 +642,164 @@ export const getServerSideProps = async (context: GetSessionParams) => {
 ```
 
 While a logged out session will be null
+
+## Magic link auth using jsonwebtoken, cookie-parser and nodemailer
+
+I created this taking various reference from internet
+Future work includes
+
+- link expire after first use
+- expire token after 15 min if it is not used to login
+
+note: for nodemailer check this [link](https://kuldeep-docs.netlify.app/posts/nodemail/)
+
+### controller/sendMail.js
+
+```js
+const nodemailer = require("nodemailer");
+
+// async..await is not allowed in global scope, must use a wrapper
+async function mailFunction(msgTemplate) {
+  try {
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.MAIL, // username
+        pass: process.env.SMTP_PW, // password
+      },
+    });
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail({
+      from: `"Name here 👻" <${process.env.MAIL}>`, // from email must match mail from google smtp
+      to: `${process.env.MAIL}`, // list of receivers
+      subject: "Hello ✔", // Subject line
+      text: "Hello world?", // plain text body
+      html: msgTemplate, // html body
+    });
+
+    // console logs
+    console.log("Message sent: %s", info.messageId);
+    console.log("Message accepted", info.accepted);
+  } catch (error) {
+    console.group(error.message);
+  }
+}
+
+const sendMail = async (req, res) => {
+  // await mailFunction(msgTemplate)
+  res.send("msg sent");
+};
+
+module.exports = { sendMail, mailFunction };
+```
+
+### controller/login.js
+
+```js
+const jwt = require("jsonwebtoken");
+const { mailFunction } = require("./sendMail");
+
+function login(req, res) {
+  const token = jwt.sign(
+    {
+      email: process.env.MAIL,
+    },
+    "secret",
+    { expiresIn: "10m" }
+  ); // numbers are interpreted as seconds. Other units:- '10m','1h','7 days' in quotes
+
+  const msgTemplate = `
+    <p><b>Hi there</b></p>
+    <a href="${process.env.HOST}/account?token=${token}" target="_blank" rel="noopener noreferrer">Cilck this link to login to you app</a>
+    `;
+
+  mailFunction(msgTemplate);
+  res.status(200).send("check your email");
+}
+
+function validateLogin(req, res) {
+  const { token } = req.query;
+  const { status, error, email } = validateHelper(token);
+  if (status !== 200) {
+    res.status(status).send(error);
+  } else if (email === process.env.MAIL) {
+    res.cookie("token", token).status(200).send("log in successful");
+  }
+}
+
+function validatLogineMiddleware(req, res, next) {
+  const { token } = req.cookies;
+  const { status, error } = validateHelper(token);
+  if (status !== 200) {
+    res.status(status).send(error);
+    return;
+  } else {
+    next();
+  }
+}
+
+module.exports = { login, validateLogin, validatLogineMiddleware };
+
+function validateHelper(token) {
+  if (!token) {
+    console.log("invalid jwt token");
+    return { status: 401, error: "something went wrong" };
+  }
+  let decoded;
+  try {
+    decoded = jwt.verify(token, "secret");
+  } catch (error) {
+    console.log(error.message);
+    return { status: 401, error: "something went wrong" };
+  }
+  if (!decoded.hasOwnProperty("email") || !decoded.hasOwnProperty("exp")) {
+    console.log("invalid jwt token");
+    return { status: 401, error: "something went wrong" };
+  }
+  const { email, exp } = decoded;
+  if (exp < Date.now() / 1000) {
+    console.log("fire");
+    console.log("jwt token expired");
+    return { status: 401, error: "something went wrong" };
+  }
+  if (email !== process.env.MAIL) {
+    console.log("user unauthorized");
+    return { status: 401, error: "something went wrong" };
+  }
+  return { status: 200, email };
+}
+```
+
+### app.js
+
+```js
+const express = require('express');
+const path = require('path');
+const { sendMail } = require('./controller/sendMail');
+const { login, validatLogineMiddleware, validateLogin } = require('./controller/login');
+const app = express();
+const cookieParser = require("cookie-parser")
+require('dotenv').config()
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'public')))
+
+....
+
+app.get('/secret', validatLogineMiddleware, (req,res)=>{
+  res.status(200).render(secret)
+})
+
+app.get('/login', login)
+
+app.get('/account', validateLogin)
+....
+
+const server = app.listen(3000, () => {
+    console.log(`The application started on port ${server.address().port}`);
+});
+```
