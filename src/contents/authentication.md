@@ -412,6 +412,11 @@ app.get("/logout", function (req, res) {
   res.redirect("/");
 });
 
+app.post("/secrets", function (req, res) {
+  if (req.isAuthenticated()) res.render("secrets");
+  else res.redirect("/login");
+});
+
 app.listen(PORT, function () {
   console.log("Listening on port " + PORT);
 });
