@@ -196,13 +196,9 @@ Example code:
 
 ```jsx
 require("dotenv").config();
-const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/users");
-const Post = require("./models/newPost");
-const fs = require("fs");
-const lib = require(__dirname + "/scripts/splitLastOccurrence.js");
 
 const jwt = require("jsonwebtoken");
 const privateKey = process.env.JSON_WEB_TOKEN_SECRET_KEY;
@@ -211,9 +207,6 @@ const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 
 const cookieParser = require("cookie-parser"); // Parse Cookie header and populate req.cookies
-
-const multer = require("multer"); //middleware for multipart form data
-const uploadMiddleware = multer({ dest: "uploads/" });
 
 // Express declaration
 const app = express();
@@ -226,12 +219,10 @@ const db_url = process.env.MONGO_DB_URL;
 mongoose.connect(db_url, { useNewUrlParser: true }); // modifying this to make it work on cycle
 
 // middleware
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use("/uploads", express.static(__dirname + "/uploads"));
 
-app.post("/register", uploadMiddleware.single("file"), async (req, res) => {
+app.post("/register", async (req, res) => {
   try {
     const { username, password, content } = req.body;
 
@@ -241,24 +232,18 @@ app.post("/register", uploadMiddleware.single("file"), async (req, res) => {
 
     const hash = bcrypt.hashSync(password, salt);
 
-    let newPath = "/uploads/profile-pic-dummy.png";
-    if (req.file) {
-      const { path, originalname } = req.file;
-      newPath = lib.newPath(path, originalname);
-      fs.renameSync(path, newPath);
-    }
     const user = new User({
       username,
       password: hash,
       content,
-      cover: newPath,
     });
+
     const userDoc = await user.save();
 
     res.status(200).json("ok");
   } catch (error) {
-    res.status(400).json(error.message);
     console.log(error.message);
+    res.status(400).json(error.message);
   }
 });
 
@@ -275,18 +260,16 @@ app.post("/login", async (req, res) => {
     const validateUserPassword = bcrypt.compareSync(password, hash);
 
     if (validateUserPassword) {
-      const token = jwt.sign(
-        { username, id: userDoc._id, iat: Math.floor(Date.now() / 1000) - 30 },
-        privateKey
-      );
+      const token = jwt.sign({ username, id: userDoc._id }, privateKey, {
+        expiresIn: "1h",
+      });
       res.cookie("token", token).status(200).json({
         username,
         id: userDoc._id,
-        cover: userDoc.cover,
         content: userDoc.content,
       }); //cookie has to come first like so
     } else {
-      throw new Error("Uesrname password don't match");
+      throw new Error("Uesrname & password don't match");
     }
   } catch (error) {
     res.status(400).json(error.message);
@@ -296,6 +279,7 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", (req, res) => {
   const { token } = req.cookies;
+  // instead of checking like this create a middleware
   if (token === "") {
     res.status(200).json(null);
   } else {
@@ -306,34 +290,6 @@ app.get("/profile", (req, res) => {
 
 app.post("/logout", (req, res) => {
   res.cookie("token", "").status(200).json("ok");
-});
-
-app.post("/newpost", uploadMiddleware.single("file"), async (req, res) => {
-  try {
-    const { token } = req.cookies;
-    if (token === "") {
-      throw new Error("user must be logged in to create post");
-    }
-    const cookieValidation = jwt.verify(token, privateKey);
-
-    const { path, originalname } = req.file;
-    const newPath = lib.newPath(path, originalname);
-    fs.renameSync(path, newPath);
-
-    const { title, content, summary } = req.body;
-    const postDoc = await Post.create({
-      summary,
-      content,
-      title,
-      cover: newPath,
-      author: cookieValidation.id,
-    });
-
-    res.status(200).json("ok");
-  } catch (error) {
-    res.status(400).json(error.message);
-    console.log(error.message);
-  }
 });
 
 app.listen(port, () => {
@@ -350,19 +306,22 @@ Go to google [console](https://console.cloud.google.com/welcome) and create an a
 With api created you should have CLIENTID and CLIENTSECRET
 We need that. Note for callback url use http://localhost:3000/auth/google/callback
 
-app.js/server.js
+### app.js or server.js
 
 ```js
 require("dotenv").config();
 const express = require("express");
+const app = express();
 const mongoose = require("mongoose");
 const { User } = require(__dirname + "/schema/userSchema.js");
-const app = express();
-const session = require("express-session");
 const passport = require("passport");
+const session = require("express-session");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+// port
 const PORT = 3000;
 
+// middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -399,9 +358,6 @@ passport.deserializeUser(function (user, cb) {
     return cb(null, user);
   });
 });
-
-//express setup
-app.use(express.static("public/"));
 
 // mongoose setup
 mongoose.set("strictQuery", false);
@@ -459,6 +415,35 @@ app.get("/logout", function (req, res) {
 app.listen(PORT, function () {
   console.log("Listening on port " + PORT);
 });
+```
+
+### user schema file
+
+```jsx
+require("dotenv").config();
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
+
+//Schema
+const userSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+    lowercase: true,
+    minLength: 6,
+    maxLength: 30,
+    unique: true,
+  },
+
+  password: {
+    type: String,
+  },
+});
+
+//Model
+const User = model("User", userSchema);
+
+module.exports = { User };
 ```
 
 <hr>
