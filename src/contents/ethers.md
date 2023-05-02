@@ -46,3 +46,35 @@ import { ethers } from "ethers"; //react
 <td>A Contract is an abstraction which represents a connection to a specific contract on the Ethereum Network, so that applications can use it like a normal JavaScript object.</td>
 </tr>
 </tbody></table>
+
+## Getting Provider, signer & contractInstance
+
+React App
+
+```js
+// A Web3Provider wraps a standard Web3 provider, which is
+// what MetaMask injects as window.ethereum into each page
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+// MetaMask requires requesting permission to connect users accounts
+await provider.send("eth_requestAccounts", []);
+// The MetaMask plugin also allows signing transactions to
+// send ether and pay to change state within the blockchain.
+// For this, you need the account signer...
+const signer = provider.getSigner();
+
+// contract instance
+const contractInstance = new ethers.Contract(ADDRESS, ABI, signer);
+
+// solidity function call
+await contractInstance.functionName();
+```
+
+Nodejs
+
+```js
+const provider = new ethers.providers.JsonRpcProvider(
+  `https://sepolia.infura.io/v3/${process.env.WEB3APIKEY}`
+);
+const contractInstance = new ethers.Contract(ADDRESS, ABI, provider);
+const name = await contractInstance.functionName();
+```
