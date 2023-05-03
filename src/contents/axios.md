@@ -128,4 +128,95 @@ async function doGetRequest() {
 doGetRequest();
 ```
 
+## Axios basic API
 
+The get, post, or delete methods are convenience methods for the basic axios API: axios(config) and axios(url, config).
+```js
+const axios = require('axios');
+
+async function makeRequest() {
+
+    const config = {
+        method: 'get',
+        url: 'http://webcode.me'
+    }
+
+    let res = await axios(config)
+
+    console.log(res.status);
+}
+
+makeRequest();
+```
+
+## Axios GET request query parameters
+
+In the following example, we append some query parameters to the URL.
+```js
+const axios = require('axios');
+const url = require('url');
+
+async function doGetRequest() {
+
+    let payload = { name: 'John Doe', occupation: 'gardener' };
+
+    const params = new url.URLSearchParams(payload);
+
+    let res = await axios.get(`http://httpbin.org/get?${params}`);
+
+    let data = res.data;
+    console.log(data);
+}
+
+doGetRequest();
+```
+
+## Axios POST JSON request
+
+A POST request is created with post method.
+
+Axios automatically serializes JavaScript objects to JSON when passed to the post function as the second parameter; we do not need to serialize POST bodies to JSON.
+```js
+const axios = require('axios');
+
+async function doPostRequest() {
+
+    let payload = { name: 'John Doe', occupation: 'gardener' };
+
+    let res = await axios.post('http://httpbin.org/post', payload);
+
+    let data = res.data;
+    console.log(data);
+}
+
+doPostRequest();
+```
+
+## Axios POST FORM request
+
+In the following example, we generate a POST request with form data.
+
+$ npm i form-data
+
+We install the form-data module.
+
+With application/x-www-form-urlencoded the data is sent in the body of the request; the keys and values are encoded in key-value tuples separated by '&', with a '=' between the key and the value.
+```js
+const axios = require('axios');
+const FormData = require('form-data');
+
+async function doPostRequest() {
+
+    const form_data = new FormData();
+    form_data.append('name', 'John Doe');
+    form_data.append('occupation', 'gardener');
+
+    let res = await axios.post('http://httpbin.org/post', form_data, 
+        { headers: form_data.getHeaders() });
+
+    let data = res.data;
+    console.log(data);
+}
+
+doPostRequest();
+```
