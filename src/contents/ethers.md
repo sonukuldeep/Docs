@@ -117,6 +117,10 @@ The most common Signers you will encounter are:
 - Wallet, which is a class which knows its private key and can execute any operations with it
 - JsonRpcSigner, which is connected to a JsonRpcProvider (or sub-class) and is acquired using getSigner
 
+## Contract Interaction
+
+A Contract object is an abstraction of a contract (EVM bytecode) deployed on the Ethereum network. It allows for a simple way to serialize calls and transactions to an on-chain contract and deserialize their results and emitted logs.
+
 ## Getting Provider, signer & contractInstance
 
 React App
