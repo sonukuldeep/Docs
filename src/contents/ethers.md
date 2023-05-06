@@ -50,18 +50,21 @@ import { ethers } from "ethers"; //react
 ## Providers
 
 - JsonRpcProvider [Doc](https://docs.ethers.org/v5/api/providers/jsonrpc-provider/#JsonRpcProvider)
-- Web3Provider [Doc](https://docs.ethers.org/v5/api/providers/other/#Web3Provider)
-- WebSocketProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#WebSocketProvider)
-- EtherscanProvider
-- InfuraProvider
-- AlchemyProvider
-- CloudflareProvider
-- PocketProvider
-- AnkrProvider
-- FallbackProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#FallbackProvider)
-- IpcProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#IpcProvider)
-- JsonRpcBatchProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#JsonRpcBatchProvider)
-- UrlJsonRpcProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#UrlJsonRpcProvider)
+
+* Other Providers
+  - Web3Provider [Doc](https://docs.ethers.org/v5/api/providers/other/#Web3Provider)
+  - WebSocketProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#WebSocketProvider)
+  - FallbackProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#FallbackProvider)
+  - IpcProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#IpcProvider)
+  - JsonRpcBatchProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#JsonRpcBatchProvider)
+  - UrlJsonRpcProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#UrlJsonRpcProvider)
+* API providers [Doc](https://docs.ethers.org/v5/api/providers/api-providers/#api-providers)
+  - EtherscanProvider
+  - InfuraProvider
+  - AlchemyProvider
+  - CloudflareProvider
+  - PocketProvider
+  - AnkrProvider
 
 ## Getting Provider, signer & contractInstance
 
