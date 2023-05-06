@@ -66,6 +66,57 @@ import { ethers } from "ethers"; //react
   - PocketProvider
   - AnkrProvider
 
+## Default Provider [Doc](https://docs.ethers.org/v5/api/providers/#providers-getDefaultProvider)
+
+[more](https://docs.ethers.org/v5/api-keys/#api-keys--getDefaultProvider)
+
+It is recommended you use a Default Provider.
+
+The default provider is the safest, easiest way to begin developing on Ethereum, and it is also robust enough for use in production.
+
+It creates a FallbackProvider connected to as many backend services as possible. When a request is made, it is sent to multiple backends simultaneously. As responses from each backend are returned, they are checked that they agree. Once a quorum has been reached (i.e. enough of the backends agree), the response is provided to your application.
+
+This ensures that if a backend has become out-of-sync, or if it has been compromised that its responses are dropped in favor of responses that match the majority.
+
+```js
+// Use the mainnet
+const network = "homestead";
+
+// Specify your own API keys
+// Each is optional, and if you omit it the default
+// API key for that service will be used.
+const provider = ethers.getDefaultProvider(network, {
+    etherscan: YOUR_ETHERSCAN_API_KEY,
+    infura: YOUR_INFURA_PROJECT_ID,
+    // Or if using a project secret:
+    // infura: {
+    //   projectId: YOUR_INFURA_PROJECT_ID,
+    //   projectSecret: YOUR_INFURA_PROJECT_SECRET,
+    // },
+    alchemy: YOUR_ALCHEMY_API_KEY,
+    pocket: YOUR_POCKET_APPLICATION_KEY
+    // Or if using an application secret key:
+    // pocket: {
+    //   applicationId: ,
+    //   applicationSecretKey:
+    // },
+    ankr: YOUR_ANKR_API_KEY
+});
+```
+
+## Signers
+
+A Signer in ethers is an abstraction of an Ethereum Account, which can be used to sign messages and transactions and send signed transactions to the Ethereum Network to execute state changing operations.
+
+The available operations depend largely on the sub-class used.
+
+For example, a Signer from MetaMask can send transactions and sign messages but cannot sign a transaction (without broadcasting it).
+
+The most common Signers you will encounter are:
+
+- Wallet, which is a class which knows its private key and can execute any operations with it
+- JsonRpcSigner, which is connected to a JsonRpcProvider (or sub-class) and is acquired using getSigner
+
 ## Getting Provider, signer & contractInstance
 
 React App
