@@ -13,7 +13,7 @@ ogImage: ""
 description: Axios is a promise-based HTTP Client for node.js and the browser.
 ---
 
-# Ethers
+# Ethers v5.7
 
 The ethers.js library aims to be a complete and compact library for interacting with the Ethereum Blockchain and its ecosystem. It was originally designed for use with ethers.io and has since expanded into a more general-purpose library.
 
@@ -46,6 +46,22 @@ import { ethers } from "ethers"; //react
 <td>A Contract is an abstraction which represents a connection to a specific contract on the Ethereum Network, so that applications can use it like a normal JavaScript object.</td>
 </tr>
 </tbody></table>
+
+## Providers
+
+- JsonRpcProvider [Doc](https://docs.ethers.org/v5/api/providers/jsonrpc-provider/#JsonRpcProvider)
+- Web3Provider [Doc](https://docs.ethers.org/v5/api/providers/other/#Web3Provider)
+- WebSocketProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#WebSocketProvider)
+- EtherscanProvider
+- InfuraProvider
+- AlchemyProvider
+- CloudflareProvider
+- PocketProvider
+- AnkrProvider
+- FallbackProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#FallbackProvider)
+- IpcProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#IpcProvider)
+- JsonRpcBatchProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#JsonRpcBatchProvider)
+- UrlJsonRpcProvider [Doc](https://docs.ethers.org/v5/api/providers/other/#UrlJsonRpcProvider)
 
 ## Getting Provider, signer & contractInstance
 
