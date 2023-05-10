@@ -13,6 +13,8 @@ description: MongoDb driver mongoose
 
 # Mongoose
 
+![main image](https://miro.medium.com/v2/resize:fit:1050/1*acfAKaDI7uv5GyFnJmiPhA.png)
+
 [Documentation](https://mongoosejs.com/docs/guides.html)
 
 ## Table of contents
