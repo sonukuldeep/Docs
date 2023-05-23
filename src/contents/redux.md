@@ -13,13 +13,15 @@ ogImage: ""
 description: Redux is a predictable state container for JavaScript apps.
 ---
 
-# Redux using react toolkit
+# Redux
 
 ![main image](https://wsrv.nl/?url=redux.js.org/img/redux-logo-landscape.png&w=600)
 
 ## Table of Contents
 
-## Installation
+## Redux and redux toolkit
+
+### Installation
 
 ```js
 # NPM
@@ -29,15 +31,17 @@ npm install @reduxjs/toolkit react-redux
 yarn add @reduxjs/toolkit react-redux
 ```
 
-## Sample code
+### 3 Step Process
 
 1. Create store
    Create store.ts inside src folder
 
 ```ts
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const initialState = { value: 0 };
+// put this in a seperate file and import it
 const countSlice = createSlice({
   name: "count",
   initialState,
@@ -51,7 +55,6 @@ const countSlice = createSlice({
   },
 });
 
-export const { increment, decrement } = countSlice.actions;
 const store = configureStore({
   reducer: {
     count: countSlice.reducer,
@@ -59,6 +62,13 @@ const store = configureStore({
 });
 
 export default store;
+export const { increment, decrement } = countSlice.actions;
+
+type AppDispatch = typeof store.dispatch;
+type RootState = ReturnType<typeof store.getState>;
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 ```
 
 2. Configure provider
@@ -86,22 +96,15 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 
 ```jsx
 import "./App.css";
-import { decrement, increment } from "./store";
-import { useDispatch, useSelector } from "react-redux";
-
-type StateProps = {
-  count: {
-    value: number,
-  },
-};
+import { decrement, increment, useAppDispatch, useAppSelector } from "./store";
 
 function App() {
-  const dispatch = useDispatch();
-  const username = useSelector((state: StateProps) => state.count.value);
+  const dispatch = useAppDispatch();
+  const count = useAppSelector(state => state.count.value);
 
   return (
     <div className="App">
-      <h1>{username}</h1>
+      <h1>{count}</h1>
       <button onClick={() => dispatch(increment())}>Increment</button>
       <button onClick={() => dispatch(decrement())}>Decrment</button>
     </div>
