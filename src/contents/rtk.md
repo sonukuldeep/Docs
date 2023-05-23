@@ -121,6 +121,8 @@ export default App;
 
 ## RTK Query
 
+[Docs](https://redux.js.org/tutorials/essentials/part-7-rtk-query-basics)
+
 ### Basic use
 
 1. Create Slice file
@@ -210,11 +212,11 @@ import "./App.css";
 import { useFetchBreedsQuery } from "./store";
 
 function App() {
-  const { data, isSuccess, isLoading, isError } = useFetchBreedsQuery();
+  const { data, isSuccess, isLoading, isError, error } = useFetchBreedsQuery();
 
   if (isLoading) return <div>loading animation</div>;
 
-  if (isError) return <div>Got and error when fetching data</div>;
+  if (isError) return <div>Got an error: {error.toString()}</div>;
 
   if (isSuccess)
     return (
