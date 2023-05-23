@@ -1,115 +1,17 @@
 ---
-title: Redux
+title: React-redux
 author: Internet
 datetime: 2023-05-23
-slug: "react-redux-and-react-toolkit"
+slug: "react-redux"
 featured: false
 draft: false
 tags:
   - react
   - redux
-  - redux-toolkit
 ogImage: ""
 description: Redux is a predictable state container for JavaScript apps.
 ---
 
-# Redux
+# React-redux
 
 ![main image](https://wsrv.nl/?url=redux.js.org/img/redux-logo-landscape.png&w=600)
-
-## Table of Contents
-
-## Redux and redux toolkit
-
-### Installation
-
-```js
-# NPM
-npm install @reduxjs/toolkit react-redux
-
-# Yarn
-yarn add @reduxjs/toolkit react-redux
-```
-
-### 3 Step Process
-
-1. Create store
-   Create store.ts inside src folder
-
-```ts
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-
-const initialState = { value: 0 };
-// put this in a seperate file and import it
-const countSlice = createSlice({
-  name: "count",
-  initialState,
-  reducers: {
-    increment: state => {
-      state.value = state.value + 1;
-    },
-    decrement: state => {
-      state.value = state.value - 1;
-    },
-  },
-});
-
-const store = configureStore({
-  reducer: {
-    count: countSlice.reducer,
-  },
-});
-
-export default store;
-export const { increment, decrement } = countSlice.actions;
-
-type AppDispatch = typeof store.dispatch;
-type RootState = ReturnType<typeof store.getState>;
-
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-```
-
-2. Configure provider
-
-Configure provider and pass store.ts to it in main.tsx
-
-```ts
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import App from "./App";
-import "./index.css";
-import store from "./store";
-
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
-);
-```
-
-3. Use toolkit
-
-```jsx
-import "./App.css";
-import { decrement, increment, useAppDispatch, useAppSelector } from "./store";
-
-function App() {
-  const dispatch = useAppDispatch();
-  const count = useAppSelector(state => state.count.value);
-
-  return (
-    <div className="App">
-      <h1>{count}</h1>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(decrement())}>Decrment</button>
-    </div>
-  );
-}
-
-export default App;
-```
