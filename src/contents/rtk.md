@@ -15,7 +15,12 @@ description: Redux Toolkit is our official standard approach for writing Redux l
 
 # Redux Toolkit
 
-![main image](https://wsrv.nl/?url=hybridheroes.de/blog/content/images/size/w2000/2022/03/redux-toolkit-1400.jpg&w=600)
+<iframe
+  src="https://codesandbox.io/p/sandbox/react-toolkit-kq3g1d"
+  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
 
 ## Table of Contents
 
