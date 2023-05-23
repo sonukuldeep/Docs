@@ -113,3 +113,124 @@ function App() {
 
 export default App;
 ```
+
+## RTK Query
+
+### Basic use
+
+1. Create Slice file
+
+```js
+// dogs-slice.ts
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+const DOGS_API_KEY = "cbfb51a2-84b6-4025-a3e2-ed8616edf311";
+
+interface Breed {
+  id: string;
+  name: string;
+  image: {
+    url: string;
+  };
+}
+
+export const apiSlice = createApi({
+  reducerPath: "api",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://api.thedogapi.com/v1",
+    prepareHeaders(headers) {
+      headers.set("x-api-key", DOGS_API_KEY);
+      return headers;
+    },
+  }),
+  endpoints(builder) {
+    return {
+      fetchBreeds: builder.query<Breed[], number | void>({
+        query(limit = 10) {
+          return `/breeds?limit=${limit}`;
+        },
+      }),
+    };
+  },
+});
+```
+
+2. Include Slice file in store and export query hook
+
+```js
+//store.ts
+import { configureStore } from "@reduxjs/toolkit";
+import { apiSlice } from "./dogs-slice";
+
+const store = configureStore({
+  reducer: {
+    [apiSlice.reducerPath]: apiSlice.reducer,
+  },
+  middleware: getDefaultMiddleware => {
+    return getDefaultMiddleware().concat(apiSlice.middleware);
+  },
+});
+
+export default store;
+
+export const { useFetchBreedsQuery } = apiSlice;
+```
+
+3. Configure provider
+   Configure provider and pass store.ts to it in main.tsx
+
+```ts
+// main.ts
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import App from "./App";
+import "./index.css";
+import store from "./store";
+
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);
+```
+
+4. Use it
+
+```js
+//app.tsx
+import "./App.css";
+import { useFetchBreedsQuery } from "./store";
+
+function App() {
+  const { data, isSuccess, isLoading, isError } = useFetchBreedsQuery();
+
+  if (isLoading) return <div>loading animation</div>;
+
+  if (isError) return <div>Got and error when fetching data</div>;
+
+  if (isSuccess)
+    return (
+      <div className="App">
+        <div style={{ marginTop: "50x" }}>
+          <p>No of dogs fetched {data.length}</p>
+          {data.map(item => (
+            <>
+              <img
+                loading="lazy"
+                src={item.image.url}
+                alt={item.name}
+                style={{ width: "600px" }}
+              />
+              <p>{item.name}</p>
+            </>
+          ))}
+        </div>
+      </div>
+    );
+}
+
+export default App;
+```
