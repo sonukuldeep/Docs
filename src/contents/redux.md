@@ -26,6 +26,8 @@ npm i react react-redux
 yarn add react react-redux
 ```
 
+Note:- Suing react-redux in this way is no longer the recommended way and is depricated. Consider using react-redux with react-toolkit
+
 ## 4 step Setup
 
 Inside src folder create all the following files
