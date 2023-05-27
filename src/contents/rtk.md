@@ -1,5 +1,5 @@
 ---
-title: RTK
+title: RTK Query
 author: Internet
 datetime: 2023-05-23
 slug: "react-toolkit"
@@ -36,18 +36,29 @@ yarn add @reduxjs/toolkit react-redux
 
 ## Basic usage
 
-### 3 Step setup
+Barebone example<br/>
+Document structure
 
-1. Create store
-   Create store.ts inside src folder
+```css
+└── src
+    └── redux
+        ├── slice
+        │   └── countSlice.ts
+        ├── hooks.ts
+        └── store.ts
+```
+
+### 4 Step setup
+
+1. Create slice file
 
 ```ts
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+//redux/slice/countSlice.ts
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = { value: 0 };
-// put this in a seperate file and import it
-const countSlice = createSlice({
+
+export const countSlice = createSlice({
   name: "count",
   initialState,
   reducers: {
@@ -57,23 +68,38 @@ const countSlice = createSlice({
     decrement: state => {
       state.value = state.value - 1;
     },
+    incrementByAmount: (state, action) => {
+      state.value = action.payload;
+    },
   },
 });
+
+export default countSlice;
+
+export const { increment, decrement, incrementByAmount } = countSlice.actions;
+```
+
+1. Create store<br/>
+   Create store.ts inside src folder<br/>
+   Team recommends only one store file per project although more than 1 is possible
+
+```ts
+// store.ts
+import { configureStore } from "@reduxjs/toolkit";
+import { apiSlice } from "./slice/dogsSlice";
+import countSlice from "./slice/countSlice";
 
 const store = configureStore({
   reducer: {
     count: countSlice.reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
+  },
+  middleware: getDefaultMiddleware => {
+    return getDefaultMiddleware().concat(apiSlice.middleware);
   },
 });
 
 export default store;
-export const { increment, decrement } = countSlice.actions;
-
-type AppDispatch = typeof store.dispatch;
-type RootState = ReturnType<typeof store.getState>;
-
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 ```
 
 2. Configure provider
@@ -86,7 +112,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import App from "./App";
 import "./index.css";
-import store from "./store";
+import store from "./redux/store";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -97,23 +123,85 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 );
 ```
 
+1. Create Hooks file
+
+```ts
+// redux/hooks.ts
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import store from "./store";
+import { apiSlice } from "./slice/dogsSlice";
+
+type AppDispatch = typeof store.dispatch;
+type RootState = ReturnType<typeof store.getState>;
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export const { useFetchBreedsQuery } = apiSlice;
+```
+
 3. Use toolkit
 
 ```jsx
+// app.jsx
 import "./App.css";
-import { decrement, increment, useAppDispatch, useAppSelector } from "./store";
+import { useState } from "react";
+import {
+  useAppDispatch,
+  useAppSelector,
+  useFetchBreedsQuery,
+} from "./redux/hooks";
+import {
+  decrement,
+  increment,
+  incrementByAmount,
+} from "./redux/slice/countSlice";
 
 function App() {
   const dispatch = useAppDispatch();
   const count = useAppSelector(state => state.count.value);
+  const [num, setNum] = useState(0);
+  const { data, isSuccess, isLoading, isError } = useFetchBreedsQuery();
 
-  return (
-    <div className="App">
-      <h1>{count}</h1>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(decrement())}>Decrment</button>
-    </div>
-  );
+  if (isLoading) return <div>loading animation</div>;
+
+  if (isError) return <div>Got and error when fetching data</div>;
+
+  if (isSuccess)
+    return (
+      <div className="App">
+        <h1>{count}</h1>
+        <button onClick={() => dispatch(increment())}>Increment</button>
+        <button onClick={() => dispatch(decrement())}>Decrment</button>
+        <div>
+          <input
+            type="text"
+            value={num}
+            onChange={e => setNum(Number(e.target.value) || 0)}
+          />
+          <button onClick={() => dispatch(incrementByAmount(num))}>
+            Change
+          </button>
+        </div>
+
+        <div style={{ marginTop: "50px" }}>
+          <p style={{ textTransform: "uppercase" }}>
+            No of dogs fetched {data.length}
+          </p>
+          {data.map(item => (
+            <>
+              <img
+                loading="lazy"
+                src={item.image.url}
+                alt={item.name}
+                style={{ width: "600px" }}
+              />
+              <p>{item.name}</p>
+            </>
+          ))}
+        </div>
+      </div>
+    );
 }
 
 export default App;
