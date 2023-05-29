@@ -82,7 +82,7 @@ export const { incremented, amountAdded } = counterSlice.actions;
 export default counterSlice.reducer;
 ```
 
-1. Create store<br/>
+2. Create store<br/>
    Create store.ts inside src folder<br/>
    Team recommends only one store file per project although more than 1 is possible but not recommended
 
@@ -104,7 +104,7 @@ export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 ```
 
-2. Configure provider
+3. Configure provider
 
 Configure provider and pass store.ts to it in main.tsx
 
@@ -125,7 +125,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 );
 ```
 
-1. Create Hooks file
+4. Create Hooks file
 
 ```ts
 // redux/hooks.ts
@@ -137,7 +137,7 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 ```
 
-3. Use toolkit
+5. Use toolkit
 
 ```jsx
 // app.jsx
@@ -182,49 +182,61 @@ export default App;
 
 ### Basic use
 
+```css
+src
+└── redux
+    ├── store.ts
+    ├── hooks.ts
+    └── slice
+        └── apiSlice.ts
+
+```
+
 1. Create Slice file
 
 ```js
-// dogs-slice.ts
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+// apiSlice.ts
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const DOGS_API_KEY = "cbfb51a2-84b6-4025-a3e2-ed8616edf311";
+const DOGS_API_KEY = 'cbfb51a2-84b6-4025-a3e2-ed8616edf311';
 
-interface Breed {
-  id: string;
-  name: string;
-  image: {
-    url: string;
-  };
+type Breed = {
+    id: string;
+    name: string;
+    image: {
+        url: string;
+    };
 }
 
-export const apiSlice = createApi({
-  reducerPath: "api",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.thedogapi.com/v1",
-    prepareHeaders(headers) {
-      headers.set("x-api-key", DOGS_API_KEY);
-      return headers;
-    },
-  }),
-  endpoints(builder) {
-    return {
-      fetchBreeds: builder.query<Breed[], number | void>({
-        query(limit = 10) {
-          return `/breeds?limit=${limit}`;
+const apiSlice = createApi({
+    reducerPath: 'api',
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'https://api.thedogapi.com/v1',
+        prepareHeaders(headers) {
+            headers.set('x-api-key', DOGS_API_KEY);
+            return headers;
         },
-      }),
-    };
-  },
+    }),
+    endpoints(builder) {
+        return {
+            fetchBreeds: builder.query<Breed[], number | void>({
+                query(limit = 10) {
+                    return `/breeds?limit=${limit}`;
+                },
+            }),
+        };
+    },
 });
+
+export default apiSlice
 ```
 
-2. Include Slice file in store and export query hook
+2. Include Slice file in store
 
 ```js
 //store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import { apiSlice } from "./dogs-slice";
+import apiSlice from "./slice/dogsApiSlice";
 
 const store = configureStore({
   reducer: {
@@ -236,11 +248,18 @@ const store = configureStore({
 });
 
 export default store;
+```
+
+3. Export query hook
+
+```ts
+// hooks.ts
+import apiSlice from "./slice/dogsApiSlice";
 
 export const { useFetchBreedsQuery } = apiSlice;
 ```
 
-3. Configure provider
+4. Configure provider
    Configure provider and pass store.ts to it in main.tsx
 
 ```ts
@@ -261,40 +280,52 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 );
 ```
 
-4. Use it
+5. Use it
 
 ```js
 //app.tsx
 import "./App.css";
-import { useFetchBreedsQuery } from "./store";
+import { useFetchBreedsQuery } from "./redux/hooks";
 
 function App() {
-  const { data, isSuccess, isLoading, isError, error } = useFetchBreedsQuery();
+  const { data, isLoading, isSuccess, isError, error } =
+    useFetchBreedsQuery(20);
 
-  if (isLoading) return <div>loading animation</div>;
-
-  if (isError) return <div>Got an error: {error.toString()}</div>;
-
-  if (isSuccess)
+  if (isLoading) {
+    return <h2>loading...</h2>;
+  } else if (isSuccess) {
     return (
-      <div className="App">
-        <div style={{ marginTop: "50x" }}>
-          <p>No of dogs fetched {data.length}</p>
-          {data.map(item => (
-            <>
+      <>
+        <h2>Number of dogs fetched:- {data.length}</h2>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 400px)",
+            gap: "5px",
+          }}
+        >
+          {data.map(breed => (
+            <div
+              key={breed.id}
+              style={{ border: "2px solid white", borderRadius: "4px" }}
+            >
+              <h2>{breed.name}</h2>
               <img
+                style={{ width: "100%", height: "300px", objectFit: "cover" }}
+                src={breed.image.url}
+                alt=""
                 loading="lazy"
-                src={item.image.url}
-                alt={item.name}
-                style={{ width: "600px" }}
               />
-              <p>{item.name}</p>
-            </>
+            </div>
           ))}
         </div>
-      </div>
+      </>
     );
+  } else if (isError) {
+    return <div>Error occured {JSON.stringify(error)}</div>;
+  } else {
+    <h2>Hello there</h2>;
+  }
 }
-
 export default App;
 ```
