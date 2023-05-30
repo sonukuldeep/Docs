@@ -36,6 +36,7 @@ yarn add @reduxjs/toolkit react-redux
 
 ## Basic usage
 
+[Docs](https://redux-toolkit.js.org/tutorials/typescript)
 Barebone example<br/>
 Document structure
 
@@ -48,9 +49,9 @@ Document structure
         └── store.ts
 ```
 
-### 4 Step setup
+### Step setup
 
-1. Create slice file
+#### Create slice file
 
 ```ts
 //redux/slice/countSlice.ts
@@ -82,9 +83,10 @@ export const { incremented, amountAdded } = counterSlice.actions;
 export default counterSlice.reducer;
 ```
 
-2. Create store<br/>
-   Create store.ts inside src folder<br/>
-   Team recommends only one store file per project although more than 1 is possible but not recommended
+#### Create store<br/>
+
+Create store.ts inside src folder<br/>
+Team recommends only one store file per project although more than 1 is possible but not recommended
 
 ```ts
 // store.ts
@@ -104,7 +106,7 @@ export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 ```
 
-3. Configure provider
+#### Configure provider
 
 Configure provider and pass store.ts to it in main.tsx
 
@@ -125,7 +127,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 );
 ```
 
-4. Create Hooks file
+#### Create Hooks file
 
 ```ts
 // redux/hooks.ts
@@ -137,7 +139,7 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 ```
 
-5. Use toolkit
+#### Use toolkit
 
 ```jsx
 // app.jsx
@@ -192,7 +194,7 @@ src
 
 ```
 
-1. Create Slice file
+#### Create Slice file
 
 ```js
 // apiSlice.ts
@@ -231,7 +233,7 @@ const apiSlice = createApi({
 export default apiSlice
 ```
 
-2. Include Slice file in store
+#### Include Slice file in store
 
 ```js
 //store.ts
@@ -250,7 +252,7 @@ const store = configureStore({
 export default store;
 ```
 
-3. Export query hook
+#### Export query hook
 
 ```ts
 // hooks.ts
@@ -259,8 +261,9 @@ import apiSlice from "./slice/dogsApiSlice";
 export const { useFetchBreedsQuery } = apiSlice;
 ```
 
-4. Configure provider
-   Configure provider and pass store.ts to it in main.tsx
+#### Configure provider
+
+Configure provider and pass store.ts to it in main.tsx
 
 ```ts
 // main.ts
@@ -280,7 +283,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 );
 ```
 
-5. Use it
+#### Use it
 
 ```js
 //app.tsx
@@ -328,4 +331,144 @@ function App() {
   }
 }
 export default App;
+```
+
+## Async thunk
+
+### Basic fetch post
+
+```css
+src
+└── redux
+    ├── store.ts
+    ├── hooks.ts
+    └── slice
+        └── postSlice.ts
+
+```
+
+#### Slice
+
+```ts
+// postSlice.ts
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+const POSTS_URL = "https://rickandmortyapi.com/api/character";
+
+export enum LoadingStatus {
+  IDLE = "idle",
+  LOADING = "loading",
+  SUCCEEDED = "succeeded",
+  FAILED = "failed",
+}
+
+type StateProps = {
+  posts: PostProps[]; // structure of data
+  status: LoadingStatus;
+  error: string | undefined;
+};
+
+const initialState: StateProps = {
+  posts: [],
+  status: LoadingStatus.IDLE, // idle | loading | succeeded | failed
+  error: "",
+};
+
+export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
+  // try catch block is not needed here
+  // createAsyncThunk will handle errors here internally
+  const response = await axios.get(POSTS_URL);
+  return response.data.results;
+});
+
+const postsSlice = createSlice({
+  name: "posts",
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(fetchPosts.pending, state => {
+        state.status = LoadingStatus.LOADING;
+      })
+      .addCase(fetchPosts.fulfilled, (state, action) => {
+        state.status = LoadingStatus.SUCCEEDED;
+        state.posts = action.payload;
+      })
+      .addCase(fetchPosts.rejected, (state, action) => {
+        state.status = LoadingStatus.FAILED;
+        state.error = action.error.message;
+      });
+  },
+});
+
+export default postsSlice.reducer;
+```
+
+#### store
+
+```ts
+// store.ts
+import { configureStore } from "@reduxjs/toolkit";
+import postReducer from "../redux/slice/postSlice";
+
+export const store = configureStore({
+  reducer: {
+    posts: postReducer,
+  },
+});
+
+// important for type inference
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+```
+
+#### Hooks
+
+```ts
+// hooks.ts
+// redux/hooks.ts
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "./store";
+
+// useAppDispatch and useAppSelector setup helps typescript auto complete
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+```
+
+#### Use
+
+```ts
+// App.tsx
+import { fetchPosts, LoadingStatus } from "./redux/slice/postSlice";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
+
+export default function App() {
+  const { status, error, posts } = useAppSelector(state => state.posts);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (status === LoadingStatus.IDLE) {
+      // fetch all post on component mount
+      dispatch(fetchPosts());
+    }
+  }, []);
+
+  if (status === LoadingStatus.LOADING) return <h2>Loading...</h2>;
+  else if (status === LoadingStatus.SUCCEEDED)
+    return (
+      <div>
+        <h1>Hello world</h1>
+        {posts.map(post => (
+          <div key={post.id} style={{ border: "2px solid #fff" }}>
+            <h2>{post.name}</h2>
+            <p>{post.gender}</p>
+            <img src={post.image} loading="lazy" />
+          </div>
+        ))}
+      </div>
+    );
+  else if (status === LoadingStatus.FAILED) return <h2>{error}</h2>;
+}
 ```
