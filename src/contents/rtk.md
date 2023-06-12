@@ -178,6 +178,8 @@ function App() {
 export default App;
 ```
 
+<hr/>
+
 ## RTK Query
 
 [Docs](https://redux.js.org/tutorials/essentials/part-7-rtk-query-basics)
@@ -332,6 +334,8 @@ function App() {
 }
 export default App;
 ```
+
+<hr/>
 
 ## Async thunk
 
