@@ -473,12 +473,200 @@ Providers have to be configured as per the docs
 
 ### Setup
 
-#### For Nextjs 13.2 or higher
+#### For Nextjs 13.4 or higher
 
 Documentation isn't complete yet
 [link](https://next-auth.js.org/configuration/initialization#route-handlers-app) <br>
 
-#### For Nextjs 13.1 and lower
+```css
+app
+└── api
+    └── auth
+        └── [...nextauth]
+            └── route.ts
+```
+
+- Step:-1
+
+```ts
+//route.ts
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+
+const handler = NextAuth({
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      // login prompts is not skipped when this is set. Not recommended by next auth
+      // authorization: {
+      //   params: {
+      //     prompt: "consent",
+      //     access_type: "offline",
+      //     response_type: "code"
+      //   }
+      // }
+    }),
+  ],
+  callbacks: {
+    async session({ session }) {
+      // console.log(session)
+      return session;
+    },
+    async signIn({ account, profile, user, credentials }) {
+      try {
+        if (account.provider === "google") {
+          const { email, email_verified, name } = profile;
+          // console.log(email, email_verified, name, user)
+          // do something like register user to db
+          const allowedEmails = process.env.ALLOWEDEMAILS.split(",");
+
+          if (allowedEmails.includes(user.email)) return true;
+          else return false;
+        }
+
+        return false;
+      } catch (error) {
+        console.log("Error checking if user exists: ", error.message);
+        return false;
+      }
+    },
+  },
+});
+
+export { handler as GET, handler as POST };
+```
+
+```css
+component
+└── Provider.tsx
+```
+
+- Step:-2
+
+```ts
+// Provider.tsx
+"use client";
+
+import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
+
+interface AppPropsWithSession {
+  session?: Session;
+  children: React.ReactNode;
+}
+
+const Provider = ({ children, session }: AppPropsWithSession) => {
+  return <SessionProvider session={session}>{children}</SessionProvider>;
+};
+
+export default Provider;
+```
+
+```css
+app
+└── layout.tsx
+```
+
+- Step:-3
+
+```ts
+import "./globals.css";
+import { Inter } from "next/font/google";
+import Provider from "./components/Provider";
+import { Goto } from "./components/Goto";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata = {
+  title: "mongoose nextjs 13",
+  description: "app",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Provider>
+      <html lang="en">
+        <body className={`${inter.className} max-w-7xl mx-auto text-slate-500`}>
+          <Header />
+          {children}
+        </body>
+      </html>
+    </Provider>
+  );
+}
+
+function Header() {
+  return (
+    <header className="flex gap-2">
+      <Goto path="/" text="Home" />
+      <Goto path="/create" text="Create db entry" />
+      <Goto path="/protected" text="Go to Protected page" />
+    </header>
+  );
+}
+```
+
+- Step:-4
+
+### Use
+
+```tsx
+// protected/page.tsx
+"use client";
+
+import { useSession, signIn, signOut } from "next-auth/react";
+
+const Home = () => {
+  const { data: session } = useSession();
+  // const { data: session } = useSession({required: true}) required parameter forces this
+  // component to be loaded only after valid authentication
+
+  if (session) {
+    return (
+      <>
+        <h1>Signed in as {session?.user?.email}</h1>
+        <p>
+          This is protected component and is only rendered after successful sign
+          in
+        </p>
+        <p>Checkout api/../route.tsx for next-auth configuration</p>
+        <button
+          className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-1 px-3 my-2 border border-blue-500 rounded"
+          onClick={() => signOut()}
+        >
+          Sign out
+        </button>
+      </>
+    );
+  } else
+    return (
+      <div>
+        <h1>Protected page</h1>
+        <h2>Sign in to access protected page</h2>
+        <p>This page is shown when the user is not logged in</p>
+        <p>This also protects data from unauthorized users</p>
+        <p>Once signed in, useful data is rendered as required</p>
+        <button
+          className="bg-green-400 hover:bg-green-500 text-white font-bold py-1 px-3 my-2 border border-green-500 rounded"
+          onClick={() => signIn()}
+        >
+          Sign in
+        </button>
+      </div>
+    );
+};
+
+export default Home;
+```
+
+<hr/>
+
+#### For Nextjs 13.3 and lower
 
 api/auth/[...nextauth].js
 
