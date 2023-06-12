@@ -255,3 +255,88 @@ This has a dedicated section
 [link](https://kuldeep-docs.netlify.app/posts/authentication/#using-next-auth)
 
 <hr>
+
+## Integrate mongoose into nextjs 13.4
+
+### Mongoose config file
+
+```ts
+//utils/mongoose.ts
+import mongoose from "mongoose";
+
+if (!process.env.MONGO_URI) {
+  throw new Error('Invalid/Missing environment variable: "MONGO_URI"');
+}
+
+const uri = process.env.MONGO_URI;
+
+const connectMongo = async () => mongoose.connect(uri);
+
+export default connectMongo;
+```
+
+### Mongoose model
+
+```ts
+// models/test.ts
+import { Schema, model, models } from "mongoose";
+
+const testSchema = new Schema({
+  name: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+});
+
+const Test = models.Test || model("Test", testSchema);
+
+export default Test;
+```
+
+### Use
+
+```ts
+import connectMongo from "@/utils/mongoose";
+import Test from "@/models/testModel";
+
+async function fetchDocuments() {
+  console.log("CONNECTING TO MONGO");
+  await connectMongo();
+  console.log("CONNECTED TO MONGO");
+
+  console.log("FETCHING DOCUMENT");
+  const test = await Test.find();
+  console.log("DATA FETCHED");
+  return test;
+}
+
+const Home = async () => {
+  const data = await fetchDocuments();
+  return (
+    <>
+      <main className="flex flex-col gap-2">
+        <h1 className="text-xl">How does this work?</h1>
+        <p>
+          Mongodb data is fetched from the root page component and the data is
+          rendered here as below.
+        </p>
+        <p>
+          Any form of data can be fetched in server side in advanced and served
+          provided all models are defined in /models folder
+        </p>
+        <ul className="grid grid-cols-3 gap-2">
+          {data.map(data => (
+            <li className="border p-2 rounded" key={data.id}>
+              name:- {data.name} <br /> email:- {data.email}
+            </li>
+          ))}
+        </ul>
+      </main>
+    </>
+  );
+};
+
+export default Home;
+```
