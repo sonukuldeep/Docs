@@ -1,3 +1,17 @@
+---
+author: kuldeep
+datetime: 2023-06-12
+title: Prisma
+slug: prisma
+featured: false
+draft: false
+tags:
+  - prisma
+  - sql
+ogImage: ""
+description: Prisma orm
+---
+
 ## Prisma
 
 ### 1. Installation
