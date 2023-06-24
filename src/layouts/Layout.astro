@@ -1,6 +1,7 @@
 ---
 import { SITE } from "src/config";
 import "../styles/base.css";
+import "../utils/CopyCodeButton/styles.css";
 
 export interface Props {
   title?: string;
@@ -101,6 +102,12 @@ const favicon = "/favicon.png";
 
       // Put dark class on html tag to enable dark mode
       document.querySelector("html").className = theme;
+    </script>
+
+    <!-- copy code script -->
+    <script>
+      import "../utils/CopyCodeButton/copyCodeButton";
+      import "../utils/CopyCodeButton/createCopyButtons";
     </script>
   </head>
   <body>
