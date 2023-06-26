@@ -268,3 +268,70 @@ css file
   }
 }
 ```
+
+## Using scroll listner change background color
+
+Create a css variable and add this generic style
+
+```css
+:root {
+  --nav-bg: rgba(255, 255, 255, 0);
+}
+/* changing nav bar color dynamically */
+.bg-dynamic {
+  background-color: var(--nav-bg);
+}
+```
+
+Add this to react componet
+
+```tsx
+import { useEffect, useRef } from "react";
+
+export default function ScrollAnimation() {
+  const nav = useRef<HTMLDivElement>(null);
+  const root = document.documentElement;
+
+  const animateProperty = {
+    color: "--nav-bg",
+  };
+
+  function animateFunction(element: HTMLDivElement, property: string) {
+    const top = element.getBoundingClientRect().top;
+    const color = "rgba(255, 255, 255, " + Alpha(top) + ")";
+    root.style.setProperty(property, color);
+  }
+
+  function Alpha(top: number) {
+    let range;
+    range = top >= 0 ? 0 : top >= -400 ? top : -400;
+    const output = ((range * -1) / 450).toFixed(2);
+    return output.toString();
+  }
+
+  useEffect(() => {
+    if (nav.current) {
+      const animatedDiv = nav.current!;
+      window.addEventListener(
+        "scroll",
+        () => {
+          animateFunction(animatedDiv, animateProperty.color);
+        },
+        false
+      );
+
+      return () => {
+        window.removeEventListener("scroll", () => {
+          animateFunction(animatedDiv, animateProperty.color);
+        });
+      };
+    }
+  }, []);
+
+  return (
+    <div ref={nav}>
+      <h1>Hello world</h1>
+    </div>
+  );
+}
+```
