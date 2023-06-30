@@ -218,6 +218,168 @@ function ContactForm() {
 
 <hr/>
 
+### Multi step form in react/nextjs using typesript
+
+```tsx
+import React, { useState } from "react";
+
+interface FormData {
+  field1: string;
+  field2: string;
+  field3: string;
+}
+
+export default function MultiStepForm() {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState<FormData>({
+    field1: "",
+    field2: "",
+    field3: "",
+  });
+
+  const handleNext = () => {
+    setStep(step + 1);
+  };
+
+  const handlePrevious = () => {
+    setStep(step - 1);
+  };
+
+  const handleSubmit = () => {
+    // Handle form submission, e.g., send data to server
+    console.log("Form submitted:", formData);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  return (
+    <div className="pt-20 max-w-5xl mx-auto">
+      {step === 1 && (
+        <Step1
+          onNext={handleNext}
+          handleChange={handleChange}
+          formData={formData}
+        />
+      )}
+      {step === 2 && (
+        <Step2
+          onNext={handleNext}
+          onPrevious={handlePrevious}
+          handleChange={handleChange}
+          formData={formData}
+        />
+      )}
+      {step === 3 && (
+        <Step3
+          onSubmit={handleSubmit}
+          onPrevious={handlePrevious}
+          handleChange={handleChange}
+          formData={formData}
+        />
+      )}
+      {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
+    </div>
+  );
+}
+
+// Step 1
+function Step1({
+  onNext,
+  handleChange,
+  formData,
+}: {
+  onNext: () => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  formData: FormData;
+}) {
+  return (
+    <div className="flex flex-col items-center">
+      <h2>Step 1 of 3</h2>
+      <input
+        type="text"
+        name="field1"
+        placeholder="Field 1"
+        value={formData.field1}
+        onChange={handleChange}
+      />
+      <button onClick={onNext} disabled={formData.field1.length === 0}>
+        Next
+      </button>
+    </div>
+  );
+}
+
+// Step 2
+function Step2({
+  onNext,
+  onPrevious,
+  handleChange,
+  formData,
+}: {
+  onNext: () => void;
+  onPrevious: () => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  formData: FormData;
+}) {
+  return (
+    <div className="flex flex-col items-center">
+      <h2>Step 2 of 3</h2>
+      <input
+        type="text"
+        name="field2"
+        placeholder="Field 2"
+        value={formData.field2}
+        onChange={handleChange}
+      />
+      <button onClick={onPrevious}>Previous</button>
+      <button onClick={onNext} disabled={formData.field2.length === 0}>
+        Next
+      </button>
+    </div>
+  );
+}
+
+// Step 3
+function Step3({
+  onSubmit,
+  onPrevious,
+  handleChange,
+  formData,
+}: {
+  onSubmit: () => void;
+  onPrevious: () => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  formData: FormData;
+}) {
+  return (
+    <div className="flex flex-col items-center">
+      <h2>Step 3 of 3</h2>
+      <input
+        type="text"
+        name="field3"
+        placeholder="Field 3"
+        value={formData.field3}
+        onChange={handleChange}
+      />
+      <div className="flex">
+        <button onClick={onPrevious}>Previous</button>
+        <button onClick={onSubmit} disabled={formData.field3.length === 0}>
+          Submit
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+<hr/>
+
 ## How to detect click outside React component?
 
 ```tsx
