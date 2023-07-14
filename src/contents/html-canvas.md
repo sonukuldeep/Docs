@@ -11,7 +11,60 @@ ogImage: ""
 description: Some tips and tricks related to animation on canvas element
 ---
 
-#Html canvas
+# Html canvas
+
+## GetImageData
+
+The `getImageData()` method returns an `ImageData` object, which contains a `data` property that represents the pixel data of the captured region. The `data` property is a one-dimensional array with four values per pixel: red, green, blue, and alpha values.
+
+Here's an example of how you can access and print sample pixel data from the `ImageData` object:
+
+```javascript
+// Get the canvas element
+var canvas = document.getElementById("myCanvas");
+
+// Get the 2D drawing context
+var ctx = canvas.getContext("2d");
+
+// Draw an image onto the canvas
+var img = document.getElementById("myImage");
+ctx.drawImage(img, 0, 0);
+
+// Get the image data
+var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+// Access pixel data
+var data = imageData.data;
+
+// Print sample pixel data
+for (var i = 0; i < 4 * 10; i += 4) {
+  var red = data[i];
+  var green = data[i + 1];
+  var blue = data[i + 2];
+  var alpha = data[i + 3];
+
+  console.log(
+    "Pixel at index",
+    i / 4,
+    ": R =",
+    red,
+    "G =",
+    green,
+    "B =",
+    blue,
+    "A =",
+    alpha
+  );
+}
+```
+
+In the above example, we iterate over the `data` array in increments of 4 to access each pixel. We then retrieve the red, green, blue, and alpha values for each pixel using the appropriate indices.
+
+The `for` loop in the example prints the sample pixel data for the first 10 pixels. You can adjust the loop parameters to access and print data for a different range of pixels if desired.
+
+Keep in mind that the pixel data is represented as integers ranging from 0 to 255. The red, green, blue, and alpha values provide the color and transparency information for each pixel.
+
+<hr/>
 
 ## FPS
 
