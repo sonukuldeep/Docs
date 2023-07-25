@@ -423,3 +423,60 @@ For more details check Prisma on Next js or prisma docs [here](https://www.prism
 ## Prisma on Next js
 
 [link](https://kuldeep-docs.netlify.app/posts/nextjs/#prisma)
+
+<hr/>
+
+## Custom events in js
+
+Custom event can be created using
+
+- new CustomEvent()
+- new Event()
+
+CustomEvent lets you pass data while Event doesn't
+
+### Syntax for CustomEvent
+
+```js
+// Define the custom event with data
+const customEventData = { message: "Hello, this is custom data!" };
+const customEvent = new CustomEvent("myCustomEvent", {
+  detail: customEventData,
+});
+
+// Add an event listener to respond to the custom event
+document.addEventListener("myCustomEvent", function (event) {
+  console.log("Custom event triggered with data:", event.detail);
+});
+
+// Trigger the custom event
+document.dispatchEvent(customEvent);
+
+// Trigger custom event with new data
+customEvent.detail = { message: "Hello, this is custom data 2!" };
+document.dispatchEvent(customEvent);
+```
+
+### Syntax for Event
+
+```js
+// Define the custom event
+const customEvent = new Event("myCustomEvent");
+// Add an event listener to respond to the custom event
+document.addEventListener("myCustomEvent", function (event) {
+  console.log("Custom event triggered!", event);
+});
+
+// Trigger the custom event
+document.dispatchEvent(customEvent);
+// Define the custom event
+const customEvent = new Event("myCustomEvent");
+
+// Add an event listener to respond to the custom event
+document.addEventListener("myCustomEvent", function (event) {
+  console.log("Custom event triggered!", event);
+});
+
+// Trigger the custom event
+document.dispatchEvent(customEvent);
+```
