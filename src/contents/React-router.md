@@ -20,6 +20,7 @@ React Router is the most popular routing library in React, but it can be a bit c
 1. Advanced Route Definitions
 1. Handling Navigation
 1. Routers In Depth
+1. 'cannot GET /URL' error on refresh
 
 ## Table of contents
 
@@ -646,3 +647,9 @@ The final router is the StaticRouter and this router again has a very specific u
   <App />
 </StaticRouter>
 ```
+
+<hr/>
+
+## Cannot get /url error on refresh
+
+[Check this article](https://ui.dev/react-router-cannot-get-url-refresh)
