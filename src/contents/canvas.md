@@ -48,15 +48,15 @@ function animation(currentTime) {
   deltaTime = currentTime - lastTime;
 
   // Proceed only if enough time has elapsed based on the desired frame rate
-  if (deltaTime >= frameRate) {
+  if (deltaTime >= frameTime) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // do something
 
-    lastTime = currentTime - (deltaTime % frameRate);
+    lastTime = currentTime - (deltaTime % frameTime);
   }
 }
-animation();
+animation(0);
 // requestAnimationFrame(animation)
 ```
 
