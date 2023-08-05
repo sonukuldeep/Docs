@@ -192,3 +192,54 @@ In the above example, we iterate over the `data` array in increments of 4 to acc
 The `for` loop in the example prints the sample pixel data for the first 10 pixels. You can adjust the loop parameters to access and print data for a different range of pixels if desired.
 
 Keep in mind that the pixel data is represented as integers ranging from 0 to 255. The red, green, blue, and alpha values provide the color and transparency information for each pixel.
+
+<hr/>
+
+## globalCompositeOperation
+
+`globalCompositeOperation` is a property used in the HTML5 Canvas API, which is a powerful tool for rendering graphics and images on a web page. This property allows you to control how newly drawn shapes or images are combined with existing content on the canvas.
+
+The `globalCompositeOperation` property determines the way pixels from the newly drawn shape or image will interact with pixels that are already on the canvas. It essentially defines the blending mode or composition operation to be applied.
+
+Here's how it works:
+
+```javascript
+context.globalCompositeOperation = "operation";
+```
+
+Where `context` is the 2D drawing context of the canvas, and `'operation'` is a string representing the desired composition operation.
+
+Some common composition operations include:
+
+1. `source-over` (default): The new shape/image is drawn on top of the existing content.
+2. `source-in`: The new shape/image is only drawn where it overlaps with the existing content.
+3. `source-out`: The new shape/image is drawn everywhere except where it overlaps with the existing content.
+4. `source-atop`: The new shape/image is drawn on top of the existing content and only where they overlap.
+5. `destination-over`: The existing content is drawn on top of the new shape/image.
+6. `destination-in`: The existing content is only shown where it overlaps with the new shape/image.
+7. `destination-out`: The existing content is only shown where it does not overlap with the new shape/image.
+8. `destination-atop`: The existing content is shown on top of the new shape/image and only where they overlap.
+9. `lighter`: The colors of the new shape/image and existing content are combined, creating a lighter effect.
+10. `darker`: The colors of the new shape/image and existing content are combined, creating a darker effect.
+11. `xor`: Pixels are only drawn where the new shape/image and existing content do not overlap.
+
+These are just a few examples of the available composition operations. The `globalCompositeOperation` property allows for various creative possibilities when combining different shapes and images on the canvas.
+
+Here's an example of how you might use `globalCompositeOperation`:
+
+```javascript
+const canvas = document.getElementById("myCanvas");
+const context = canvas.getContext("2d");
+
+context.fillStyle = "blue";
+context.fillRect(50, 50, 100, 100);
+
+context.globalCompositeOperation = "source-atop";
+
+context.fillStyle = "red";
+context.beginPath();
+context.arc(100, 100, 50, 0, Math.PI * 2, false);
+context.fill();
+```
+
+In this example, a blue rectangle is drawn on the canvas, and then a red circle is drawn on top using the `source-atop` composition operation, resulting in the red circle being visible only where it overlaps with the blue rectangle.
