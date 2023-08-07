@@ -15,7 +15,7 @@ description: Web Components are actually a collection of a few different technol
 
 ## Termonology
 
-- HTML templates: Fragments of HTML markup using <template> elements that won't be rendered until they're appended to the page with JavaScript.
+- HTML templates: Fragments of HTML markup using &lt;template&gt; elements that won't be rendered until they're appended to the page with JavaScript.
 - Custom elements: Widely supported JavaScript APIs that let you create new DOM elements. Once you create and register a custom element using these APIs, you can use it similarly to a React component.
 - Shadow DOM: A smaller, encapsulated DOM that is isolated from the main DOM and rendered separately. Any styles and scripts you create for your custom components in the Shadow DOM will not affect other elements in the main DOM.
 - append: Accepts Node Objects/DOMStrings
