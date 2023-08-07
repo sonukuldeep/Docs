@@ -6,7 +6,7 @@ slug: web-components
 featured: false
 draft: false
 tags:
-  - docs
+  - web-components
 ogImage: ""
 description: Web Components are actually a collection of a few different technologies that allow you to create custom HTML elements.
 ---
