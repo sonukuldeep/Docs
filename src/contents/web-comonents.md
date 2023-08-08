@@ -23,6 +23,10 @@ description: Web Components are actually a collection of a few different technol
 
 ## Demo
 
+[Web component 1](https://codepen.io/Donald-6329/pen/XWyQYee?editors=0010)
+
+## Sample
+
 ```html
 <!--index.html-->
 <!DOCTYPE html>
@@ -216,4 +220,7 @@ class Footer extends HTMLElement {
 customElements.define("footer-component", Footer);
 ```
 
-<a href='https://www.freecodecamp.org/news/reusable-html-components-how-to-reuse-a-header-and-footer-on-a-website/'>Link to the original article</a>
+## Links
+
+[Mdn docs](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/)
+[FreeCodeCamp article](https://www.freecodecamp.org/news/reusable-html-components-how-to-reuse-a-header-and-footer-on-a-website/)
