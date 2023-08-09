@@ -243,3 +243,40 @@ context.fill();
 ```
 
 In this example, a blue rectangle is drawn on the canvas, and then a red circle is drawn on top using the `source-atop` composition operation, resulting in the red circle being visible only where it overlaps with the blue rectangle.
+
+<hr />
+
+## Basics
+
+### Drawing Methods
+
+There are only 3 methods to draw directly on the canvas:
+
+- [fillRect()](https://www.w3schools.com/tags/canvas_fillrect.asp)
+- [strokeRect()](https://www.w3schools.com/tags/canvas_strokerect.asp)
+- [clearRect()](https://www.w3schools.com/tags/canvas_clearrect.asp)
+
+Path methods:
+
+- [beginPath()](https://www.w3schools.com/tags/canvas_beginpath.asp)
+- [closePath()](https://www.w3schools.com/tags/canvas_closepath.asp)
+- [isPointInPath()](https://www.w3schools.com/tags/canvas_ispointinpath.asp)
+- [moveTo()](https://www.w3schools.com/tags/canvas_moveto.asp)
+- [lineTo()](https://www.w3schools.com/tags/canvas_lineto.asp)
+- [fill()](https://www.w3schools.com/tags/canvas_fill.asp)
+- [rect()](https://www.w3schools.com/tags/canvas_rect.asp)
+- [stroke()](https://www.w3schools.com/tags/canvas_stroke.asp)
+- [bezierCurveTo()](https://www.w3schools.com/tags/canvas_beziercurveto.asp)
+- [arc()](https://www.w3schools.com/tags/canvas_arc.asp)
+- [arcTo()](https://www.w3schools.com/tags/canvas_arcto.asp)
+- [quadraticCurveTo()](https://www.w3schools.com/tags/canvas_quadraticcurveto.asp)
+
+Text methods:
+
+- [direction](https://www.w3schools.com/tags/canvas_direction.asp)
+- [fillText()](https://www.w3schools.com/tags/canvas_filltext.asp)
+- [font](https://www.w3schools.com/tags/canvas_font.asp)
+- [measureText()](https://www.w3schools.com/tags/canvas_measuretext.asp)
+- [strokeText()](https://www.w3schools.com/tags/canvas_stroketext.asp)
+- [textAlign](https://www.w3schools.com/tags/canvas_textalign.asp)
+- [textBaseline](https://www.w3schools.com/tags/canvas_textbaseline.asp)
