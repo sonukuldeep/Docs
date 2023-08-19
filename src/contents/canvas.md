@@ -146,6 +146,8 @@ class ShakeOnHit {
 
 The `getImageData()` method returns an `ImageData` object, which contains a `data` property that represents the pixel data of the captured region. The `data` property is a one-dimensional array with four values per pixel: red, green, blue, and alpha values.
 
+[getImageData check the js](https://codepen.io/Donald-6329/pen/rNoNRze)
+
 Here's an example of how you can access and print sample pixel data from the `ImageData` object:
 
 ```javascript
@@ -247,6 +249,8 @@ In this example, a blue rectangle is drawn on the canvas, and then a red circle 
 <hr />
 
 ## Basics
+
+[Reference](https://www.w3schools.com/tags/ref_canvas.asp)
 
 ### Drawing Methods
 
