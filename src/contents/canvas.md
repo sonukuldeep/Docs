@@ -284,3 +284,20 @@ Text methods:
 - [strokeText()](https://www.w3schools.com/tags/canvas_stroketext.asp)
 - [textAlign](https://www.w3schools.com/tags/canvas_textalign.asp)
 - [textBaseline](https://www.w3schools.com/tags/canvas_textbaseline.asp)
+
+Colors, Styles, and Shadows
+
+- [addColorStop()](https://www.w3schools.com/tags/canvas_addcolorstop.asp)
+- [createLinearGradient()](https://www.w3schools.com/tags/canvas_createlineargradient.asp)
+- [createPattern()](https://www.w3schools.com/tags/canvas_createpattern.asp)
+- [createRadialGradient()](https://www.w3schools.com/tags/canvas_createradialgradient.asp)
+- [fillStyle](https://www.w3schools.com/tags/canvas_fillstyle.asp)
+- [lineCap](https://www.w3schools.com/tags/canvas_linecap.asp)
+- [lineJoin](https://www.w3schools.com/tags/canvas_linejoin.asp)
+- [lineWidth](https://www.w3schools.com/tags/canvas_linewidth.asp)
+- [miterLimit](https://www.w3schools.com/tags/canvas_miterlimit.asp)
+- [shadowBlur](https://www.w3schools.com/tags/canvas_shadowblur.asp)
+- [shadowColor](https://www.w3schools.com/tags/canvas_shadowcolor.asp)
+- [shadowOffsetX](https://www.w3schools.com/tags/canvas_shadowoffsetx.asp)
+- [shadowOffsetY](https://www.w3schools.com/tags/canvas_shadowoffsety.asp)
+- [strokeStyle](https://www.w3schools.com/tags/canvas_strokestyle.asp)
