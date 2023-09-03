@@ -90,37 +90,17 @@ function NavbarWrapper({ onclick }: { onclick: () => void }) {
       <Button
         component={NavLink} // NavLink adds an active class to the component which can be targeted in css
         to="/"
-        className={"navLink"}
-        color="inherit"
         onClick={onclick}
       >
         Home
       </Button>
-      <Button
-        component={NavLink}
-        to="/menu"
-        className={"navLink"}
-        color="inherit"
-        onClick={onclick}
-      >
+      <Button component={NavLink} to="/menu" onClick={onclick}>
         Menu
       </Button>
-      <Button
-        component={NavLink}
-        to="/about"
-        className={"navLink"}
-        color="inherit"
-        onClick={onclick}
-      >
+      <Button component={NavLink} to="/about" onClick={onclick}>
         About
       </Button>
-      <Button
-        component={NavLink}
-        to="/contact"
-        className={"navLink"}
-        color="inherit"
-        onClick={onclick}
-      >
+      <Button component={NavLink} to="/contact" onClick={onclick}>
         Contact
       </Button>
     </>
@@ -136,14 +116,24 @@ const styles: StylesProps = {
     gap: 5,
     listStyle: "none",
     textDecoration: "none",
-    color: "goldenrod",
+    "& a": {
+      color: "goldenrod",
+    },
+    "& a.active": {
+      color: "blueviolet",
+    },
   },
   mobileNavLinkContainer: {
     display: { xs: "block", sm: "none" },
     "& .MuiDrawer-paper": {
       boxSizing: "border-box",
       width: "200px",
-      color: "goldenrod",
+      "& a": {
+        color: "goldenrod",
+      },
+      "& a.active": {
+        color: "blueviolet",
+      },
     },
   },
   icon: {
@@ -151,14 +141,6 @@ const styles: StylesProps = {
     display: { sm: "none" },
   },
 };
-```
-
-`style.css`
-
-```css
-.navLink.active {
-  color: blueviolet;
-}
 ```
 
 ## Theme
