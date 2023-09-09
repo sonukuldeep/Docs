@@ -18,14 +18,14 @@ Vanilla setup is possible but the styling is simply horrible as a result I'm usi
 ## Install
 
 ```js
-npm i -D docdash jsdoc
+npm i -D clean-jsdoc-theme jsdoc
 ```
 
 **Add to package.json**
 
 ```json
 "script": {
-  "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
+  "generate-docs": "jsdoc -c jsdoc.json"
 }
 ```
 
@@ -42,22 +42,25 @@ Use this jsdoc.json
   "source": {
     "include": ["src"],
     "includePattern": ".js$",
-    "excludePattern": "(node_modules/|jsdoc)"
-  },
-  "templates": {
-    "cleverLinks": false,
-    "monospaceLinks": false
+    "excludePattern": "(node_modules/|docs)"
   },
   "opts": {
-    "template": "node_modules/docdash",
-    "destination": "./jsdoc",
+    "template": "./node_modules/clean-jsdoc-theme",
+    "destination": "./docs",
     "recurse": true,
-    "encoding": "utf8"
+    "encoding": "utf8",
+    "tutorials": "./tutorials",
+    "readme": "./README.md"
+  },
+  "markdown": {
+    "hardwrap": false,
+    "idInHeadings": true
   }
 }
 ```
 
-add folders that contain yous js files in **include**
+add folders that contain your js files in **include**.
+add tutorials and readme to this json if required as shown below
 
 ## Important files
 
