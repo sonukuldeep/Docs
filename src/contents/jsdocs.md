@@ -11,6 +11,54 @@ ogImage: ""
 description: Js doc
 ---
 
+## How to set up
+
+Vanilla setup is possible but the styling is simply horrible as a result I'm using docdash which provides a better ui for docs
+
+## Install
+
+```js
+npm i -D docdash jsdoc
+```
+
+**Add to package.json**
+
+```json
+"script": {
+  "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
+}
+```
+
+**root/jsdoc.json**
+Use this jsdoc.json
+
+```json
+{
+  "tags": {
+    "allowUnknownTags": false
+  },
+  "plugins": ["plugins/markdown"],
+  "recurseDepth": 10,
+  "source": {
+    "include": ["src"],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|jsdoc)"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  },
+  "opts": {
+    "template": "node_modules/docdash",
+    "destination": "./jsdoc",
+    "recurse": true,
+    "encoding": "utf8"
+  }
+}
+```
+
+add folders that contain yous js files in **include**
+
 ## Important files
 
 ```css
@@ -26,6 +74,8 @@ root
 root
 └── jsdoc/index.html
 ```
+
+## Below settings are for vanilla setup
 
 **jsdoc.json**
 
