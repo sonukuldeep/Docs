@@ -11,7 +11,23 @@ ogImage: ""
 description: Js doc
 ---
 
-**jsdoc.join**
+## Important files
+
+```css
+root
+├── jsdoc.json
+├── tutorials/calculator.md
+├── tutorials/program_tutorial.md
+├── tutorials/tutorials.json
+├── assets/main.js
+├── assets/calculator.js
+└── README.md
+
+root
+└── jsdoc/index.html
+```
+
+**jsdoc.json**
 
 ```json
 {
@@ -144,4 +160,50 @@ const person1 = new Person({ name: "John dao", id: 2, rollNo: 5 });
 person1.displayInfo();
 
 console.log(add(20, 25));
+```
+
+**calculator.js**
+
+```js
+/**
+ * Calulator module
+ * @module calculator - See {@tutorial calculator}
+ */
+
+/**
+ * Add two numbers
+ * @param {number} n1 - First number
+ * @param {number} n2 - Second number
+ * @returns {number} - Sum of numbers
+ */
+exports.add = (n1, n2) => n1 + n2;
+
+/**
+ * Subtract two numbers
+ * @param {number} n1 - First number
+ * @param {number} n2 - Second number
+ * @returns {number} - Sum of numbers
+ */
+exports.subtract = (n1, n2) => n1 - n2;
+
+/**
+ * Multiply two numbers
+ * @param {number} n1 - First number
+ * @param {number} n2 - Second number
+ * @returns {number} - Product of numbers
+ */
+exports.multiply = (n1, n2) => n1 * n2;
+```
+
+**tutorials.json**
+
+```json
+{
+  "program_tutorial": {
+    "title": "Program tutorial"
+  },
+  "calculator": {
+    "title": "Calculator tutorial"
+  }
+}
 ```
