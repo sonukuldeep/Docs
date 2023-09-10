@@ -13,7 +13,7 @@ description: Js doc
 
 ## How to set up
 
-Vanilla setup is possible but the styling is simply horrible as a result I'm using docdash which provides a better ui for docs
+Vanilla setup is possible but the styling is simply horrible as a result I'm using clean-jsdoc-theme which provides a better ui for docs
 
 ## Install
 
