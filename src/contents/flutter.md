@@ -11,7 +11,13 @@ ogImage: ""
 description: Flutter is a popular open-source framework for building natively compiled applications for mobile, web, and desktop from a single codebase. Flutter provides a wide range of widgets that you can use to create user interfaces for your apps.
 ---
 
+# Flutter
+
 Flutter is a popular open-source framework for building natively compiled applications for mobile, web, and desktop from a single codebase. Flutter provides a wide range of widgets that you can use to create user interfaces for your apps. Here's a list of some commonly used widgets in Flutter:
+
+## Table Of Contents
+
+## Must used widgets
 
 1. **Container**: A basic rectangular box that can contain other widgets. It's often used for styling and layout.
 
@@ -54,3 +60,45 @@ Flutter is a popular open-source framework for building natively compiled applic
 20. **WebView**: Used to embed web content within your Flutter app.
 
 These are just a few of the commonly used widgets in Flutter. Flutter provides a rich set of widgets for various purposes, and you can also create custom widgets to suit your specific needs.
+
+## Widget in detail
+
+### Container
+
+```dart
+Container(
+  width: 200.0,
+  height: 100.0,
+  margin: EdgeInsets.all(16.0),
+  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+  decoration: BoxDecoration(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(10.0),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey,
+        blurRadius: 5.0,
+        offset: Offset(0, 3),
+      ),
+    ],
+  ),
+  child: Center(
+    child: Text(
+      'Styled Container',
+      style: TextStyle(color: Colors.white, fontSize: 18.0),
+    ),
+  ),
+)
+```
+
+### Text
+
+```dart
+Text(
+  'This is a long text that may overflow if it doesn\'t fit on the screen. You can use properties like maxLines and overflow to handle this.',
+  style: TextStyle(fontSize: 16.0),
+  textAlign: TextAlign.center,
+  maxLines: 2,
+  overflow: TextOverflow.ellipsis,
+)
+```
