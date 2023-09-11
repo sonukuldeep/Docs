@@ -65,7 +65,9 @@ These are just a few of the commonly used widgets in Flutter. Flutter provides a
 
 ### Container
 
-```dart
+[Docs](https://api.flutter.dev/flutter/widgets/Container-class.html)
+
+```js
 Container(
   width: 200.0,
   height: 100.0,
@@ -93,7 +95,9 @@ Container(
 
 ### Text
 
-```dart
+[Docs](https://api.flutter.dev/flutter/widgets/Text-class.html)
+
+```js
 Text(
   'This is a long text that may overflow if it doesn\'t fit on the screen. You can use properties like maxLines and overflow to handle this.',
   style: TextStyle(fontSize: 16.0),
@@ -101,4 +105,93 @@ Text(
   maxLines: 2,
   overflow: TextOverflow.ellipsis,
 )
+```
+
+### Image
+
+[Docs](https://api.flutter.dev/flutter/widgets/Image-class.html)
+
+```js
+const Image(
+  image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+)
+// also
+Image.network(
+  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
+  width: 200.0,
+  height: 150.0,
+  fit: BoxFit.cover,
+)
+
+// also
+// Image.asset is used to load an image from a local asset.
+Image.asset('assets/images/flutter_logo.png')
+// also
+// Here's a simple example of displaying an image from raw byte data:
+Image.memory(Uint8List.fromList(byteData))
+```
+
+### Column
+
+[Docs](https://api.flutter.dev/flutter/widgets/Column-class.html)
+
+```js
+Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  mainAxisSize: MainAxisSize.min,
+  children: <Widget>[
+    const Text('We move under cover and we move as one'),
+    const Text('Through the night, we have one shot to live another day'),
+    const Text('We cannot let a stray gunshot give us away'),
+    const Text('We will fight up close, seize the moment and stay in it'),
+    const Text('It’s either that or meet the business end of a bayonet'),
+    const Text('The code word is ‘Rochambeau,’ dig me?'),
+    Text('Rochambeau!', style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0)),
+  ],
+)
+```
+
+### Row
+
+[Docs](https://api.flutter.dev/flutter/widgets/Row-class.html)
+
+```js
+const Row(
+  children: <Widget>[
+    Expanded(
+      child: Text('Deliver features faster', textAlign: TextAlign.center),
+    ),
+    Expanded(
+      child: Text('Craft beautiful UIs', textAlign: TextAlign.center),
+    ),
+    Expanded(
+      child: FittedBox(
+        child: FlutterLogo(),
+      ),
+    ),
+  ],
+)
+```
+
+### ListView
+
+[Docs](https://api.flutter.dev/flutter/widgets/ListView-class.html)
+
+```js
+final List<String> entries = <String>['A', 'B', 'C'];
+final List<int> colorCodes = <int>[600, 500, 100];
+
+Widget build(BuildContext context) {
+  return ListView.builder(
+    padding: const EdgeInsets.all(8),
+    itemCount: entries.length,
+    itemBuilder: (BuildContext context, int index) {
+      return Container(
+        height: 50,
+        color: Colors.amber[colorCodes[index]],
+        child: Center(child: Text('Entry ${entries[index]}')),
+      );
+    }
+  );
+}
 ```
