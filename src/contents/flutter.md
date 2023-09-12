@@ -15,6 +15,20 @@ description: Flutter is a popular open-source framework for building natively co
 
 Flutter is a popular open-source framework for building natively compiled applications for mobile, web, and desktop from a single codebase. Flutter provides a wide range of widgets that you can use to create user interfaces for your apps. Here's a list of some commonly used widgets in Flutter:
 
+## Daddy of all widgets
+
+### StatelessWidget [Docs](https://api.flutter.dev/flutter/widgets/StatelessWidget-class.html)
+
+A widget that does not require mutable state.
+
+A stateless widget is a widget that describes part of the user interface by building a constellation of other widgets that describe the user interface more concretely. The building process continues recursively until the description of the user interface is fully concrete (e.g., consists entirely of RenderObjectWidgets, which describe concrete RenderObjects).
+
+### StatefulWidget
+
+A widget that has mutable state.
+
+State is information that (1) can be read synchronously when the widget is built and (2) might change during the lifetime of the widget. It is the responsibility of the widget implementer to ensure that the State is promptly notified when such state changes, using State.setState.
+
 ## Table Of Contents
 
 ## Must used widgets
@@ -194,4 +208,71 @@ Widget build(BuildContext context) {
     }
   );
 }
+```
+
+### Stack
+
+[Docs](https://api.flutter.dev/flutter/widgets/Stack-class.html)
+
+```js
+Stack(
+  children: <Widget>[
+    Container(
+      width: 100,
+      height: 100,
+      color: Colors.red,
+    ),
+    Container(
+      width: 90,
+      height: 90,
+      color: Colors.green,
+    ),
+    Container(
+      width: 80,
+      height: 80,
+      color: Colors.blue,
+    ),
+  ],
+)
+```
+
+### AppBar
+
+[Docs](https://api.flutter.dev/flutter/material/AppBar-class.html)
+
+```js
+appBar: AppBar(
+        title: const Text('AppBar Demo'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add_alert),
+            tooltip: 'Show Snackbar',
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('This is a snackbar')));
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.navigate_next),
+            tooltip: 'Go to the next page',
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute<void>(
+                builder: (BuildContext context) {
+                  return Scaffold(
+                    appBar: AppBar(
+                      title: const Text('Next page'),
+                    ),
+                    body: const Center(
+                      child: Text(
+                        'This is the next page',
+                        style: TextStyle(fontSize: 24),
+                      ),
+                    ),
+                  );
+                },
+              ));
+            },
+          ),
+        ],
+      ),
 ```
