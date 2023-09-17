@@ -95,6 +95,19 @@ gsap.to(".square", {
 });
 ```
 
+### Scroll trigger observer
+
+```js
+ScrollTrigger.observe({
+  target: window,
+  type: "pointer",
+  onMove: ({ deltaX, deltaY }) => {
+    gsap.to(".pointer-animation", { x: deltaX * 0.4, y: deltaY * 0.4 });
+    gsap.to(".pointer-animation-1", { y: deltaX * 0.4, x: deltaY * 0.4 });
+  },
+});
+```
+
 ### Timeline
 
 #### Ex 1
