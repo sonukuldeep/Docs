@@ -362,3 +362,69 @@ export default app = () => {
   return <p>redirect home in 3 secs</p>;
 };
 ```
+
+### useSearchParams
+
+Installation
+useSearchParams is part of _react-router-dom_
+
+```js
+npm i react-router-dom
+```
+
+Example
+
+```js
+import { useSearchParams } from "react-router-dom";
+import "./App.css";
+
+function App() {
+  const items = [
+    "apple",
+    "banana",
+    "car",
+    "dog",
+    "elephant",
+    "flower",
+    "guitar",
+    "house",
+  ];
+  const [search, setSearch] = useSearchParams({ q: "" });
+  const query = search.get("q") || "";
+  const filtered = items.filter(item => item.includes(query));
+
+  return (
+    <>
+      <h1 className="text-[20px] text-blue-600">Hello react + vite app</h1>
+      <div>
+        <label htmlFor="q">Title</label>
+        <input
+          className="border-2 m-2 pl-1"
+          type="text"
+          id="q"
+          value={query}
+          onChange={e =>
+            setSearch(
+              prev => {
+                prev.set("q", e.target.value);
+                return prev;
+              },
+              { replace: true } // backbutton takes user to previous page
+            )
+          }
+        />
+      </div>
+      <h1 className="font-semibold">Items</h1>
+      <ul>
+        {filtered.map(item => (
+          <li key={item} className="list-disc">
+            {item}
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+export default App;
+```
