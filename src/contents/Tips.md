@@ -73,3 +73,121 @@ element.scrollIntoView({behavior:"smooth", block: "end", inline:"nearest"})
 ```
 
 [source](https://bosctechlabs.com/scroll-to-an-element-in-react/)
+
+## Responsive image component
+
+### html
+
+```html
+<img
+  src="https://picsum.photos/id/237/1200/1200"
+  alt="random image"
+  loading="lazy"
+  sizes="(max-width: 400px) 300px,(max-width: 700px) 500px, 700px"
+  srcset="
+    https://picsum.photos/id/2/600/600      500w,
+    https://picsum.photos/id/23/800/800     700w,
+    https://picsum.photos/id/237/1000/1000 1100w
+  "
+/>
+```
+
+- According to mdn if srcset is provided src is ignored and these must be sizes attribute for the browser to make smart choice for image download
+- From my extensive testing i have come to a conclusion that both chrome and mozilla only use 2-3 of these images hence providing more is a waste
+- Sizes and srcset are not linked 1-1. sizes just tell the browser how much space the image will takeup in each viewpoint specified.
+- Depending on size alloted to image at each viewpoint the browser then downloads the best image according to the list of images in srcset
+
+### Lasyloading using vanilla js
+
+```html
+<div
+  class="blurred-img"
+  style="background-image: url('https://picsum.photos/id/237/20/20?blur')"
+>
+  <img
+    src="https://picsum.photos/id/237/1200/1200"
+    alt="random image"
+    loading="lazy"
+    sizes="(max-width: 400px) 300px,(max-width: 700px) 500px, 700px"
+    srcset="
+      https://picsum.photos/id/2/600/600      500w,
+      https://picsum.photos/id/23/800/800     700w,
+      https://picsum.photos/id/237/1000/1000 1100w
+    "
+  />
+</div>
+```
+
+```css
+.blurred-img {
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  width: 700px;
+}
+
+.blurred-img img {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  transition: opacity 250ms ease-in;
+}
+
+.blurred-img::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: pulse 2s infinite;
+  background-color: white;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.blurred-img.loaded::before {
+  animation: none;
+  content: none;
+}
+
+.blurred-img.loaded img {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .blurred-img {
+    width: 500px;
+  }
+}
+@media (max-width: 400px) {
+  .blurred-img {
+    width: 300px;
+  }
+}
+```
+
+```js
+const blurredImageDiv = document.querySelector(".blurred-img");
+
+const img = blurredImageDiv.querySelector(".blurred-img img");
+
+function loaded() {
+  blurredImageDiv.classList.add("loaded");
+  blurredImageDiv.style.backgroundImage = "none";
+}
+
+if (img.complete) {
+  loaded();
+} else img.addEventListener("load", loaded);
+```
