@@ -191,3 +191,66 @@ if (img.complete) {
   loaded();
 } else img.addEventListener("load", loaded);
 ```
+
+### Nextjs image
+
+[Docs](https://nextjs.org/docs/app/building-your-application/optimizing/images)
+
+#### Local image
+
+```jsx
+import Image from "next/image";
+import profilePic from "./me.png";
+
+export default function Page() {
+  return (
+    <Image
+      src={profilePic}
+      alt="Picture of the author"
+      // width={500} automatically provided
+      // height={500} automatically provided
+      // blurDataURL="data:..." automatically provided
+      // placeholder="blur" // Optional blur-up while loading
+    />
+  );
+}
+```
+
+#### Remote image
+
+```jsx
+import Image from "next/image";
+
+export default function Page() {
+  return (
+    <Image
+      src="https://s3.amazonaws.com/my-bucket/profile.png"
+      alt="Picture of the author"
+      width={500}
+      height={500}
+      blurDataURL={"base64-encoded image (10px or less)"}
+      placeholder="blur"
+    />
+  );
+}
+```
+
+### Unknown image size
+
+If size of image is unknown then a container can be used instead. I dont recommend it since it is not clear from the documentation if loader creates srcset images to server to devices of different sizes.
+
+```jsx
+import Image from "next/image";
+
+export default function Page() {
+  return (
+    <div className="grid-element">
+      <Image
+        fill
+        src="/example.png"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      />
+    </div>
+  );
+}
+```
