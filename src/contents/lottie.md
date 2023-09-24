@@ -16,9 +16,8 @@ description: Animating lottie files
 ## Docs
 
 - [Airbnb site](https://airbnb.io/lottie/#/web)
-- [jLottie](https://github.com/LottieFiles/jlottie)
+- [Docs](https://github.com/LottieFiles/lottie-player)
 - [Lottie react](https://github.com/LottieFiles/lottie-react)
-- [Lottie interactivity](https://docs.lottiefiles.com/lottie-interactivity/)
 - [Lottie web](https://github.com/airbnb/lottie-web/)
 
 ## Demo
@@ -29,7 +28,7 @@ description: Animating lottie files
 
 ## Tip
 
-use dotlottie when possible else use bodymovin
+use dotlottie when possible due to small file size else use bodymovin by airbnb
 
 ## Using lottie-player Web Component
 
@@ -201,4 +200,40 @@ dot lottie files are smaller compared to other lottie json file hence it should 
 <script type="module">
   import "@dotlottie/player-component";
 </script>
+```
+
+## Lottie-interactivity ft dotlottie
+
+[Docs](https://docs.lottiefiles.com/lottie-interactivity/)
+
+### Animate on click
+
+```html
+<body>
+  <dotlottie-player
+    mode="normal"
+    src="animation_lmxafm56.lottie"
+    style="width: 320px"
+  >
+  </dotlottie-player>
+  <script type="module">
+    import "@dotlottie/player-component";
+    import { create } from "@lottiefiles/lottie-interactivity";
+
+    const player = document.querySelector("dotlottie-player");
+
+    player.addEventListener("ready", () => {
+      create({
+        player: player.getLottie(),
+        mode: "cursor",
+        actions: [
+          {
+            type: "click",
+            forceFlag: true,
+          },
+        ],
+      });
+    });
+  </script>
+</body>
 ```
