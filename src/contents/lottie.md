@@ -16,10 +16,9 @@ description: Animating lottie files
 ## Docs
 
 - [Airbnb site](https://airbnb.io/lottie/#/web)
-- [Lottie player](https://github.com/LottieFiles/lottie-player)
+- [jLottie](https://github.com/LottieFiles/jlottie)
 - [Lottie react](https://github.com/LottieFiles/lottie-react)
 - [Lottie interactivity](https://docs.lottiefiles.com/lottie-interactivity/)
-- [jLottie](https://github.com/LottieFiles/jlottie)
 - [Lottie web](https://github.com/airbnb/lottie-web/)
 
 ## Demo
@@ -30,9 +29,21 @@ description: Animating lottie files
 
 ## Tip
 
-Use bodymovin or lottie-player
+use dotlottie when possible else use bodymovin
 
-## Using lottie player
+## Using lottie-player Web Component
+
+[Docs](https://github.com/LottieFiles/lottie-player)
+
+### Install
+
+```js
+<script src="https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js"></script>
+// or
+npm install --save @lottiefiles/lottie-player
+```
+
+### Demo
 
 ```html
 /* put in html */
@@ -51,9 +62,22 @@ Use bodymovin or lottie-player
 
 ## Using bodymovin
 
-[Docs](https://airbnb.io/lottie/#/web)
+bodymovin is from airbnb rest all packages are from lottiefiles.com
 
-html
+### Install
+
+```js
+# with npm
+npm install lottie-web
+
+# with bower
+bower install bodymovin
+```
+
+- [Docs](https://airbnb.io/lottie/#/web)
+- [Docs](https://github.com/airbnb/lottie-web/tree/master)
+
+index.html
 
 ```html
 <body>
@@ -78,7 +102,7 @@ html
 </body>
 ```
 
-Js file
+main.js
 
 ```js
 const button = document.querySelector("button");
@@ -99,7 +123,7 @@ button.addEventListener("click", () => {
 });
 ```
 
-css
+style.css
 
 ```css
 body {
@@ -155,4 +179,26 @@ button:active {
   left: -30px;
   pointer-events: none;
 }
+```
+
+## dotlottie
+
+dot lottie files are smaller compared to other lottie json file hence it should be the prefered method of implementing lottie animation on websites.
+
+- [Docs](https://docs.lottiefiles.com/dotlottie-players/)
+- [github](https://github.com/dotlottie/player-component/tree/master/packages/player-component)
+
+```html
+<dotlottie-player
+  autoplay
+  controls
+  loop
+  mode="normal"
+  src="animation_lmxafm56.lottie"
+  style="width: 320px"
+>
+</dotlottie-player>
+<script type="module">
+  import "@dotlottie/player-component";
+</script>
 ```
