@@ -186,6 +186,24 @@ dot lottie files are smaller compared to other lottie json file hence it should 
 
 - [Docs](https://docs.lottiefiles.com/dotlottie-players/)
 - [github](https://github.com/dotlottie/player-component/tree/master/packages/player-component)
+- [dotlottie methods](https://docs.lottiefiles.com/dotlottie-players/components/player-component/methods)
+
+### Install
+
+use cdn, npm package doesn't work well with vanilla js
+
+With the cdn method no additional import is needed on js side
+
+```js
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
+```
+
+src in dotlottie-player custom component does not take .json only .lottie works<br>
+however, as shown in example 2 load function can be used to load .json from js
+
+### Example 1
+
+Nothing fancy
 
 ```html
 <dotlottie-player
@@ -197,9 +215,75 @@ dot lottie files are smaller compared to other lottie json file hence it should 
   style="width: 320px"
 >
 </dotlottie-player>
-<script type="module">
-  import "@dotlottie/player-component";
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
+```
+
+### Example 2
+
+- Animate on load
+- Animate on show
+- Animate on scroll
+
+```html
+<div class="spacer"></div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+<dotlottie-player style="width: 320px"></dotlottie-player>
+<button id="reset">reset</button>
+<div class="spacer"></div>
+
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
+<script>
+  const player = document.querySelector("dotlottie-player");
+
+  player.load("./animation_lmxafm56.lottie").then(() => player.play());
+  //player.load('./animation_lmxafm56.lottie').then(() => player.playOnShow({ threshold: [1] })) // threshold btw [0-1] - 0.5 means start playing when half of the animation is on view
+  //player.load('./animation_lmxafm56.lottie').then(() => player.playOnScroll({ threshold: [0.2, 0.5] })) // 0.2 means start at 20% from the bottom of viewport and complete at 50% of viewport
 </script>
+```
+
+### Example 3
+
+Animate on click
+
+```html
+<div class="spacer"></div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+<dotlottie-player style="width: 320px" mode="normal"></dotlottie-player>
+<button id="reset">reset</button>
+<div class="spacer"></div>
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
+<script type="module">
+  const player = document.querySelector("dotlottie-player");
+
+  player.load("./animation_lmxafm56.lottie").then(() => {
+    player.addEventListener("click", () => {
+      player.play();
+      player.seek(0);
+    });
+  });
+</script>
+```
+
+### Example 4
+
+Animate on hover
+
+```html
+<div class="spacer"></div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+<dotlottie-player
+  style="width: 320px"
+  mode="normal"
+  src="./animation_lmxafm56.lottie"
+  hover
+  loop
+></dotlottie-player>
+<button id="reset">reset</button>
+<div class="spacer"></div>
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
 ```
 
 ## Lottie-interactivity ft dotlottie
