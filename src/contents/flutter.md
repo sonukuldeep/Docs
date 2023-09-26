@@ -459,3 +459,48 @@ class OutlinedCardExample extends StatelessWidget {
   }
 }
 ```
+
+## Glass glow effect
+
+Stack is not important but take a look at BackdropFilter
+
+```dart
+Stack(
+  children: [
+    Align(
+      alignment: const AlignmentDirectional(8.5, -0.3),
+      child: Container(
+        height: 300,
+        width: 300,
+        decoration: const BoxDecoration(
+            shape: BoxShape.circle, color: Colors.deepPurple),
+      ),
+    ),
+    Align(
+      alignment: const AlignmentDirectional(-8.5, -0.3),
+      child: Container(
+        height: 300,
+        width: 300,
+        decoration: const BoxDecoration(
+            shape: BoxShape.circle, color: Color(0xFF673A87)),
+      ),
+    ),
+    Align(
+      alignment: const AlignmentDirectional(0, -1.8),
+      child: Container(
+        height: 300,
+        width: 300,
+        decoration: const BoxDecoration(color: Color(0xFFFFAB40)),
+      ),
+    ),
+    // this is where blur magic happens
+    BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
+      child: Container(
+        decoration:
+            const BoxDecoration(color: Colors.transparent),
+      ),
+    ),
+  ],
+),
+```
