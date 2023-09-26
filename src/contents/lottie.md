@@ -30,35 +30,6 @@ description: Animating lottie files
 
 use dotlottie when possible due to small file size else use bodymovin by airbnb
 
-## Using lottie-player Web Component
-
-[Docs](https://github.com/LottieFiles/lottie-player)
-
-### Install
-
-```js
-<script src="https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js"></script>
-// or
-npm install --save @lottiefiles/lottie-player
-```
-
-### Demo
-
-```html
-/* put in html */
-<lottie-player
-  src="https://lottie.host/9f19ba8a-a077-4095-b61b-d46337ee40ba/yJaFIt38QW.json"
-  background="#ffffff"
-  speed="1"
-  style="width: 300px; height: 300px"
-  loop
-  controls
-  autoplay
-  direction="1"
-  mode="normal"
-></lottie-player>
-```
-
 ## Using bodymovin
 
 bodymovin is from airbnb rest all packages are from lottiefiles.com
@@ -294,20 +265,19 @@ Animate on hover
 
 ```html
 <body>
-  <dotlottie-player
-    mode="normal"
-    src="animation_lmxafm56.lottie"
-    style="width: 320px"
-  >
-  </dotlottie-player>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <dotlottie-player style="width: 320px" mode="normal"></dotlottie-player>
+  <div class="spacer"></div>
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-interactivity@latest/dist/lottie-interactivity.min.js"></script>
   <script type="module">
-    import "@dotlottie/player-component";
-    import { create } from "@lottiefiles/lottie-interactivity";
-
     const player = document.querySelector("dotlottie-player");
+    player.load("./animation_lmxafm56.lottie");
 
     player.addEventListener("ready", () => {
-      create({
+      LottieInteractivity.create({
         player: player.getLottie(),
         mode: "cursor",
         actions: [
@@ -320,4 +290,65 @@ Animate on hover
     });
   </script>
 </body>
+```
+
+### Animate on scroll
+
+```html
+<body>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <dotlottie-player style="width: 320px" mode="normal"></dotlottie-player>
+  <div class="spacer"></div>
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-interactivity@latest/dist/lottie-interactivity.min.js"></script>
+  <script type="module">
+    const player = document.querySelector("dotlottie-player");
+    player.load("./animation_lmxafm56.lottie");
+
+    player.addEventListener("ready", () => {
+      LottieInteractivity.create({
+        player: player.getLottie(),
+        mode: "scroll",
+        actions: [
+          {
+            visibility: [0, 0.6],
+            type: "seek",
+            frames: [0],
+          },
+        ],
+      });
+    });
+  </script>
+</body>
+```
+
+## Using lottie-player Web Component
+
+[Docs](https://github.com/LottieFiles/lottie-player)
+
+### Install
+
+```js
+<script src="https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js"></script>
+// or
+npm install --save @lottiefiles/lottie-player
+```
+
+### Demo
+
+```html
+/* put in html */
+<lottie-player
+  src="https://lottie.host/9f19ba8a-a077-4095-b61b-d46337ee40ba/yJaFIt38QW.json"
+  background="#ffffff"
+  speed="1"
+  style="width: 300px; height: 300px"
+  loop
+  controls
+  autoplay
+  direction="1"
+  mode="normal"
+></lottie-player>
 ```
