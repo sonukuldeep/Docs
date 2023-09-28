@@ -77,6 +77,10 @@ These are just a few of the commonly used widgets in Flutter. Flutter provides a
 
 ## Widget in detail
 
+### Button
+
+[Different button shapes](https://stackoverflow.com/questions/49991444/create-a-rounded-button-button-with-border-radius-in-flutter)
+
 ### Container
 
 [Docs](https://api.flutter.dev/flutter/widgets/Container-class.html)
