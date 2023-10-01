@@ -968,3 +968,121 @@ Container(
   ),
 ),
 ```
+
+## Tab
+
+### Default tab controller
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:food_app/app_icons.dart';
+
+class HomePage2 extends StatefulWidget {
+  const HomePage2({super.key});
+
+  @override
+  State<HomePage2> createState() => _HomePage2State();
+}
+
+class _HomePage2State extends State<HomePage2> {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      initialIndex: 0,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Default tab controller"),
+          bottom: const TabBar(
+              indicatorColor: Colors.white,
+              indicatorWeight: 2.0,
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.grey,
+              tabs: [
+                Tab(
+                  text: "Dog",
+                  icon: Icon(
+                    AppIcons.dog,
+                    color: Colors.white,
+                  ),
+                ),
+                Tab(
+                  text: "Cat",
+                  icon: Icon(
+                    AppIcons.cat,
+                    color: Colors.white,
+                  ),
+                ),
+                Tab(
+                  text: "Rabbit",
+                  icon: Icon(
+                    AppIcons.rabbit,
+                    color: Colors.white,
+                  ),
+                ),
+              ]),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: TabBarView(children: [
+                Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        "Dog",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Image.asset("assets/images/dog.avif")
+                    ],
+                  ),
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        "Cat",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Image.asset("assets/images/cat.png")
+                    ],
+                  ),
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        "Rabbit",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Image.asset("assets/images/rabbit.avif")
+                    ],
+                  ),
+                ),
+              ]),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
