@@ -1022,65 +1022,143 @@ class _HomePage2State extends State<HomePage2> {
                 ),
               ]),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: TabBarView(children: [
-                Center(
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        "Dog",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Image.asset("assets/images/dog.avif")
-                    ],
-                  ),
+        body: TabBarView(children: [
+          Center(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
                 ),
-                Center(
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        "Cat",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Image.asset("assets/images/cat.png")
-                    ],
-                  ),
+                const Text(
+                  "Dog",
+                  style: TextStyle(fontSize: 20),
                 ),
-                Center(
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        "Rabbit",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Image.asset("assets/images/rabbit.avif")
-                    ],
-                  ),
+                const SizedBox(
+                  height: 10,
                 ),
-              ]),
-            )
-          ],
+                Image.asset("assets/images/dog.avif")
+              ],
+            ),
+          ),
+          Center(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  "Cat",
+                  style: TextStyle(fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Image.asset("assets/images/cat.png")
+              ],
+            ),
+          ),
+          Center(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  "Rabbit",
+                  style: TextStyle(fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Image.asset("assets/images/rabbit.avif")
+              ],
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+```
+
+### Custom tab controller
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:food_app/app_icons.dart';
+
+class HomePage3 extends StatefulWidget {
+  const HomePage3({super.key});
+
+  @override
+  State<HomePage3> createState() => _HomePage3State();
+}
+
+class _HomePage3State extends State<HomePage3> with TickerProviderStateMixin {
+  final List<Tab> myTabs = <Tab>[
+    const Tab(
+      text: 'Dog',
+      icon: Icon(AppIcons.dog),
+    ),
+    const Tab(
+      text: 'Cat',
+      icon: Icon(AppIcons.cat),
+    ),
+    const Tab(
+      text: 'Rabbit',
+      icon: Icon(AppIcons.rabbit),
+    ),
+  ];
+
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: myTabs.length);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        bottom: TabBar(
+          indicatorColor: Colors.white,
+          indicatorWeight: 2.0,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.grey,
+          controller: _tabController,
+          tabs: myTabs,
         ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: myTabs.map((Tab tab) {
+          final String label = tab.text!.toLowerCase();
+          return Center(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'This is the $label tab',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Image.asset("assets/images/$label.avif")
+              ],
+            ),
+          );
+        }).toList(),
       ),
     );
   }
