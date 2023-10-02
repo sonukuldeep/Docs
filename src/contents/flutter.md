@@ -1167,6 +1167,8 @@ class _HomePage3State extends State<HomePage3> with TickerProviderStateMixin {
 
 ## Form
 
+### General form
+
 ```dart
 import 'package:flutter/material.dart';
 
@@ -1228,6 +1230,138 @@ class MyCustomFormState extends State<MyCustomForm> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+```
+
+### Form with Name, password
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(home: MyForm());
+  }
+}
+
+// form
+class MyForm extends StatefulWidget {
+  const MyForm({super.key});
+
+  @override
+  State<MyForm> createState() => _MyFormState();
+}
+
+class _MyFormState extends State<MyForm> {
+  final _formKey = GlobalKey<FormState>();
+  final _password = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("My Form"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
+        child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter name";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Enter name",
+                    labelText: "Name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter roll number";
+                    } else if (value.length != 10) {
+                      return "Enter a valid number";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Enter your mobile number",
+                    labelText: "Mobile number",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                TextFormField(
+                  controller: _password,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter password";
+                    }
+                    return null;
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: "Enter password",
+                    labelText: "Password",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter confirm password";
+                    } else if (value != _password.value.text) {
+                      return "Password fields are not same";
+                    }
+                    return null;
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: "Enter confirm password",
+                    labelText: "Confirm Password",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+              ],
+            )),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _formKey.currentState!.validate();
+        },
+        child: const Icon(Icons.done),
       ),
     );
   }
