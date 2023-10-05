@@ -1367,3 +1367,22 @@ class _MyFormState extends State<MyForm> {
   }
 }
 ```
+
+## Linear progress indicator
+
+```dart
+LinearProgressIndicator(
+  value: 0.5, // Set the current progress value (0.0 to 1.0)
+  backgroundColor: Colors.grey, // Background color
+  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue), // Progress color
+)
+```
+
+## CircularProgressIndicator
+
+```dart
+CircularProgressIndicator(
+  backgroundColor: Colors.grey, // Background color
+  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue), // Spinner color
+)
+```
