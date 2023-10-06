@@ -1386,3 +1386,6 @@ CircularProgressIndicator(
   valueColor: AlwaysStoppedAnimation<Color>(Colors.blue), // Spinner color
 )
 ```
+
+## Tops
+[Flutter tips](https://github.com/vandadnp/flutter-tips-and-tricks)
