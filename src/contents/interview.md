@@ -58,9 +58,83 @@ Here are some key points about synthetic events in React:
 
 - Automatic Cleanup: React takes care of automatically cleaning up event listeners when a component is unmounted. This helps prevent memory leaks that can occur if you manually attach event listeners.
 
-## Lifecycle methods
+### Lifecycle methods
 
 In React, the lifecycle of a component refers to the series of events or methods that a component goes through from its creation and mounting in the DOM to its updating, unmounting, and removal from the DOM.
+
+- Initial Stage (Mounting):
+
+        constructor(): This is the first method called when a component is being created. It's used to initialize the component's state and bind event handlers. Avoid side effects here, as it's called only once.
+
+        render(): The render method is responsible for rendering the component's UI. It returns JSX that describes what should be displayed on the screen. It's called every time the component needs to re-render.
+
+        componentDidMount(): After the component's initial render, this method is called. It's commonly used for performing side effects, such as making network requests or initializing third-party libraries. It's a good place to set up timers or subscriptions as well.
+
+- Update Stage (Updating):
+
+        static getDerivedStateFromProps(): This method is called whenever new props are received or before render in the initial render. It's used to compute a new state based on changes in props. It's a static method and should not have side effects.
+
+        shouldComponentUpdate(): This method allows you to control whether the component should re-render when the props or state change. By default, it returns true. You can implement custom logic to optimize performance by preventing unnecessary renders.
+
+        render(): If shouldComponentUpdate returns true (or is not implemented), render is called again to re-render the component with updated props and state.
+
+        componentDidUpdate(): After a component's update has been rendered, this method is called. It's often used for side effects based on changes in props or state, such as updating the DOM or making additional network requests.
+
+- Unmount Stage (Unmounting):
+  componentWillUnmount(): This method is called just before the component is removed from the DOM. It's used for cleaning up resources, like event listeners or timers, to prevent memory leaks.
+
+### Functional component vs class based components
+
+- **Simplicity**:
+
+  - Functional components are simpler to write and understand. They don't involve the complexities of class definitions, constructors, or lifecycle methods.
+  - Less boilerplate code means fewer opportunities for bugs, and it makes it easier for developers, including beginners, to work with React.
+
+- **Ease of Understanding**:
+
+  - Functional components focus primarily on rendering UI based on props and state, making it easier to reason about their behavior.
+  - The code in a functional component flows top to bottom, which aligns well with how we think about UI composition.
+
+- **No 'this' Keyword**:
+
+  - Functional components don't use the `this` keyword, eliminating the need for explicit binding of event handlers.
+  - This simplifies the code and helps avoid common issues related to the context of `this`.
+
+- **Improved Performance**:
+
+  - Functional components are generally faster to render than class components. They have a smaller memory footprint and don't involve the overhead of class instances.
+  - React can optimize functional components more effectively in some cases.
+
+- **Hooks**:
+
+  - Functional components are the recommended way to use React Hooks. Hooks provide a more intuitive way to manage state, side effects, and component lifecycles.
+  - Hooks make it easier to reuse stateful logic across components.
+
+- **Reusability**:
+
+  - Functional components are inherently more reusable because they are essentially functions that can be easily composed and combined.
+  - This reusability can lead to cleaner and more maintainable code.
+
+- **Simplified Lifecycle with Hooks**:
+
+  - Functional components with Hooks simplify the management of component lifecycles and side effects, replacing the need for numerous lifecycle methods in class components.
+  - Hooks like `useEffect` provide a unified way to handle side effects.
+
+- **Easier Testing**:
+
+  - Functional components are easier to test because they are pure functions. You can test their behavior by providing props and examining the output.
+  - Testing is simplified as there's no need to mock or handle component instances.
+
+- **Better Performance Optimization**:
+
+  - With React's `React.memo` and `useMemo` from Hooks, you can easily optimize functional components to prevent unnecessary re-renders.
+  - These optimizations can lead to better application performance.
+
+- **Consistency with Upcoming Features**:
+  - React is actively evolving, and many new features and optimizations are designed with functional components and Hooks in mind.
+  - Using functional components aligns your codebase with the direction of the React library and ensures compatibility with future updates.
+
+In summary, functional components offer simplicity, ease of understanding, and improved performance compared to class-based components. They encourage a more declarative and functional programming style, making them the preferred choice for many React developers, especially in modern React applications.
 
 ## Javascript
 
