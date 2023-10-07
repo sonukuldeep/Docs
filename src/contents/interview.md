@@ -64,6 +64,10 @@ In React, the lifecycle of a component refers to the series of events or methods
 
 ## Javascript
 
+### javascript for OOP
+
+JavaScript is a multi-paradigm programming language, and it supports Object-Oriented Programming (OOP) concepts, including objects, classes (introduced in ES6), inheritance, encapsulation, polymorphism, and abstraction. While it has some differences from classical OOP languages, JavaScript's OOP features make it versatile for object-oriented coding.
+
 ### Asynchronous code in js
 
 Asynchronous operations in JavaScript are crucial for performing tasks that may take some time to complete, such as making network requests, reading files, or executing long-running computations. Understanding how asynchronous operations work in JavaScript involves several key concepts: the call stack, callback queue (also known as the task queue), Web API, and the event loop.
