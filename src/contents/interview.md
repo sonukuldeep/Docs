@@ -138,6 +138,95 @@ In summary, functional components offer simplicity, ease of understanding, and i
 
 ## Javascript
 
+### Closure
+
+A closure is a fundamental concept in JavaScript (and many other programming languages) that refers to the ability of a function to "remember" its lexical scope even after that function has finished executing. In other words, a closure allows a function to maintain access to variables and parameters from its outer or enclosing function's scope, even when the outer function has completed its execution.
+
+```js
+function outerFunction() {
+  const outerVar = "I am from the outer function";
+
+  function innerFunction() {
+    console.log(outerVar); // innerFunction has access to outerVar
+  }
+
+  return innerFunction;
+}
+
+const myClosure = outerFunction();
+myClosure(); // Outputs: "I am from the outer function"
+```
+
+Closures play a significant role in React, as they enable various essential features and patterns in React applications. Here are some of the significant ways in which closures are used in React:
+
+- **State Management**:
+
+  - React's state management relies on closures to maintain the state of a component.
+  - When you use the `useState` Hook in a functional component, it returns an array with the current state value and a function to update that state. The state value is captured within a closure, allowing it to persist across re-renders.
+
+  ```jsx
+  const [count, setCount] = useState(0); // count is maintained via closure
+  ```
+
+- **Event Handlers**:
+
+  - Event handlers in React often use closures to capture and remember the component's current state or props when an event handler is defined.
+  - This ensures that the correct state or props are available when an event occurs, even if the event happens later when the component has re-rendered.
+
+  ```jsx
+  function MyComponent() {
+    const [count, setCount] = useState(0);
+
+    const handleClick = () => {
+      setCount(count + 1); // count is captured via closure
+    };
+
+    return <button onClick={handleClick}>Increment</button>;
+  }
+  ```
+
+- **Private Variables and Functions**:
+
+  - Closures allow you to create private variables and functions within a component. This is valuable for encapsulating logic and data within a component without exposing them to the outside world.
+
+  ```jsx
+  function Counter() {
+    let privateValue = 0; // private variable
+
+    const increment = () => {
+      privateValue++;
+      console.log(privateValue);
+    };
+
+    return (
+      <div>
+        <button onClick={increment}>Increment</button>
+      </div>
+    );
+  }
+  ```
+
+- **Custom Hooks**:
+
+  - Custom Hooks, which are reusable functions in React, frequently utilize closures to maintain internal state and logic. This allows you to abstract complex behavior and reuse it across different components.
+
+  ```jsx
+  function useCounter(initialValue) {
+    const [count, setCount] = useState(initialValue);
+
+    const increment = () => {
+      setCount(count + 1); // count captured via closure
+    };
+
+    return { count, increment };
+  }
+  ```
+
+- **Memoization and Optimization**:
+  - Closures can be used for memoization and performance optimization techniques in React. You can create functions that cache and reuse the results of expensive computations or calculations.
+
+Closures are an integral part of React's component architecture and state management. They enable components to encapsulate their internal state, handle events effectively, and maintain data privacy, which are crucial aspects of building scalable and maintainable React applications.
+
 ### javascript for OOP
 
 JavaScript is a multi-paradigm programming language, and it supports Object-Oriented Programming (OOP) concepts, including objects, classes (introduced in ES6), inheritance, encapsulation, polymorphism, and abstraction. While it has some differences from classical OOP languages, JavaScript's OOP features make it versatile for object-oriented coding.
@@ -211,3 +300,21 @@ myPromise
 ```
 
 Promises are a fundamental tool for working with asynchronous code in JavaScript and are widely used to simplify complex asynchronous operations and improve code readability and maintainability. They provide a clear way to handle success and error scenarios while avoiding callback hell.
+
+### Strict mode
+
+Strict mode is a development mode feature that helps you write cleaner and more reliable code by catching and highlighting potential problems in your application. It is not specific to React but is a JavaScript feature that can be applied to React applications (as well as other JavaScript code).
+
+The main benefits of using strict mode in React are as follows:
+
+- Detecting Unsafe Lifecycles and Deprecated APIs: Strict mode helps you identify and address components with unsafe lifecycles (e.g., componentWillMount, componentWillUpdate, and componentWillReceiveProps) and deprecated APIs. It logs warnings to the console for these issues.
+
+- Identifying Side-Effects: It helps identify side-effects in your render methods. For example, if a component's render method causes a mutation that is not part of rendering (e.g., modifying a global variable), strict mode will catch and warn you about it.
+
+- Warns About Legacy String Refs: It warns you if you are using string refs (e.g., ref="myRef") instead of callback refs (e.g., ref={node => this.myRef = node}), which is recommended.
+
+- Detecting Unexpected Side-Effects: Strict mode intentionally "double-invokes" certain functions, like constructor, render, and componentDidUpdate, to help detect side-effects. This can catch bugs that might not be apparent in non-strict mode.
+
+- Improves Development Tool Warnings: It helps development tools like React DevTools to provide better error messages and warnings.
+
+It's important to note that strict mode is intended for development use only. You should not use it in production as it can have a performance impact. When you build your application for production, strict mode-related code and checks are automatically stripped out.
