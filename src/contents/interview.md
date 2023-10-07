@@ -13,7 +13,7 @@ description: Collection of interview question and answers
 
 # Interview 101
 
-## Table of Context
+## Table of Contents
 
 ## React
 

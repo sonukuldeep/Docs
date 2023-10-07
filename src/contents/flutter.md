@@ -15,6 +15,8 @@ description: Flutter is a popular open-source framework for building natively co
 
 Flutter is a popular open-source framework for building natively compiled applications for mobile, web, and desktop from a single codebase. Flutter provides a wide range of widgets that you can use to create user interfaces for your apps. Here's a list of some commonly used widgets in Flutter:
 
+## Table of Contents
+
 ## Daddy of all widgets
 
 ### StatelessWidget [Docs](https://api.flutter.dev/flutter/widgets/StatelessWidget-class.html)
@@ -1388,4 +1390,5 @@ CircularProgressIndicator(
 ```
 
 ## Tops
+
 [Flutter tips](https://github.com/vandadnp/flutter-tips-and-tricks)

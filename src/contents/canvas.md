@@ -13,6 +13,8 @@ description: Codes for everything related to html canvas
 
 # Canvas
 
+## Table of Contents
+
 ## Boilerplate
 
 ```js

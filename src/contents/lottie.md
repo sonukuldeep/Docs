@@ -13,6 +13,8 @@ description: Animating lottie files
 
 # Lottie animation
 
+## Table of Contents
+
 ## Docs
 
 - [Airbnb site](https://airbnb.io/lottie/#/web)
