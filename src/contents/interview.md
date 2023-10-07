@@ -44,6 +44,24 @@ DOM stands for Document Object Model. The DOM represents an HTML document with a
 
 React keeps a lightweight representation of the real DOM in the memory, and that is known as the virtual DOM. When the state of an object changes, the virtual DOM changes only that object in the real DOM, rather than updating all the objects.
 
+### Synthetic events
+
+In React, synthetic events are a way to handle and interact with browser events in a consistent and cross-browser-compatible manner. They are an abstraction layer on top of native browser events, provided by React to simplify event handling and provide a more predictable and unified API for working with events across different browsers.
+
+Here are some key points about synthetic events in React:
+
+- Cross-Browser Compatibility: Synthetic events are designed to work consistently across different web browsers, abstracting away some of the inconsistencies and quirks that can exist in browser-specific event implementations.
+
+- Performance Optimization: React uses a technique called event delegation to improve performance. Instead of attaching event listeners to individual DOM elements, React attaches a single event listener to the top-level document or a container element. When an event occurs, React determines which component's event handler should be called. This can lead to more efficient event handling in applications with many components.
+
+- Event Pooling: React uses an event pooling mechanism to reduce memory usage and improve performance. When an event is triggered, React reuses the same event object for all event handlers, making it more efficient than creating a new event object for each handler.
+
+- Automatic Cleanup: React takes care of automatically cleaning up event listeners when a component is unmounted. This helps prevent memory leaks that can occur if you manually attach event listeners.
+
+## Lifecycle methods
+
+In React, the lifecycle of a component refers to the series of events or methods that a component goes through from its creation and mounting in the DOM to its updating, unmounting, and removal from the DOM.
+
 ## Javascript
 
 ### Asynchronous code in js
@@ -74,18 +92,18 @@ A Promise in JavaScript is a special object that represents the eventual complet
 
 Promises have several stages in their lifecycle, which are represented by three states: `Pending`, `Fulfilled`, and `Rejected`. Here's an overview of each stage:
 
-- **Pending**:
+- Pending:
 
   - When a Promise is created, it starts in the `Pending` state. This means that the asynchronous operation represented by the Promise is still in progress, and the final outcome (success or failure) is not yet determined.
   - During the pending stage, you can attach `.then()` and `.catch()` handlers to the Promise to specify what should happen when the Promise is fulfilled (resolved successfully) or rejected (encounters an error).
 
-- **Fulfilled (Resolved)**:
+- Fulfilled (Resolved):
 
   - If the asynchronous operation succeeds, the Promise transitions to the `Fulfilled` state.
   - When the Promise is fulfilled, it means that the operation has completed successfully, and it holds a resolved value.
   - The `.then()` handler attached to the Promise will be called with the resolved value, allowing you to process the result of the operation.
 
-- **Rejected**:
+- Rejected:
   - If the asynchronous operation encounters an error or fails for any reason, the Promise transitions to the `Rejected` state.
   - When the Promise is rejected, it holds a reason or an error object that describes why the operation failed.
   - The `.catch()` handler attached to the Promise will be called with the rejection reason, allowing you to handle errors and perform error-specific logic.
