@@ -12,6 +12,7 @@ description: Collection of interview question and answers
 ---
 
 # Interview 101
+![main image](https://www.google.com/search?q=interview&client=firefox-b-m&sca_esv=571739304&tbm=isch&source=lnms&sa=X&ved=0ahUKEwjWnOuv-OaBAxWltFYBHbc-DfAQ_AUIBygC&biw=378&bih=747#)
 
 ## Table of Contents
 
