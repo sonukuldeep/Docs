@@ -12,6 +12,7 @@ description: How to send mail with nodemailer and smtp server
 ---
 
 # Node Mailer
+![main image](https://miro.medium.com/v2/resize:fit:1400/1*kUUCkHwi-xcy2FwyG3vxKw.jpeg)
 
 We are using node mailer to send emails from our server
 

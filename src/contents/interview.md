@@ -12,6 +12,7 @@ description: Collection of interview question and answers
 ---
 
 # Interview 101
+![main image](https://www.cheggindia.com/wp-content/uploads/2021/02/HR-Interview-Questions-for-Freshers-2023-Detailed-Guide-with-Answers.png)
 
 ## Table of Contents
 
