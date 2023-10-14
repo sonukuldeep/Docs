@@ -254,3 +254,7 @@ export default function Page() {
   );
 }
 ```
+
+## Multi account git configuration
+
+This multi account git configuration is folder based meaning
