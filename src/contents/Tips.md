@@ -6,7 +6,7 @@ slug: "tips"
 featured: false
 draft: false
 tags:
-  - react
+  - react responsive-image git-config
 ogImage: ""
 description: Collection of random tips and tricks i came across in the internet.
 ---
