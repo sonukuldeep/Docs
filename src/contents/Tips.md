@@ -257,4 +257,46 @@ export default function Page() {
 
 ## Multi account git configuration
 
-This multi account git configuration is folder based meaning
+This multi account git configuration is folder based meaning depending on the current working directory, the configuration will change accordingly, automatically.
+
+```npm
+# ~/.gitconfig
+[includeIf "gitdir:C:/Work/"]
+	path = C:/Users/Sonukuldeep/.gitconfig.work
+[includeIf "gitdir:C:/Personal/"]
+	path = C:/Users/Sonukuldeep/.gitconfig.personal
+[core]
+	excludesfile = C:/Users/Sonukuldeep/.gitignore_global
+[init]
+	defaultBranch = main
+```
+
+```npm
+# C:/Personal/
+
+[user]
+	name = sonukuldeep
+	email = sonukuldip@xyz.com
+
+[github]
+	user = "sonukuldeep"
+
+[core]
+	sshCommand = "ssh -i C:/Users/sonuk/.ssh/idrsa1"
+```
+
+```npm
+# C:/Work/
+
+[user]
+	name = xyz-company
+	email = xyz-company@xyz.com
+
+[github]
+	user = "xyz-company"
+
+[core]
+	sshCommand = "ssh -i C:/Users/sonuk/.ssh/idrsa2"
+```
+
+Then when you're working in any git folder inside work directory then git config specific to work will be used. Some goes for personal folder.
