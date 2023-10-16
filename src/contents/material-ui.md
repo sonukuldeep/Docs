@@ -364,3 +364,27 @@ const MyForm: React.FC = () => {
 
 export default MyForm;
 ```
+
+## Customization
+### Overriding nested component styles
+
+You can use the browser dev tools to identify the slot for the component you want to override. It can save you a lot of time. The styles injected into the DOM by MUI rely on class names that follow a simple pattern: [hash]-Mui[Component name]-[name of the slot].
+
+⚠️ These class names can't be used as CSS selectors because they are unstable, however, MUI applies global class names using a consistent convention: Mui[Component name]-[name of the slot].
+
+![image](https://v5-0-6.mui.com/static/images/customization/dev-tools.png)
+In this example, the styles are applied with .css-ae2u5c-MuiSlider-thumb so the name of the component is Slider and the name of the slot is thumb.
+
+You now know that you need to target the .MuiSlider-thumb class name for overriding the look of the thumb:
+```jsx
+    <Slider
+      defaultValue={30}
+      sx={{
+        width: 300,
+        color: 'success.main',
+        '& .MuiSlider-thumb': {
+          borderRadius: '1px',
+        },
+      }}
+    />
+```
