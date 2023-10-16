@@ -365,7 +365,9 @@ const MyForm: React.FC = () => {
 export default MyForm;
 ```
 
-## Customization
+## Customization 
+[Docs](https://v5-0-6.mui.com/customization/how-to-customize/)
+
 ### Overriding nested component styles
 
 You can use the browser dev tools to identify the slot for the component you want to override. It can save you a lot of time. The styles injected into the DOM by MUI rely on class names that follow a simple pattern: [hash]-Mui[Component name]-[name of the slot].
@@ -375,7 +377,6 @@ You can use the browser dev tools to identify the slot for the component you wan
 
 <img width="300px" src="https://v5-0-6.mui.com/static/images/customization/dev-tools.png"/>
 
-![image]()
 In this example, the styles are applied with .css-ae2u5c-MuiSlider-thumb so the name of the component is Slider and the name of the slot is thumb.
 
 You now know that you need to target the .MuiSlider-thumb class name for overriding the look of the thumb:
@@ -390,4 +391,57 @@ You now know that you need to target the .MuiSlider-thumb class name for overrid
         },
       }}
     />
+```
+
+### Overriding styles with class names
+
+If you would like to override the styles of the components using classes, you can use the className prop available on each component. For overriding the styles of the different parts inside the component, you can use the global classes available for each slot, as described in the previous section.
+
+You can find examples of this using different styles libraries in the Styles library interoperability guide.
+State classes
+
+The components special states, like hover, focus, disabled and selected, are styled with a higher CSS specificity. Specificity is a weight that is applied to a given CSS declaration.
+
+In order to override the components' special states, you need to increase specificity. Here is an example with the disable state and the Button component using a pseudo-class (:disabled):
+```css
+.Button {
+  color: black;
+}
+
+/* Increase the specificity */
+.Button:disabled {
+  color: white;
+}
+```
+
+```jsx
+.Button {
+  color: black;
+}
+
+/* Increase the specificity */
+.Button:disabled {
+  color: white;
+}
+```
+
+```jsx
+<Button disabled className="Button">
+```
+
+Sometimes, you can't use a CSS pseudo-class, as the state doesn't exist in the web specification. Let's take the MenuItem component and its selected state as an example. In such cases you can use a MUI equivalent of CSS pseudo-classes - state classes. Target the .Mui-selected global class name to customize the special state of the MenuItem component:
+
+```jsx
+.MenuItem {
+  color: black;
+}
+
+/* Increase the specificity */
+.MenuItem.Mui-selected {
+  color: blue;
+}
+```
+
+```jsx
+<MenuItem selected className="MenuItem">
 ```
