@@ -14,7 +14,7 @@ description: Hard to find solution from material ui
 
 # Material ui
 
-<img width="300px" src="https://res.cloudinary.com/practicaldev/image/fetch/s--wAw1dBzS--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://thepracticaldev.s3.amazonaws.com/i/vb6ai56xqgpc0bcfn92y.png"/>
+<img width="500px" src="https://res.cloudinary.com/practicaldev/image/fetch/s--wAw1dBzS--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://thepracticaldev.s3.amazonaws.com/i/vb6ai56xqgpc0bcfn92y.png"/>
 
 ## Table of Contents
 
@@ -372,7 +372,10 @@ You can use the browser dev tools to identify the slot for the component you wan
 
 ⚠️ These class names can't be used as CSS selectors because they are unstable, however, MUI applies global class names using a consistent convention: Mui[Component name]-[name of the slot].
 
-![image](https://v5-0-6.mui.com/static/images/customization/dev-tools.png)
+
+<img width="300px" src="https://v5-0-6.mui.com/static/images/customization/dev-tools.png"/>
+
+![image]()
 In this example, the styles are applied with .css-ae2u5c-MuiSlider-thumb so the name of the component is Slider and the name of the slot is thumb.
 
 You now know that you need to target the .MuiSlider-thumb class name for overriding the look of the thumb:
