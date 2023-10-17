@@ -445,3 +445,18 @@ Sometimes, you can't use a CSS pseudo-class, as the state doesn't exist in the w
 ```jsx
 <MenuItem selected className="MenuItem">
 ```
+
+## Customize components
+### TextField
+```js
+    <TextField
+      id="standard-basic"
+      label="Standard"
+      variant="outlined"
+      sx={{
+        width: "100px",
+        "& .MuiInputBase-root": { height: "30px" },
+        "& .MuiFormLabel-root": { top: "-11px" },
+      }}
+    />
+```
