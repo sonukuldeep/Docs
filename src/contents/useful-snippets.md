@@ -401,6 +401,48 @@ function useOutsideAlerter(ref: React.RefObject<HTMLElement>) {
 
 <hr>
 
+## Detect click outside the element
+```tsx
+import React, { useEffect, useRef, useState } from 'react';
+
+function App() {
+  const [isClickOutside, setIsClickOutside] = useState(false);
+  const targetRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    // Function to handle the click event
+    function handleClickOutside(event: MouseEvent) {
+      if (targetRef.current && !targetRef.current.contains(event.target as Node)) {
+        setIsClickOutside(true);
+      } else {
+        setIsClickOutside(false);
+      }
+    }
+
+    // Attach the event listener when the component mounts
+    document.addEventListener('click', handleClickOutside);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div>
+      <div ref={targetRef}>
+        <p>Click inside this element</p>
+      </div>
+      {isClickOutside && <p>Click outside the element!</p>}
+    </div>
+  );
+}
+
+export default App;
+```
+
+<hr/>
+
 ## Prisma setup in Node js
 
 [main image](https://logos-world.net/wp-content/uploads/2022/04/Prisma-Logo.png)
