@@ -106,6 +106,11 @@ description: Useful git commands.
 50. `git bisect bad` and `git bisect good`: Marks commits as bad or good during the binary search.
 
 ## Bonus
+### List git repo in remote
 git ls-remote --heads origin  
 
 These commands and concepts cover a wide range of Git functionality, and mastering them will help you effectively manage your Git repositories and collaborate with others.
+
+### Change most recent Git commit message
+
+git commit --amend
