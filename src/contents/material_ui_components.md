@@ -15,138 +15,88 @@ description: Material ui setup and reusable components
 
 ## Table of Contents
 
-## Navbar
+## Customization 
+[Docs](https://v5-0-6.mui.com/customization/how-to-customize/)
 
-`Header.tsx`
+### Overriding nested component styles
 
-```ts
-import {
-  AppBar,
-  Box,
-  Button,
-  Divider,
-  Drawer,
-  IconButton,
-  SxProps,
-  Toolbar,
-  Typography,
-} from "@mui/material";
-import { Fastfood, Menu } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+You can use the browser dev tools to identify the slot for the component you want to override. It can save you a lot of time. The styles injected into the DOM by MUI rely on class names that follow a simple pattern: [hash]-Mui[Component name]-[name of the slot].
 
-function Header() {
-  const [openDrawer, setOpenDrawer] = useState(false);
+⚠️ These class names can't be used as CSS selectors because they are unstable, however, MUI applies global class names using a consistent convention: Mui[Component name]-[name of the slot].
 
-  return (
-    <Box>
-      <AppBar component={"nav"} sx={{ bgcolor: "black" }}>
-        <Toolbar>
-          {/* hambergan icon */}
-          <IconButton
-            color="inherit" // it stops animating if color is not provided
-            aria-label={"open-drawer"}
-            edge="start"
-            sx={styles.icon}
-            onClick={() => setOpenDrawer(pre => !pre)}
-          >
-            <Menu sx={{ color: "goldenrod" }} />
-          </IconButton>
-          {/* Nav heading and icon */}
-          <Typography
-            color={"goldenrod"}
-            variant="h6"
-            component={"div"}
-            sx={{ flexGrow: 1 }}
-          >
-            <Fastfood /> My Restaurant
-          </Typography>
-          <Box sx={styles.navLinkContainer}>
-            {/* navlinks */}
-            <NavbarWrapper onclick={() => {}} />
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="temporary"
-        open={openDrawer}
-        onClose={() => setOpenDrawer(pre => !pre)}
-        sx={styles.mobileNavLinkContainer}
-      >
-        <Typography variant="h5" sx={{ textAlign: "center", margin: 1 }}>
-          Menu
-        </Typography>
-        <Divider></Divider>
-        <NavbarWrapper onclick={() => setOpenDrawer(pre => !pre)} />
-      </Drawer>
-      <Box>
-        <Toolbar /> {/* works as a spacer  */}
-      </Box>
-    </Box>
-  );
-}
 
-export default Header;
+<img width="300px" src="https://v5-0-6.mui.com/static/images/customization/dev-tools.png"/>
 
-function NavbarWrapper({ onclick }: { onclick: () => void }) {
-  return (
-    <>
-      <Button
-        component={NavLink} // NavLink adds an active class to the component which can be targeted in css
-        to="/"
-        onClick={onclick}
-      >
-        Home
-      </Button>
-      <Button component={NavLink} to="/menu" onClick={onclick}>
-        Menu
-      </Button>
-      <Button component={NavLink} to="/about" onClick={onclick}>
-        About
-      </Button>
-      <Button component={NavLink} to="/contact" onClick={onclick}>
-        Contact
-      </Button>
-    </>
-  );
-}
+In this example, the styles are applied with .css-ae2u5c-MuiSlider-thumb so the name of the component is Slider and the name of the slot is thumb.
 
-type StylesProps = {
-  [key: string]: SxProps;
-};
-const styles: StylesProps = {
-  navLinkContainer: {
-    display: { xs: "none", sm: "flex" },
-    gap: 5,
-    listStyle: "none",
-    textDecoration: "none",
-    "& a": {
-      color: "goldenrod",
-    },
-    "& a.active": {
-      color: "blueviolet",
-    },
-  },
-  mobileNavLinkContainer: {
-    display: { xs: "block", sm: "none" },
-    "& .MuiDrawer-paper": {
-      boxSizing: "border-box",
-      width: "200px",
-      "& a": {
-        color: "goldenrod",
-      },
-      "& a.active": {
-        color: "blueviolet",
-      },
-    },
-  },
-  icon: {
-    mr: 2,
-    display: { sm: "none" },
-  },
-};
+You now know that you need to target the .MuiSlider-thumb class name for overriding the look of the thumb:
+```jsx
+    <Slider
+      defaultValue={30}
+      sx={{
+        width: 300,
+        color: 'success.main',
+        '& .MuiSlider-thumb': {
+          borderRadius: '1px',
+        },
+      }}
+    />
 ```
 
+### Overriding styles with class names
+
+If you would like to override the styles of the components using classes, you can use the className prop available on each component. For overriding the styles of the different parts inside the component, you can use the global classes available for each slot, as described in the previous section.
+
+You can find examples of this using different styles libraries in the Styles library interoperability guide.
+State classes
+
+The components special states, like hover, focus, disabled and selected, are styled with a higher CSS specificity. Specificity is a weight that is applied to a given CSS declaration.
+
+In order to override the components' special states, you need to increase specificity. Here is an example with the disable state and the Button component using a pseudo-class (:disabled):
+```css
+.Button {
+  color: black;
+}
+
+/* Increase the specificity */
+.Button:disabled {
+  color: white;
+}
+```
+
+```jsx
+.Button {
+  color: black;
+}
+
+/* Increase the specificity */
+.Button:disabled {
+  color: white;
+}
+```
+
+```jsx
+<Button disabled className="Button">
+```
+
+Sometimes, you can't use a CSS pseudo-class, as the state doesn't exist in the web specification. Let's take the MenuItem component and its selected state as an example. In such cases you can use a MUI equivalent of CSS pseudo-classes - state classes. Target the .Mui-selected global class name to customize the special state of the MenuItem component:
+
+```jsx
+.MenuItem {
+  color: black;
+}
+
+/* Increase the specificity */
+.MenuItem.Mui-selected {
+  color: blue;
+}
+```
+
+```jsx
+<MenuItem selected className="MenuItem">
+```
+
+<hr/>
 
 ## Customize components
 ### TextField
