@@ -367,6 +367,140 @@ export default MyForm;
 
 <hr/>
 
+## Navbar
+
+`Header.tsx`
+
+```ts
+import {
+  AppBar,
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  IconButton,
+  SxProps,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { Fastfood, Menu } from "@mui/icons-material";
+import { NavLink } from "react-router-dom";
+import { useState } from "react";
+
+function Header() {
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  return (
+    <Box>
+      <AppBar component={"nav"} sx={{ bgcolor: "black" }}>
+        <Toolbar>
+          {/* hambergan icon */}
+          <IconButton
+            color="inherit" // it stops animating if color is not provided
+            aria-label={"open-drawer"}
+            edge="start"
+            sx={styles.icon}
+            onClick={() => setOpenDrawer(pre => !pre)}
+          >
+            <Menu sx={{ color: "goldenrod" }} />
+          </IconButton>
+          {/* Nav heading and icon */}
+          <Typography
+            color={"goldenrod"}
+            variant="h6"
+            component={"div"}
+            sx={{ flexGrow: 1 }}
+          >
+            <Fastfood /> My Restaurant
+          </Typography>
+          <Box sx={styles.navLinkContainer}>
+            {/* navlinks */}
+            <NavbarWrapper onclick={() => {}} />
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="temporary"
+        open={openDrawer}
+        onClose={() => setOpenDrawer(pre => !pre)}
+        sx={styles.mobileNavLinkContainer}
+      >
+        <Typography variant="h5" sx={{ textAlign: "center", margin: 1 }}>
+          Menu
+        </Typography>
+        <Divider></Divider>
+        <NavbarWrapper onclick={() => setOpenDrawer(pre => !pre)} />
+      </Drawer>
+      <Box>
+        <Toolbar /> {/* works as a spacer  */}
+      </Box>
+    </Box>
+  );
+}
+
+export default Header;
+
+function NavbarWrapper({ onclick }: { onclick: () => void }) {
+  return (
+    <>
+      <Button
+        component={NavLink} // NavLink adds an active class to the component which can be targeted in css
+        to="/"
+        onClick={onclick}
+      >
+        Home
+      </Button>
+      <Button component={NavLink} to="/menu" onClick={onclick}>
+        Menu
+      </Button>
+      <Button component={NavLink} to="/about" onClick={onclick}>
+        About
+      </Button>
+      <Button component={NavLink} to="/contact" onClick={onclick}>
+        Contact
+      </Button>
+    </>
+  );
+}
+
+type StylesProps = {
+  [key: string]: SxProps;
+};
+const styles: StylesProps = {
+  navLinkContainer: {
+    display: { xs: "none", sm: "flex" },
+    gap: 5,
+    listStyle: "none",
+    textDecoration: "none",
+    "& a": {
+      color: "goldenrod",
+    },
+    "& a.active": {
+      color: "blueviolet",
+    },
+  },
+  mobileNavLinkContainer: {
+    display: { xs: "block", sm: "none" },
+    "& .MuiDrawer-paper": {
+      boxSizing: "border-box",
+      width: "200px",
+      "& a": {
+        color: "goldenrod",
+      },
+      "& a.active": {
+        color: "blueviolet",
+      },
+    },
+  },
+  icon: {
+    mr: 2,
+    display: { sm: "none" },
+  },
+};
+```
+
+<hr/>
+
 ## Theme
 
 Setup
