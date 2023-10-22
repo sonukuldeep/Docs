@@ -1,7 +1,7 @@
 ---
 author: kuldeep
 datetime: 2023-09-03
-title: Material UI
+title: Material UI Components
 slug: "mui"
 featured: false
 draft: false
@@ -10,6 +10,9 @@ tags:
 ogImage: ""
 description: Material ui setup and reusable components
 ---
+# MUI 
+
+## Table of Contents
 
 ## Navbar
 
