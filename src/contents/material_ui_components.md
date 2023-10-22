@@ -10,6 +10,7 @@ tags:
 ogImage: ""
 description: Material ui setup and reusable components
 ---
+
 # MUI 
 
 ## Table of Contents
@@ -146,130 +147,113 @@ const styles: StylesProps = {
 };
 ```
 
-## Theme
 
-Setup
-`src/App.tsx`
-
-```tsx
-//...other imports
-import { CssBaseline, SxProps, ThemeProvider } from "@mui/material";
-import theme from "./lib/theme";
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {/* other stuff here */}
-    </ThemeProvider>
-  );
-}
+## Customize components
+### TextField
+```js
+    <TextField
+      id="standard-basic"
+      label="Standard"
+      variant="outlined"
+      sx={{
+        width: "100px",
+        "& .MuiInputBase-root": { height: "30px" },
+        "& .MuiFormLabel-root": { top: "-11px" },
+      }}
+    />
 ```
 
-`src/lib/theme.ts` - there are certain limitation to where customColors will work so check before use
+### Collapse
+```jsx
+import * as React from "react"; 
+import ListSubheader from "@mui/material/ListSubheader"; 
+import List from "@mui/material/List"; 
+import ListItemButton from "@mui/material/ListItemButton"; 
+import ListItemIcon from "@mui/material/ListItemIcon"; 
+import ListItemText from "@mui/material/ListItemText"; 
+import Collapse from "@mui/material/Collapse"; 
+import DraftsIcon from "@mui/icons-material/Drafts"; 
+import ExpandLess from "@mui/icons-material/ExpandLess"; 
+import ExpandMore from "@mui/icons-material/ExpandMore"; 
 
-```ts
-import { createTheme } from "@mui/material";
-import { green, grey, indigo } from "@mui/material/colors";
+import PersonIcon from "@mui/icons-material/Person"; 
+import EditIcon from "@mui/icons-material/Edit"; 
+import FaceRetouchingNaturalIcon from 
+	"@mui/icons-material/FaceRetouchingNatural"; 
+import ArticleIcon from "@mui/icons-material/Article"; 
+import LogoutIcon from "@mui/icons-material/Logout"; 
 
-declare module "@mui/material/styles" {
-  interface Palette {
-    customNeutral: {
-      light: string;
-      medium: string;
-      normal: string;
-      main: string;
-    };
-    customGreen: Palette["primary"];
-  }
+export default function NestedList() { 
+	const [open, setOpen] = React.useState(true); 
 
-  interface PaletteOptions {
-    customNeutral?: {
-      light: string;
-      medium: string;
-      normal: string;
-      main: string;
-    };
-    customGreen?: PaletteOptions["primary"];
-  }
-}
+	const handleClick = () => { 
+		setOpen(!open); 
+	}; 
 
-declare module "@mui/material/styles" {
-  interface TypographyVariants {
-    link: React.CSSProperties;
-    cardTitle: React.CSSProperties;
-    h6: React.CSSProperties;
-    h7: React.CSSProperties;
-    h8: React.CSSProperties;
-  }
+	return ( 
+		<> 
+			<h1 style={{ color: "green" }}> 
+				GeeksForGeeks</h1> 
 
-  interface TypographyVariantsOptions {
-    link?: React.CSSProperties;
-    cardTitle?: React.CSSProperties;
-    h6?: React.CSSProperties;
-    h7?: React.CSSProperties;
-    h8?: React.CSSProperties;
-  }
-}
+			<List 
+				sx={{ 
+					width: "100%", maxWidth: 360, 
+					bgcolor: "background.paper"
+				}} 
+				component="nav"
+				aria-labelledby="nested-list-subheader"
+				subheader={ 
+					<ListSubheader component="div"
+						id="nested-list-subheader"> 
+						Setting 
+					</ListSubheader> 
+				} 
+			> 
+				<ListItemButton> 
+					<ListItemIcon> 
+						<PersonIcon /> 
+					</ListItemIcon> 
+					<ListItemText primary="My Profile" /> 
+				</ListItemButton> 
+				<ListItemButton> 
+					<ListItemIcon> 
+						<DraftsIcon /> 
+					</ListItemIcon> 
+					<ListItemText primary="My Courses" /> 
+				</ListItemButton> 
+				<ListItemButton onClick={handleClick}> 
+					<ListItemIcon> 
+						<EditIcon /> 
+					</ListItemIcon> 
+					<ListItemText primary="Edit" /> 
+					{open ? <ExpandLess /> : <ExpandMore />} 
+				</ListItemButton> 
+				<Collapse in={open} timeout="auto" unmountOnExit> 
+					<List component="div" disablePadding> 
+						<ListItemButton sx={{ pl: 4 }}> 
+							<ListItemIcon> 
+								<FaceRetouchingNaturalIcon /> 
+							</ListItemIcon> 
+							<ListItemText primary="Edit Profile" /> 
+						</ListItemButton> 
 
-declare module "@mui/material/Typography" {
-  interface TypographyPropsVariantOverrides {
-    link: true;
-    cardTitle: true;
-    h6: true;
-    h7: true;
-    h8: true;
-  }
-}
+						<ListItemButton sx={{ pl: 4 }}> 
+							<ListItemIcon> 
+								<ArticleIcon /> 
+							</ListItemIcon> 
+							<ListItemText primary="Edit Articles" /> 
+						</ListItemButton> 
+					</List> 
+				</Collapse> 
 
-let theme = createTheme({
-  palette: {
-    primary: {
-      main: indigo[500],
-      light: indigo["A700"],
-    },
-    secondary: {
-      main: indigo[50],
-    },
-    customNeutral: {
-      light: grey[50],
-      medium: grey[200],
-      normal: grey[700],
-      main: grey[900],
-    },
-    customGreen: {
-      main: green[800],
-    },
-  },
-});
-
-theme = createTheme(theme, {
-  typography: {
-    link: {
-      fontSize: "0.8rem",
-      fontWeight: 500,
-      color: theme.palette.primary.main,
-      display: "block",
-      cursor: "pointer",
-      [theme.breakpoints.up("md")]: {
-        fontSize: "0.9rem",
-      },
-    },
-    cardTitle: {
-      fontSize: "1.2rem",
-      display: "block",
-      fontWeight: 500,
-    },
-    h6: {
-      fontSize: "1rem",
-    },
-    h7: {
-      fontSize: "0.8rem",
-    },
-    h8: {
-      fontSize: "0.7rem",
-    },
-  },
-});
-
-export default theme;
+				<ListItemButton> 
+					<ListItemIcon> 
+						<LogoutIcon /> 
+					</ListItemIcon> 
+					<ListItemText primary="Logout" /> 
+				</ListItemButton> 
+			</List> 
+		</> 
+	); 
+} 
 ```
