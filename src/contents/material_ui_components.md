@@ -207,3 +207,50 @@ export default function NestedList() {
 	); 
 } 
 ```
+
+<hr/>
+
+### Autocomplete
+```tsx
+import * as React from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+interface Ifilm {
+  label: string;
+  year: number;
+}
+export default function ComboBox() {
+  const [value, setValue] = React.useState<Ifilm | null>();
+  const [inputValue, setInputValue] = React.useState("");
+  return (
+    <Autocomplete
+      value={value}
+      onChange={(event: any, newValue: Ifilm | null) => {
+        setValue(newValue);
+      }}
+      inputValue={inputValue}
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+      }}
+      disablePortal
+      id="combo-box-demo"
+      options={top100Films}
+      sx={{
+        width: 300,
+        "& .MuiInputBase-root": { height: 100 },
+        "& .MuiFormLabel-root[data-shrink='false']": {
+          transform: "translate(14px,37px)"
+        }
+      }}
+      renderInput={(params) => <TextField {...params} label="Movie" />}
+    />
+  );
+}
+
+// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
+const top100Films = [
+  { label: "The Shawshank Redemption", year: 1994 },
+  { label: "The Godfather", year: 1972 },
+  { label: "The Godfather: Part II", year: 1974 }
+];
+```
