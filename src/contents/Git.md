@@ -107,14 +107,12 @@ description: Useful git commands.
 
 ## Bonus
 ### List git repo in remote
-git ls-remote --heads origin  
+`git ls-remote --heads origin`
 
 These commands and concepts cover a wide range of Git functionality, and mastering them will help you effectively manage your Git repositories and collaborate with others.
 
 ### Change most recent Git commit message
-
-git commit --amend
-
+`git commit --amend`
 
 ### Merge abort
-git merge --abort
+`git merge --abort`
