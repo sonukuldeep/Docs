@@ -114,3 +114,7 @@ These commands and concepts cover a wide range of Git functionality, and masteri
 ### Change most recent Git commit message
 
 git commit --amend
+
+
+### Merge abort
+git merge --abort
