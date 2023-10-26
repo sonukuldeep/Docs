@@ -116,3 +116,29 @@ These commands and concepts cover a wide range of Git functionality, and masteri
 
 ### Merge abort
 `git merge --abort`
+
+Reverting Working Copy to Most Recent Commit
+
+To revert to the previous commit, ignoring any changes:
+
+`git reset --hard HEAD`
+
+where HEAD is the last commit in your current branch
+Reverting The Working Copy to an Older Commit
+
+To revert to a commit that's older than the most recent commit:
+
+### Resets index to former commit; replace '56e05fced' with your commit code
+`git reset 56e05fced` 
+
+### Moves pointer back to previous HEAD
+`git reset --soft HEAD@{1}`
+
+`git commit -m "Revert to 56e05fced"`
+
+### Updates working copy to reflect the new commit
+`git reset --hard`
+
+### Push your changes to respective branch
+`git push -f`
+
