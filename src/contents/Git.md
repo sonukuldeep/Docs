@@ -105,6 +105,68 @@ description: Useful git commands.
 49. `git bisect start`: Starts the binary search for a faulty commit.
 50. `git bisect bad` and `git bisect good`: Marks commits as bad or good during the binary search.
 
+## TimeStamp of commits
+You can use the `git log` command to retrieve the timestamp of a specific commit or the entire commit history. Here are some common commands to get the time of a commit in Git:
+
+1. To get the timestamp of the latest commit in the current branch:
+```bash
+git log -1 --format="%cd" --date=iso
+```
+
+This command uses the `git log` command with the `-1` option to limit the output to the latest commit, `--format="%cd"` to specify the format for the commit date, and `--date=iso` to display the date in ISO 8601 format.
+
+2. To get the timestamp of a specific commit by its SHA-1 hash (replace `commit_hash` with the actual hash):
+```bash
+git log -1 --format="%cd" --date=iso commit_hash
+```
+
+3. To get the timestamps of all commits in the current branch:
+```bash
+git log --format="%cd" --date=iso
+```
+
+These commands will display the commit date and time in ISO 8601 format, which looks like "YYYY-MM-DD HH:MM:SS ±TTTT." You can adjust the date format to your liking by changing the `--format` parameter.
+
+If you want to view additional information about the commit, such as the author, commit message, and more, you can omit the `--format` option. The default `git log` format includes this information. For example:
+
+```bash
+git log -1 --date=iso commit_hash
+```
+
+Replace `commit_hash` with the actual hash of the commit you're interested in, and the command will display details about that specific commit, including its timestamp.
+
+To get the timestamp of a specific commit in a remote repository, you need to fetch the information from the remote repository first and then use the `git log` command. Here's how you can do it:
+
+1. Fetch the latest changes from the remote repository:
+
+```bash
+git fetch origin
+```
+
+Replace `origin` with the name of the remote repository if it's different.
+
+2. Retrieve the timestamp of a specific commit in the remote repository by its SHA-1 hash (replace `commit_hash` with the actual hash):
+
+```bash
+git log -1 --format="%cd" --date=iso origin/branch_name commit_hash
+```
+
+Here, `branch_name` is the name of the branch where the commit is located. Replace it with the correct branch name.
+
+The `origin/branch_name` specifies the remote branch. This command fetches the commit information from the remote repository and displays the commit date and time in ISO 8601 format for the specific commit you're interested in.
+
+If you want to retrieve the timestamp for a commit in a remote repository without fetching the latest changes, you can do so by specifying the remote repository and branch explicitly in the `git log` command. Here's an example:
+
+```bash
+git log -1 --format="%cd" --date=iso remote_url/branch_name commit_hash
+```
+
+Replace `remote_url` with the URL of the remote repository and `branch_name` with the name of the branch in the remote repository where the commit is located.
+
+Remember that you need the necessary permissions and access to the remote repository to fetch and view its commit history.
+
+<hr/>
+
 ## Bonus
 ### List git repo in remote
 `git ls-remote --heads origin`
