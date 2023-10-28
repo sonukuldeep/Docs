@@ -515,8 +515,9 @@ import { apiSlice } from "./slice/apiSlice";
 export const { useGetPostsQuery, useAddPostsMutation, useUpdatePostsMutation, useDeletePostsMutation } = apiSlice;
 ```
 
- apiSlice.js
+apiSlice.js
 ```jsx
+// apiSlice.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -557,6 +558,7 @@ export const apiSlice = createApi({
 
 index.js
 ```jsx
+// index.js
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
