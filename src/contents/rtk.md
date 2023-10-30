@@ -3,7 +3,7 @@ title: RTK Query
 author: Internet
 datetime: 2023-05-23
 slug: "react-toolkit"
-featured: false
+featured: true
 draft: false
 tags:
   - react
