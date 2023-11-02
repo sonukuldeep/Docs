@@ -522,3 +522,51 @@ document.addEventListener("myCustomEvent", function (event) {
 // Trigger the custom event
 document.dispatchEvent(customEvent);
 ```
+
+## React form with FormData 
+```tsx
+import React, { FormEvent } from 'react';
+
+const MyForm: React.FC = () => {
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('YOUR_API_ENDPOINT', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        // Request was successful, handle the response here.
+        console.log('Form data submitted successfully');
+      } else {
+        // Request failed, handle the error here.
+        console.error('Failed to submit form data');
+      }
+    } catch (error) {
+      // Handle network or other errors here.
+      console.error('Error:', error);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="name">Name</label>
+        <input type="text" id="name" name="name" />
+      </div>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input type="email" id="email" name="email" />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default MyForm;
+```
