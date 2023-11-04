@@ -22,6 +22,9 @@ description: Redux Toolkit is our official standard approach for writing Redux l
   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
 ></iframe>
 
+## Introduction video
+[Rtk query](https://www.youtube.com/watch?v=u3KlatzB7GM&list=PL0Zuz27SZ-6M1J5I1w2-uZx36Qp6qhjKo)
+
 ## Table of Contents
 
 ## Installation
