@@ -125,7 +125,7 @@ getBtn?.addEventListener("click", async () => {
 });
 ```
 
-Example
+More Examples
 
 ```js
 import axios from "axios";
