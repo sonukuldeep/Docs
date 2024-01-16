@@ -3,7 +3,7 @@ title: RTK Query
 author: Internet
 datetime: 2023-05-23
 slug: "react-toolkit"
-featured: false
+featured: true
 draft: false
 tags:
   - react
@@ -21,6 +21,9 @@ description: Redux Toolkit is our official standard approach for writing Redux l
   allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
 ></iframe>
+
+## Introduction video
+[Rtk query](https://www.youtube.com/watch?v=u3KlatzB7GM&list=PL0Zuz27SZ-6M1J5I1w2-uZx36Qp6qhjKo)
 
 ## Table of Contents
 
@@ -475,4 +478,102 @@ export default function App() {
     );
   else if (status === LoadingStatus.FAILED) return <h2>{error}</h2>;
 }
+```
+
+
+## ApiSlice setup
+```css
+src
+└── redux
+    ├── store.js
+    ├── hooks.js
+    └── slice
+        └── postSlice.js
+
+```
+
+store.js
+```js
+//store.ts
+import { configureStore } from "@reduxjs/toolkit";
+import { apiSlice } from './slice/apiSlice';
+
+const store = configureStore({
+  reducer: {
+    [apiSlice.reducerPath]: apiSlice.reducer,
+  },
+  middleware: getDefaultMiddleware => {
+    return getDefaultMiddleware().concat(apiSlice.middleware);
+  },
+});
+
+export default store;
+````
+
+hooks.js
+```js
+// hooks.ts
+import { apiSlice } from "./slice/apiSlice";
+
+export const { useGetPostsQuery, useAddPostsMutation, useUpdatePostsMutation, useDeletePostsMutation } = apiSlice;
+```
+
+apiSlice.js
+```jsx
+// apiSlice.js
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+export const apiSlice = createApi({
+  reducerPath: "api",
+  baseQuery: fetchBaseQuery({ baseUrl: "https://653c7e46d5d6790f5ec805f4.mockapi.io/" }),
+  tagTypes: ['Posts'],
+  endpoints: (builder) => ({
+    getPosts: builder.query({
+      query: () => "/posts",
+      providesTags: ['Posts']
+    }),
+    addPosts: builder.mutation({
+      query: (todo) => ({
+        url: "/posts",
+        method: "POST",
+        body: todo
+      }),
+      invalidatesTags: ["Posts"]
+    }),
+    updatePosts: builder.mutation({
+      query: (todo) => ({
+        url: `/posts/${todo.id}`,
+        method: "PUT",
+        body: todo
+      }),
+      invalidatesTags: ["Posts"]
+    }),
+    deletePosts: builder.mutation({
+      query: ({ id }) => ({
+        url: `/posts/${id}`,
+        method: "DELETE",
+        body: id
+      }),
+      invalidatesTags: ["Posts"]
+    }),
+  })
+});
+```
+
+index.js
+```jsx
+// index.js
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+import { Provider } from 'react-redux'
+import store from './app/redux/store'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>,
+)
 ```

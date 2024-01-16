@@ -401,6 +401,48 @@ function useOutsideAlerter(ref: React.RefObject<HTMLElement>) {
 
 <hr>
 
+## Detect click outside the element
+```tsx
+import React, { useEffect, useRef, useState } from 'react';
+
+function App() {
+  const [isClickOutside, setIsClickOutside] = useState(false);
+  const targetRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    // Function to handle the click event
+    function handleClickOutside(event: MouseEvent) {
+      if (targetRef.current && !targetRef.current.contains(event.target as Node)) {
+        setIsClickOutside(true);
+      } else {
+        setIsClickOutside(false);
+      }
+    }
+
+    // Attach the event listener when the component mounts
+    document.addEventListener('click', handleClickOutside);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div>
+      <div ref={targetRef}>
+        <p>Click inside this element</p>
+      </div>
+      {isClickOutside && <p>Click outside the element!</p>}
+    </div>
+  );
+}
+
+export default App;
+```
+
+<hr/>
+
 ## Prisma setup in Node js
 
 [main image](https://logos-world.net/wp-content/uploads/2022/04/Prisma-Logo.png)
@@ -479,4 +521,88 @@ document.addEventListener("myCustomEvent", function (event) {
 
 // Trigger the custom event
 document.dispatchEvent(customEvent);
+```
+
+## React form with FormData 
+```tsx
+import React, { FormEvent } from 'react';
+
+const MyForm: React.FC = () => {
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('YOUR_API_ENDPOINT', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        // Request was successful, handle the response here.
+        console.log('Form data submitted successfully');
+      } else {
+        // Request failed, handle the error here.
+        console.error('Failed to submit form data');
+      }
+    } catch (error) {
+      // Handle network or other errors here.
+      console.error('Error:', error);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="name">Name</label>
+        <input type="text" id="name" name="name" />
+      </div>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input type="email" id="email" name="email" />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default MyForm;
+```
+
+## Form using react hook form
+
+```jsx
+import { useForm } from "react-hook-form";
+
+const Example = () => {
+  const { handleSubmit, register, formState: { errors } } = useForm();
+  const onSubmit = values => console.log(values);
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input
+        type="email"
+        {...register("email", {
+          required: "Required",
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: "invalid email address"
+          }
+        })}
+      />
+      {errors.email && errors.email.message}
+
+      <input
+        {...register("username", {
+          validate: value => value !== "admin" || "Nice try!"
+        })}
+      />
+      {errors.username && errors.username.message}
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
 ```

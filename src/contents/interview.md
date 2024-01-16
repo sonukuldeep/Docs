@@ -319,3 +319,22 @@ The main benefits of using strict mode in React are as follows:
 - Improves Development Tool Warnings: It helps development tools like React DevTools to provide better error messages and warnings.
 
 It's important to note that strict mode is intended for development use only. You should not use it in production as it can have a performance impact. When you build your application for production, strict mode-related code and checks are automatically stripped out.
+
+### Rehydration error
+In React, rehydration errors can occur when there is a mismatch between the initial server-rendered HTML content and the subsequent client-side rendering. These errors can disrupt the intended behavior of your application and lead to issues. Here are some common causes of rehydration errors in React:
+
+1. **Component Mismatch**: If the component structure or hierarchy on the client-side differs from the server-rendered HTML, React might encounter problems when trying to reconcile the differences.
+
+2. **Data Mismatch**: If the data used to render components on the client doesn't match the data used for server-side rendering, you can run into issues. This can happen if the data fetch or API calls on the client differ from those on the server.
+
+3. **Inconsistent State**: If there's a discrepancy in the state of a component between the server and client, React might not be able to rehydrate the component correctly. This could be due to differences in component state or props.
+
+4. **Misconfigured Routing**: Issues with client-side routing can lead to rehydration errors. If the server renders one route, but the client attempts to render a different route, problems can occur.
+
+5. **Differences in Event Handlers**: If you have event handlers or other side effects that behave differently on the server and client, this can cause rehydration errors.
+
+6. **Third-party Libraries**: Third-party libraries and components that are not designed with server-side rendering in mind can introduce rehydration problems.
+
+7. **Async Operations**: If there are asynchronous operations that depend on client-side data and they don't execute in the same order as on the server, this can cause issues.
+
+To avoid rehydration errors, it's essential to ensure consistency between the initial server-rendered HTML and the client-side rendering. This can involve using strategies like code splitting, ensuring that your data fetching is consistent, and handling client-side routing appropriately. Additionally, consider server-side rendering frameworks like Next.js that simplify this process and reduce the chances of rehydration errors.

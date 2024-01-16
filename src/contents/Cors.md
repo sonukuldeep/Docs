@@ -16,6 +16,7 @@ description: CORS, Cross-Origin Resource Sharing.
 
 ![main image](https://cdn.pellerex.com/public/ecosystem/web/content/api-cors/pellerex-asp-net-5-web-api-cors.png)
 
+[Cors article](https://simplelocalize.io/blog/posts/what-is-cors/)
 ## Table of Contents
 
 ## What Is CORS?
@@ -101,4 +102,16 @@ app.use(cors({
 // Server code
 
 app.listen(3000)
+```
+
+## Disable cors on browser
+```js
+# Windows
+chrome.exe --user-data-dir="C://chrome-dev-disabled-security" --disable-web-security --disable-site-isolation-trials
+
+# macOS
+open /Applications/Google\ Chrome.app --args --user-data-dir="/var/tmp/chrome-dev-disabled-security" --disable-web-security --disable-site-isolation-trials
+
+# Linux
+google-chrome --user-data-dir="~/chrome-dev-disabled-security" --disable-web-security --disable-site-isolation-trials
 ```
