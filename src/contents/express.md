@@ -339,3 +339,54 @@ function authorizeUsersAccess(req, res, next) {
 
 app.listen(3000, () => console.log("Server Started"));
 ```
+
+## Setup for react js
+
+- React is served from express in this setup
+- Express serves client/build or client/dist folder
+- Additionally, no other setup in needed in react
+
+```js
+//imports
+const express = require("express");
+const app = express();
+const path = require("path");
+
+// Set the port based on environment
+const PORT = 3000;
+
+//Middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(logger);
+
+// Serve static files from a public folder
+app.use(express.static(path.join(__dirname, "../client/dist"))); // have a folder named public in root
+app.use(express.static(path.join(__dirname, "public"))); // have a folder named public in root
+
+// Routes
+app.get("/api", (req, res) => {
+  res.status(200).json({ message: "Hello from server!" });
+});
+
+app.get("/static", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// react app
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/dist", "index.html"));
+});
+
+// logger
+function logger(req, res, next) {
+  console.log(`${new Date().toISOString()}: ${req.originalUrl}`);
+  next(); // always have return statement after this
+  return;
+}
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT} in test mode`);
+});
+```
