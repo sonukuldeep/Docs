@@ -292,3 +292,50 @@ vercel.json
   ]
 }
 ```
+
+## Middleware
+
+```js
+const express = require("express");
+const app = express();
+const jwt = require("jsonwebtoken");
+
+// middleware that runs on all request
+app.use(loggingMiddleware);
+
+app.get("/", (req, res) => {
+  res.send("Home Page");
+});
+
+app.get("/users", authorizeUsersAccess, (req, res) => {
+  res.send("Users Page");
+});
+
+function loggingMiddleware(req, res, next) {
+  console.log(`${new Date().toISOString()}: ${req.originalUrl}`);
+  next(); // always have return statement after this
+  return;
+}
+
+// this middleware runs on /users route
+function authorizeUsersAccess(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    req.user = decoded;
+    next(); // always have return statement after this
+    return;
+  });
+}
+
+app.listen(3000, () => console.log("Server Started"));
+```
