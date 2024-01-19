@@ -344,7 +344,8 @@ app.listen(3000, () => console.log("Server Started"));
 
 - React is served from express in this setup
 - Express serves client/build or client/dist folder
-- Additionally, no other setup in needed in react
+
+### Server setup
 
 ```js
 //imports
@@ -388,5 +389,30 @@ function logger(req, res, next) {
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT} in test mode`);
+});
+```
+
+### React setup
+
+- When using create-react-app<br/>
+  Add `proxy": "http://localhost:3000` to _package.json_ for local development.
+- When using vite<br/>
+  Add this to `vite.config.js`
+
+```js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+    },
+  },
 });
 ```
