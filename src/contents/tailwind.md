@@ -95,3 +95,173 @@ const Navbar = () => {
 
 export default Navbar
 ```
+
+## Theming in React/Nextjs
+
+[Link to repo](https://github.com/TomIsLoading/tailwind-themeing)
+
+### Important files
+
+```css
+src
+│── App.jsx
+│── styles
+│   ├── global.css
+│   └── utils.css
+└── tailwind.config.js
+```
+
+```tsx
+// App.jsx/layout.tsx
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+import { useEffect } from "react";
+
+export default function App({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    // NOTE: This should be set based on some kind of toggle or theme selector.
+    // I've added this here for demonstration purposes
+    localStorage.setItem("theme", "light");
+
+    // If the user has selected a theme, use that
+    const selectedTheme = localStorage.getItem("theme");
+
+    if (selectedTheme) {
+      document.body.classList.add(selectedTheme);
+
+      // Else if the users OS preferences prefers dark mode
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      document.body.classList.add("dark");
+
+      // Else use light mode
+    } else {
+      document.body.classList.add("light");
+    }
+  }, []);
+
+  return <Component {...pageProps} />;
+}
+```
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.light {
+  --background: 245, 245, 245;
+
+  --border: 212, 212, 212;
+  --card: 255, 255, 255;
+
+  --copy-primary: 23, 23, 23;
+  --copy-secondary: 115, 115, 115;
+
+  --cta: 139, 92, 246;
+  --cta-active: 124, 58, 237;
+  --cta-text: 255, 255, 255;
+
+  background: rgba(var(--background));
+}
+
+.dark {
+  --background: 0, 0, 0;
+
+  --border: 38, 38, 38;
+  --card: 23, 23, 23;
+
+  --copy-primary: 250, 250, 250;
+  --copy-secondary: 115, 115, 115;
+
+  --cta: 99, 102, 241;
+  --cta-active: 79, 70, 229;
+  --cta-text: 255, 255, 255;
+
+  background: rgba(var(--background));
+}
+
+.red {
+  --background: 254, 202, 202;
+
+  --border: 185, 28, 28;
+  --card: 239, 68, 68;
+
+  --copy-primary: 250, 250, 250;
+  --copy-secondary: 254, 226, 226;
+
+  --cta: 250, 250, 250;
+  --cta-active: 254, 226, 226;
+  --cta-text: 239, 68, 68;
+
+  background: rgba(var(--background));
+}
+
+:root {
+  --grape: 114, 35, 204;
+}
+
+/* :root {
+  --background: 245, 245, 245;
+
+  --border: 212, 212, 212;
+  --card: 255, 255, 255;
+
+  --copy-primary: 23, 23, 23;
+  --copy-secondary: 115, 115, 115;
+
+  --cta: 139, 92, 246;
+  --cta-active: 124, 58, 237;
+  --cta-text: 255, 255, 255;
+}
+
+body {
+  background: rgba(var(--background));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: 0, 0, 0;
+
+    --border: 38, 38, 38;
+    --card: 23, 23, 23;
+
+    --copy-primary: 250, 250, 250;
+    --copy-secondary: 115, 115, 115;
+
+    --cta: 99, 102, 241;
+    --cta-active: 79, 70, 229;
+    --cta-text: 255, 255, 255;
+  }
+} */
+```
+
+```ts
+// tailwind.config.ts
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "rgba(var(--background))",
+        border: "rgba(var(--border))",
+        card: "rgba(var(--card))",
+        "copy-primary": "rgba(var(--copy-primary))",
+        "copy-secondary": "rgba(var(--copy-secondary))",
+        cta: "rgba(var(--cta))",
+        "cta-active": "rgba(var(--cta-active))",
+        "cta-text": "rgba(var(--cta-text))",
+
+        grape: "rgba(var(--grape))",
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
+```

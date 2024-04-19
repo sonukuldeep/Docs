@@ -8,6 +8,7 @@ draft: false
 tags:
   - font
   - poppins
+  - Nextjs
 ogImage: ""
 description: Poppins font initialization.
 ---
@@ -59,3 +60,7 @@ Add Poppins font
 ```shell
 font-family: 'Poppins', sans-serif;
 ```
+
+## Adding local font to Nextjs
+
+[Link local font](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#local-fonts)
