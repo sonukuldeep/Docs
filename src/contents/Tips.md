@@ -255,6 +255,28 @@ export default function Page() {
 }
 ```
 
+## Customise scroll bar 
+```css
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    scrollbar-width: thin;
+}
+ 
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+ 
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+```
+
 ## Multi account git configuration
 
 This multi account git configuration is folder based meaning depending on the current working directory, the configuration will change accordingly, automatically.
