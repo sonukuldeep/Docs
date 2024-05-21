@@ -256,6 +256,7 @@ export default function Page() {
 ```
 
 ## Customise scroll bar 
+For chrome
 ```css
 /* Custom scrollbar styles */
 .custom-scrollbar::-webkit-scrollbar {
