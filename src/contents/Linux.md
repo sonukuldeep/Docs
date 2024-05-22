@@ -18,15 +18,20 @@ description: Tips and tricks from linux
 
 ##Basics
 * ctrl a c           -> cre­ate new win­dow
+* ctrl-a n           -> switch to next win­dow
+* ctrl-a p           -> switch to previous win­dow
 * ctrl a A           -> set win­dow name
 * ctrl a w           -> show all win­dow
 * ctrl a 1|2|3|…     -> switch to win­dow n
 * ctrl a "           -> choose win­dow
 * ctrl a ctrl a      -> switch between win­dow
-* ctrl a d           -> detach win­dow
+* ctrl a d           -> detach win­dow without terminating it
 * ctrl a ?           -> help
 * ctrl a [           -> start copy, move cur­sor to the copy loca­tion, press ENTER, select the chars, press ENTER to copy the selected char­ac­ters to the buffer
 * ctrl a ]           -> paste from buffer
+* screen -x          -> attach to a detached session if only one is present.
+* screen -ls         -> list all screen sessions
+* screen -r id       -> attach to a session by session ID
 
 ##Starting screen
 * screen –DR            -> list of detached screen
