@@ -227,7 +227,7 @@ node_modules/
 npm-debug.log
 ```
 
-## docker-compose.yaml
+## compose.yaml
 ```yaml
 version: '3'
 services:
@@ -246,6 +246,26 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_SERVER=mongodb
+```
+
+## compose.yaml
+compose with watch
+```bash
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - 3000:5173
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+        - path: .
+          target: /app
+          action: sync
 ```
 
 [Docker compose example](https://github.com/adrianhajdin/docker-course/blob/main/mern-docker/compose.yml)
