@@ -11,8 +11,32 @@ ogImage: ""
 description: PM2 is a daemon process manager that will help you manage and keep your application online.
 ---
 
-# PM@
+# PM2
 PM2 is a powerful process manager for Node.js applications. It allows you to keep applications alive forever, reload them without downtime, facilitate common system admin tasks, and much more. Here's a comprehensive list of PM2 commands and their descriptions:
+
+## Ecosystem file
+```json
+module.exports = {
+  apps: [
+    {
+      name: "portal1",
+      script: "server.js",
+      instances: 1,
+      autorestart: true,
+      watch: true,
+      max_memory_restart: "100M"
+    },
+	 {
+      name: "portal2",
+      script: "server.js",
+      instances: 1,
+      autorestart: true,
+      watch: true,
+      max_memory_restart: "100M"
+    },
+  ]
+}
+```
 
 ## Starting, Stopping, and Restarting Applications
 
