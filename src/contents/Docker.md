@@ -189,31 +189,35 @@ CMD ["python", "app.py"]
 
 ### Dockerfile example
 ```bash
-# Use an official Node.js runtime as a parent image
+# Use the official Node.js 20 image based on Alpine Linux
 FROM node:20-alpine
 
-# Set the working directory in the container to /usr/src/app
-WORKDIR /usr/src/app
+# Create a group named 'app' and a system user named 'app' that belongs to the 'app' group
+RUN addgroup app && adduser -S -G app app
 
-# Copy package.json and package-lock.json before other files
-# Utilize Docker cache to save re-installing dependencies if unchanged
-COPY package.json .
-COPY package-lock.json .
+# Set the working directory to /app
+WORKDIR /app
 
-# Install dependencies
+# Copy the package.json and package-lock.json files to the working directory
+COPY package*.json ./
+
+# Install the project dependencies as root user
 RUN npm install
 
-# Copy the rest of your application code
+# Copy the rest of the application code to the working directory
 COPY . .
 
-# Expose port 8080 for the app to be accessible
-EXPOSE 8080
+# Change the ownership of all files in the working directory to the 'app' user and group
+RUN chown -R app:app /app
 
-# Define environment variable
-ENV NODE_ENV=production
+# Switch to the 'app' user
+USER app
 
-# Define the command to run your app using CMD which defines your runtime
-CMD [ "node", "server.js" ]
+# Expose port 5173 for the application
+EXPOSE 5173
+
+# Run the application using the 'npm run dev' command
+CMD ["npm", "run", "dev"]
 ```
 
 ### .dockerignore
