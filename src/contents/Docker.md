@@ -247,3 +247,5 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_SERVER=mongodb
 ```
+
+[Docker compose example](https://github.com/adrianhajdin/docker-course/blob/main/mern-docker/compose.yml)
