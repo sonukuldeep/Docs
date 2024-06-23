@@ -300,3 +300,63 @@ This multi account git configuration is folder based meaning depending on the cu
 ```
 
 Then when you're working in any git folder inside work directory then git config specific to work will be used. Some goes for personal folder.
+
+## Google sheet database
+
+Add this to google app sheet under extension after making appropriate changes in the below script
+
+```js
+const sheetName = "DATABASE";
+const param1 = "count";
+const param1CellIndex = 0;
+const param2 = "type";
+const param2CellIndex = 1;
+
+function doPost(req) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  const cell1 = req.parameter[param1];
+  const cell2 = req.parameter[param2];
+
+  sheet.insertRowBefore(2);
+  sheet.getRange(2, 1, 1, 1).setValue(cell1);
+  sheet.getRange(2, 2, 1, 1).setValue(cell2);
+
+  const response = HtmlService.createHtmlOutput();
+  return response;
+}
+
+function doGet(req) {
+  const p1 = req.parameter[param1];
+  const doc = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = doc.getSheetByName(sheetName);
+  const values = sheet.getDataRange().getValues();
+
+  const output = [];
+
+  // Loop through the values and varruct the output array
+  for (let i = 1; i < values.length; i++) {
+    const row = {};
+    row[param1] = values[i][param1CellIndex]; // Assuming count is in the 1st column (index starts from 0)
+    row[param2] = values[i][param2CellIndex]; // Assuming type is in the 1st column (index starts from 0)
+    output.push(row);
+  }
+
+  // filter
+  if (p1) {
+    const outputToReturn = output.filter(obj =>
+      obj[param1].toString().toLowerCase().includes(p1.toLowerCase())
+    );
+    const response = ContentService.createTextOutput(
+      JSON.stringify({ data: outputToReturn })
+    );
+    response.setMimeType(ContentService.MimeType.JSON);
+    return response;
+  } else {
+    const response = ContentService.createTextOutput(
+      JSON.stringify({ data: output })
+    );
+    response.setMimeType(ContentService.MimeType.JSON);
+    return response;
+  }
+}
+```
