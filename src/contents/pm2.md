@@ -19,22 +19,32 @@ PM2 is a powerful process manager for Node.js applications. It allows you to kee
 module.exports = {
   apps: [
     {
-      name: "portal1",
-      script: "server.js",
+      name: "example1",
+      script: "serve",
       instances: 1,
       autorestart: true,
-      watch: true,
-      max_memory_restart: "100M"
+      watch: false,
+      max_memory_restart: "300M",
+      env: {
+        PM2_SERVE_PATH: "example1/dist",
+        PM2_SERVE_PORT: "3001",
+        PM2_SERVE_SPA: "true",
+      },
     },
-	 {
-      name: "portal2",
-      script: "server.js",
+    {
+      name: "example2",
+      script: "serve",
       instances: 1,
       autorestart: true,
-      watch: true,
-      max_memory_restart: "100M"
+      watch: false,
+      max_memory_restart: "300M",
+      env: {
+        PM2_SERVE_PATH: "example2/dist",
+        PM2_SERVE_PORT: "3002",
+        PM2_SERVE_SPA: "true",
+      },
     },
-  ]
+  ],
 }
 ```
 
@@ -111,6 +121,11 @@ These commands cover a wide range of functionalities provided by PM2, from basic
 
 
 ## How to
+React app
+```bash
+pm2 serve build 3000 --spa
+```
+
 Nextjs app
 ```bash
 pm2 start --name website_name npm -- start
