@@ -108,3 +108,15 @@ module.exports = {
 - **Show PM2 version**: `pm2 --version`
 
 These commands cover a wide range of functionalities provided by PM2, from basic process management to advanced features like cluster mode, ecosystem file management, and integration with Keymetrics for monitoring and management.
+
+
+## How to
+Nextjs app
+```bash
+pm2 start --name website_name npm -- start
+```
+
+Nextjs app with 3 instance
+```bash
+pm2 start --name website_name -i 3 npm -- start
+```
