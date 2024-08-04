@@ -8,10 +8,11 @@ draft: false
 tags:
   - nginx
 ogImage: ""
-description: Docker is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers.
+description: Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache.
 ---
 
 # Nginx
+Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. The software was created by Russian developer Igor Sysoev and publicly released in 2004. Nginx is free and open-source software, released under the terms of the 2-clause BSD license.
 
 ## Installation
 ```bash
