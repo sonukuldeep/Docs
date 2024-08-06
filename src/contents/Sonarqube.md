@@ -32,7 +32,7 @@ SonarQube is a self-managed, automatic code review tool that systematically help
    - Analyzes the complexity of code and helps identify areas that might become problematic.
    - Encourages writing clean, maintainable code.
 
-### Where SonarQube Fits in the Testing Process
+### Why use SonarQube
 
 1. **During Development:**
    - Integrated into the development workflow, SonarQube can provide real-time feedback to developers on code quality.
