@@ -11,9 +11,11 @@ tags:
 ogImage: ""
 description: Types of api test, some common guidelines and benchmark
 ---
-<img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/0*2CfrdDKdfOmfB8Z9.gif" alt="chart" width="600px">
 
 # API Testing
+
+<img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/0*2CfrdDKdfOmfB8Z9.gif" alt="chart" width="600px">
+
 API testing involves a wide range of tests that cover various aspects of functionality, performance, security, and reliability. Here’s a comprehensive list of different types of tests for APIs:
 
 ### 1. **Functional Testing**
