@@ -83,3 +83,31 @@ sudo apt install certbot python3-certbot-nginx
 ```bash
 sudo certbot --nginx -d sub.example.com
 ```
+
+## Config for www and domain name
+```bash
+# Redirect www.hiodisha.com to hiodisha.com
+server {
+    listen 80;
+    server_name www.hiodisha.com;
+
+    return 301 http://hiodisha.com$request_uri;
+}
+
+# Main server block for hiodisha.com
+server {
+    listen 80;
+    server_name hiodisha.com;
+
+    location / {
+        proxy_pass http://localhost:3006;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+**Note:**
+get certificate for both www and original domain name
