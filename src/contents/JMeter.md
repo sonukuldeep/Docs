@@ -1,8 +1,19 @@
+---
+author: chatgpt
+datetime: 2024-08-12
+title: JMeter
+slug: "jmeter"
+featured: false
+draft: false
+tags:
+  - jmeter testing
+ogImage: ""
+description: JMeter testing api.
+---
 
+# JMeter
 
-
-
-Here are some important terminologies in JMeter that you should know:
+Some important terminologies in JMeter that you should know:
 
 ### 1. **Test Plan**
    - **Definition**: The top-level container for all elements of a JMeter test. It defines what to test and how to test it.
