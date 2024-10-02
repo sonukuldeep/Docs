@@ -69,7 +69,8 @@ sudo apt install nginx
    ```bash
    sudo systemctl restart nginx
    ```
-
+   
+Note:- Remove default config file from sites-enabled for reverse proxy to work properly
 
 ## SSL Config
 ### Certbox installation
