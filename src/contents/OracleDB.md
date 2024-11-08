@@ -149,3 +149,6 @@ ALTER SESSION SET CONTAINER = ORCLPDB2;
 
 ## Set PDB as default in sql developer/spring
 use PDB name as service name and you can clear sid
+
+** note **
+https://oracle-base.com/articles/12c/multitenant-create-and-configure-pluggable-database-12cr1
