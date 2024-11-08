@@ -56,3 +56,65 @@ expdp system/ORCLCDB@etnsdatabase FULL=Y \
 
 expdp system/ORCLCDB@etnsdatabase FULL=Y DUMPFILE=full_db_backup_$(date +"%d-%m").dmp DIRECTORY=dump_dir LOGFILE=expdp_full_db_$(date +"%d-%m").log
 ```
+
+
+## DBA and PDB
+In Oracle, **DBA** and **PDB** are terms that refer to different concepts in the context of **multitenant** architecture (introduced in Oracle 12c), which allows multiple **Pluggable Databases (PDBs)** to exist within a single **Container Database (CDB)**.
+
+### 1. **DBA (Database Administrator)**
+
+- **DBA** typically refers to a **Database Administrator** role, but in the context of Oracle, it can also refer to a view or set of views that are used to access system-level data in the database. The **DBA** prefix in Oracle views refers to **Data Dictionary Views** that provide information for database administrators about the entire database system, including all containers and pluggable databases.
+  
+  **Examples of DBA Views**:
+  - `DBA_USERS`: Lists all users in the database.
+  - `DBA_TABLES`: Lists all tables in all schemas of the database.
+  - `DBA_TABLESPACES`: Lists all tablespaces in the database.
+  
+  These views are typically used by database administrators (DBAs) to manage and monitor the database system.
+
+### 2. **PDB (Pluggable Database)**
+
+- **PDB (Pluggable Database)** refers to a **sub-database** that resides within a **Container Database (CDB)** in Oracle’s **multitenant** architecture. The multitenant architecture allows a **CDB** to host multiple **PDBs**, which are essentially isolated databases that share the same instance and resources but operate independently. Each PDB has its own schema, users, tables, and other objects.
+
+- **CDB** (Container Database) is the root database that contains one or more **PDBs**. A **CDB** includes:
+  - **CDB$ROOT**: The root container that holds common metadata and system-level information.
+  - **PDB$SEED**: A template pluggable database that is used for creating new PDBs.
+  - **PDBs**: These are the actual pluggable databases created within the CDB.
+
+#### Key Points about PDB:
+- A **PDB** is a self-contained, user-created database.
+- Each PDB can have its own users, schemas, and application data.
+- PDBs can be unplugged from one CDB and plugged into another CDB.
+- PDBs allow for easier database consolidation and management as multiple databases (PDBs) can share the same Oracle instance (CDB).
+
+### Example:
+
+- **CDB** (Container Database): This is like a large container that holds several databases inside it.
+- **PDB** (Pluggable Database): Each PDB inside the CDB behaves like a separate, standalone database but shares the same underlying infrastructure.
+
+### Visual Representation:
+
+```
+[ CDB ] 
+   ├── [ CDB$ROOT ]  (System and metadata)
+   ├── [ PDB$SEED ]  (Template PDB for cloning)
+   ├── [ PDB1 ]      (User-created PDB 1)
+   └── [ PDB2 ]      (User-created PDB 2)
+```
+
+### Key Differences Between CDB and PDB:
+
+| **Aspect**             | **CDB (Container Database)**       | **PDB (Pluggable Database)**             |
+|------------------------|------------------------------------|------------------------------------------|
+| **Role**               | Root database that contains one or more PDBs. | A self-contained database within a CDB.  |
+| **Metadata**           | Holds system-level metadata.       | Holds application-specific data.         |
+| **Users**              | Contains administrative users (e.g., SYS, SYSTEM). | Contains application users and schemas.  |
+| **Management**         | Managed by DBAs at the container level. | Managed by users at the pluggable level. |
+| **Isolation**          | No isolation between PDBs.         | Isolated, each PDB behaves as a separate database. |
+
+### Conclusion:
+
+- **DBA**: Refers to the administrative role and views in Oracle that provide information about the entire database (CDB and PDBs).
+- **PDB**: A self-contained, pluggable database within a **CDB**. Each PDB operates independently but shares the same Oracle instance, making it efficient for managing multiple databases.
+
+In a **multitenant architecture**, a **CDB** manages multiple **PDBs**, and the DBA's role is crucial in managing the entire system, including both the CDB and the PDBs within it.
