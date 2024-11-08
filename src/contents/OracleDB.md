@@ -132,3 +132,20 @@ CREATE PLUGGABLE DATABASE ORCLPDB2 ADMIN USER etns_recon IDENTIFIED BY recon CRE
 
 ### enable read right mode
 ALTER PLUGGABLE DATABASE ORCLPDB2 OPEN READ WRITE;
+
+
+## Check PDB
+
+### sql developer or within sql
+
+#### show all dba/pdb
+SELECT name FROM v$containers;
+
+#### show current dba/pdb
+SELECT sys_context('userenv', 'con_name') FROM dual;
+
+#### switch pdb
+ALTER SESSION SET CONTAINER = ORCLPDB2;
+
+## Set PDB as default in sql developer/spring
+use PDB name as service name and you can clear sid
