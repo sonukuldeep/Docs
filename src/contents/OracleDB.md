@@ -118,3 +118,17 @@ In Oracle, **DBA** and **PDB** are terms that refer to different concepts in the
 - **PDB**: A self-contained, pluggable database within a **CDB**. Each PDB operates independently but shares the same Oracle instance, making it efficient for managing multiple databases.
 
 In a **multitenant architecture**, a **CDB** manages multiple **PDBs**, and the DBA's role is crucial in managing the entire system, including both the CDB and the PDBs within it.
+
+## Create a PDB
+### connect to db inside docker
+sqlplus sys/ORCLCDB@//localhost:1521/etnsdatabase as sysdba
+
+### show pdb
+SELECT pdb_name, status FROM dba_pdbs ORDER BY pdb_name;
+SELECT name, open_mode FROM v$pdbs ORDER BY name;
+
+### create pdb
+CREATE PLUGGABLE DATABASE ORCLPDB2 ADMIN USER etns_recon IDENTIFIED BY recon CREATE_FILE_DEST='/opt/oracle/oradata';
+
+### enable read right mode
+ALTER PLUGGABLE DATABASE ORCLPDB2 OPEN READ WRITE;
