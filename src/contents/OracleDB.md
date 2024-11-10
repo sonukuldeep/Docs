@@ -76,9 +76,13 @@ expdp system/ORCLCDB@etnsdatabase FULL=Y DUMPFILE=full_db_backup.dmp DIRECTORY=d
 impdp system/ORCLCDB@etnsdatabase FULL=Y DUMPFILE=full_db_backup.dmp DIRECTORY=dump_dir LOGFILE=impdp_full_db.log
 ```
 *Note* here etnsdatabase is treated as service name in docker
+
 *Note* system/ORCLCDB@//localhost:1521/etnsdatabase syntax for service name
+
 *Note* system/ORCLCDB@etnsdatabase syntax for sid
+
 *Note* user/password@ip:port/sid
+
 *Note* user/password@service-name
 
 ## Create backup from script
