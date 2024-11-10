@@ -14,9 +14,9 @@ description: Docker is a set of platform as a service products that use OS-level
 # Docker
 
 ## What is docker?
-The fastest way to containerize applications
+Docker is an open-source platform that enables developers to build, deploy, run, update and manage containers.
 
-Docker Desktop is secure, out-of-the-box containerization software offering developers and teams a robust, hybrid toolkit to build, share, and run applications anywhere.
+Containers are standardized, executable components that combine application source code with the operating system (OS) libraries and dependencies required to run that code in any environment.
 
 ## Install (Linux)
 ```bash
@@ -91,6 +91,7 @@ docker start <container_name>
 
 # Stop a container
 docker stop <container_name>
+docker stop -t 30 <container_name>
 
 # Kill a container
 docker kill <container_name>
@@ -121,6 +122,8 @@ docker rm <container_name>
 
 # Open a shell inside a running container:
 docker exec -it <container_name> sh
+docker exec -it <container_name> bash
+docker exec <container_name> ls
 
 # Create image from container
 docker commit <container_name> (or <container-id>) <image_name>
