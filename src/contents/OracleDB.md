@@ -13,6 +13,37 @@ description: Oracle database installation, management
 ---
 
 # Install using Docker
+
+## Run from compose file(preferred)
+```bash
+version: '3.8'
+
+services:
+  etns_db:
+    image: oracledb19c/oracle.19.3.0-ee:oracle19.3.0-ee
+    container_name: ETNS_db
+    ports:
+      - "1521:1521"
+	stop_grace_period: 10m
+    environment:
+      ORACLE_SID: etnsdatabase
+      ORACLE_PDB: ORCLPDB1
+      ORACLE_PWD: ORCLCDB
+      ORACLE_EDITION: enterprise
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+      - ~/dump_dir:/home/oracle/dump
+
+volumes:
+  oracle_data:
+```
+*Note* Do not add network in compose. Manually create the network and connect to the container using
+```bash
+docker network create networkName
+docker network connect networkName containerName
+```
+
+## Run as Docker run
 ```bash
 docker run -d \
   --name ETNSCMS_db \
@@ -32,16 +63,26 @@ docker run -d \
 
 ## Management
 ```bash
+# connect to database using this
 sqlplus system/ORCLCDB@//localhost:1521/etnsdatabase
 
 # do not change
 CREATE DIRECTORY dump_dir AS '/home/oracle/dump';
 
+# create full backup
 expdp system/ORCLCDB@etnsdatabase FULL=Y DUMPFILE=full_db_backup.dmp DIRECTORY=dump_dir LOGFILE=expdp_full_db.log
 
-#make sure the dump and log files have oracle oinstall user and group
+# make sure the dump and log files have oracle oinstall user and group
 impdp system/ORCLCDB@etnsdatabase FULL=Y DUMPFILE=full_db_backup.dmp DIRECTORY=dump_dir LOGFILE=impdp_full_db.log
+```
+*Note* here etnsdatabase is treated as service name in docker
+*Note* system/ORCLCDB@//localhost:1521/etnsdatabase syntax for service name
+*Note* system/ORCLCDB@etnsdatabase syntax for sid
+*Note* user/password@ip:port/sid
+*Note* user/password@service-name
 
+## Create backup from script
+```bash
 #!/bin/bash
 
 # Get the current date and time in a human-readable format
@@ -52,9 +93,6 @@ expdp system/ORCLCDB@etnsdatabase FULL=Y \
   DUMPFILE=full_db_backup_$DATE_TIME.dmp \
   DIRECTORY=dump_dir \
   LOGFILE=expdp_full_db_$DATE_TIME.log
-
-
-expdp system/ORCLCDB@etnsdatabase FULL=Y DUMPFILE=full_db_backup_$(date +"%d-%m").dmp DIRECTORY=dump_dir LOGFILE=expdp_full_db_$(date +"%d-%m").log
 ```
 
 
@@ -120,6 +158,7 @@ In Oracle, **DBA** and **PDB** are terms that refer to different concepts in the
 In a **multitenant architecture**, a **CDB** manages multiple **PDBs**, and the DBA's role is crucial in managing the entire system, including both the CDB and the PDBs within it.
 
 ## Create a PDB
+```sql
 ### connect to db inside docker
 sqlplus sys/ORCLCDB@//localhost:1521/etnsdatabase as sysdba
 
@@ -132,23 +171,24 @@ CREATE PLUGGABLE DATABASE ORCLPDB2 ADMIN USER etns_recon IDENTIFIED BY recon CRE
 
 ### enable read right mode
 ALTER PLUGGABLE DATABASE ORCLPDB2 OPEN READ WRITE;
-
+```
 
 ## Check PDB
 
 ### sql developer or within sql
-
-#### show all dba/pdb
+```sql
+# show all dba/pdb
 SELECT name FROM v$containers;
 
-#### show current dba/pdb
+# show current dba/pdb
 SELECT sys_context('userenv', 'con_name') FROM dual;
 
-#### switch pdb
+# switch pdb
 ALTER SESSION SET CONTAINER = ORCLPDB2;
 
-## Set PDB as default in sql developer/spring
+# Set PDB as default in sql developer/spring
 use PDB name as service name and you can clear sid
+```
 
-** note **
+*Note*
 https://oracle-base.com/articles/12c/multitenant-create-and-configure-pluggable-database-12cr1
