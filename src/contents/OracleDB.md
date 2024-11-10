@@ -159,17 +159,17 @@ In a **multitenant architecture**, a **CDB** manages multiple **PDBs**, and the 
 
 ## Create a PDB
 ```sql
-### connect to db inside docker
+# connect to db inside docker
 sqlplus sys/ORCLCDB@//localhost:1521/etnsdatabase as sysdba
 
-### show pdb
+# show pdb
 SELECT pdb_name, status FROM dba_pdbs ORDER BY pdb_name;
 SELECT name, open_mode FROM v$pdbs ORDER BY name;
 
-### create pdb
+# create pdb
 CREATE PLUGGABLE DATABASE ORCLPDB2 ADMIN USER etns_recon IDENTIFIED BY recon CREATE_FILE_DEST='/opt/oracle/oradata';
 
-### enable read right mode
+# enable read right mode
 ALTER PLUGGABLE DATABASE ORCLPDB2 OPEN READ WRITE;
 ```
 
