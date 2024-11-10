@@ -124,6 +124,7 @@ docker exec -it <container_name> sh
 
 # Create image from container
 docker commit <container_name> (or <container-id>) <image_name>
+docker commit -m "Added configuration changes" -t my_new_image:v1 my_container
 
 # Fetch and follow the logs of a container:
 docker logs -f <container_name>
